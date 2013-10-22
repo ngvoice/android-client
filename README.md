@@ -11,11 +11,14 @@ This project is a work in progress.
 
 Screenshots
 ==============
-
+1.
 ![Splash screen](http://i.imgur.com/Ztj9rIT.png)
 
+2.
 ![Login screen](http://i.imgur.com/3HhUCGR.png)
 
+3.
 ![Configuration loader](http://i.imgur.com/BBlrwqN.png)
 
+4.
 ![Dialer](http://i.imgur.com/y0XZuMl.png)
