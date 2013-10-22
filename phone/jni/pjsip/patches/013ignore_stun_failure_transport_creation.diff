@@ -1,0 +1,13 @@
+Index: pjsip/sources/pjsip/src/pjsua-lib/pjsua_core.c
+===================================================================
+--- pjsip.orig/sources/pjsip/src/pjsua-lib/pjsua_core.c	2013-03-31 19:06:27.202008510 +0200
++++ pjsip/sources/pjsip/src/pjsua-lib/pjsua_core.c	2013-03-31 19:06:31.322008598 +0200
+@@ -1954,7 +1954,7 @@
+ 			 pj_ntohs(pjsua_var.stun_srv.ipv4.sin_port);
+ 	status = pjstun_get_mapped_addr2(&pjsua_var.cp.factory, &stun_opt,
+ 					 1, &sock, &p_pub_addr->ipv4);
+-	if (status != PJ_SUCCESS) {
++	if (status != PJ_SUCCESS && !pjsua_var.ua_cfg.stun_ignore_failure) {
+ 	    pjsua_perror(THIS_FILE, "Error contacting STUN server", status);
+ 	    pj_sock_close(sock);
+ 	    return status;

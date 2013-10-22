@@ -1,0 +1,27 @@
+Index: pjsip/sources/pjsip/src/pjsua-lib/pjsua_call.c
+===================================================================
+--- pjsip.orig/sources/pjsip/src/pjsua-lib/pjsua_call.c	2013-05-31 13:24:46.370203442 +0200
++++ pjsip/sources/pjsip/src/pjsua-lib/pjsua_call.c	2013-05-31 13:24:46.362203442 +0200
+@@ -23,6 +23,9 @@
+ 
+ #define THIS_FILE		"pjsua_call.c"
+ 
++#if USE_CSIPSIMPLE_HACKS
++	pj_bool_t pjsua_no_update = PJ_FALSE;
++#endif
+ 
+ /* Retry interval of sending re-INVITE for locking a codec when remote
+  * SDP answer contains multiple codec, in milliseconds.
+@@ -3353,7 +3356,11 @@
+     }
+ 
+     
+-    if (rem_can_update) {
++    if (rem_can_update
++#if USE_CSIPSIMPLE_HACKS
++            && !pjsua_no_update
++#endif
++    ) {
+ 	status = pjsip_inv_update(inv, NULL, new_offer, &tdata);
+     } else {
+ 	status = pjsip_inv_reinvite(inv, NULL, new_offer, &tdata);

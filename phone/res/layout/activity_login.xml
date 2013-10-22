@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".LoginActivity" >
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="@string/voiceblue_password"
+        android:inputType="textPassword" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/vb_logo_small" />
+
+    <EditText
+        android:id="@+id/txtUsername"
+        android:hint="@string/voiceblue_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtPassword"
+        android:layout_alignLeft="@+id/txtPassword"
+        android:layout_alignRight="@+id/txtPassword"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtPassword"
+        android:layout_alignRight="@+id/txtPassword"
+        android:layout_below="@+id/txtPassword"
+        
+        android:layout_marginTop="16dp"        
+        android:text="@string/voiceblue_login" />
+
+    <TextView
+        android:id="@+id/lnkPasswordForgotten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lnkNewAccount"
+        android:layout_alignRight="@+id/imageView1"
+        android:layout_marginBottom="14dp"
+        android:gravity="center"
+        android:text="@string/voiceblue_password_forgotten"
+        android:textColor="@color/blue" />
+
+    <TextView
+        android:id="@+id/lnkNewAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnLogin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/btnLogin"
+        android:layout_marginBottom="16dp"        
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/voiceblue_create_account"
+        android:textColor="@color/blue"
+        android:textStyle="bold" />
+
+</RelativeLayout>
