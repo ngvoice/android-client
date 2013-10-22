@@ -10,10 +10,9 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.csipsimple.R;
-//import com.actionbarsherlock.app.SherlockFragmentActivity;
-//import com.actionbarsherlock.view.Window;
 
 public class SplashScreen extends Activity {
+	private final int SPLASH_DURATION = 2500;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +30,17 @@ public class SplashScreen extends Activity {
 			public void run() {
 				try {
 					
-					Thread.sleep(3000);
+					Thread.sleep(SPLASH_DURATION);
 					
 					Intent login = new Intent(SplashScreen.this, LoginActivity.class);
 					startActivity(login);
 					finish();
 				}
-				catch(Exception ex) { }
+				catch(Exception e) { /* do nothing */  }
+
+				Intent login = new Intent(SplashScreen.this, LoginActivity.class);
+				startActivity(login);
+				finish();
 				
 			}
 		}).start();
