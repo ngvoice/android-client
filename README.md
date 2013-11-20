@@ -9,6 +9,15 @@ to fetch every account and information needed to create a local SIP account on t
 
 This project is a work in progress.
 
+Features
+==============
+Apart from the very well known features of the Csipsiple softphone, this custom version has:
+
+- one click configuration using a unique login credential
+- every account is configured automatically. Special for those who are not used to SIP terminology
+- mobile push notifications using Google Cloud Messaging. This allows us to trigger configuration reloading, registration
+and unregistration on demand, etc.
+
 Screenshots
 ==============
 
