@@ -81,5 +81,4 @@ public class ConfigDownloaderTask extends AsyncTask<AccessInformation, Void, Con
 	protected void onPreExecute() {		
 		mCaller.onPreDownloading();
 	}
-
 }

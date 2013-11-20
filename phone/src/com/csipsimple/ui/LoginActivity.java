@@ -34,7 +34,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		super.onCreate(savedInstanceState);
 				
 		if (!isFirstTimeConfiguration()) {
-			showDialer();
+			showMainScreen();
 			return;
 		}
 		
@@ -107,7 +107,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
@@ -164,11 +164,9 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			/*else {
 				mProgressDialog.dismiss();
 				showError("> 0!");
-			}*/
-			 
-			//getContentResolver().query(SipProfile., projection, selection, selectionArgs, sortOrder);		
-			
-			showDialer();
+			}*/				
+					
+			showMainScreen();
 		}
 		catch(Exception e) {
 			showError(e.getMessage());
@@ -179,12 +177,12 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 	
 	}
 	
-	private void showDialer() {
+	private void showMainScreen() {
 
 		Intent home = new Intent(LoginActivity.this, SipHome.class);
+		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(home);
 		finish();
-		
 	}
 
 }

@@ -19,12 +19,9 @@ import org.apache.http.protocol.HTTP;
 public class HttpsClient extends DefaultHttpClient {
 
 	public static DefaultHttpClient getClient(String username, String password) throws Exception {
-
-		System.out.print("getting client");
-		DefaultHttpClient client = getClient();
-		System.out.print("got");
-		UsernamePasswordCredentials creds = new UsernamePasswordCredentials(username, password);
 		
+		DefaultHttpClient client = getClient();
+		UsernamePasswordCredentials creds = new UsernamePasswordCredentials(username, password);
 		
         ((AbstractHttpClient) client).getCredentialsProvider()
          								.setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT), 

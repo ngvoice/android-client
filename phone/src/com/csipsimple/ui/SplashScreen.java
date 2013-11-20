@@ -39,9 +39,9 @@ public class SplashScreen extends Activity {
 				catch(Exception e) { /* do nothing */  }
 
 				Intent login = new Intent(SplashScreen.this, LoginActivity.class);
+				login.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(login);
 				finish();
-				
 			}
 		}).start();
 		/*
@@ -61,8 +61,7 @@ public class SplashScreen extends Activity {
 		        
 			}
 		});	
-		*/
-		System.out.print("in splash screen");
+		*/		
 	}
 
 	@Override

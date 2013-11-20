@@ -1329,6 +1329,7 @@ public class SipService extends Service {
      */
 	public void notifyUserOfMessage(String msg) {
 		serviceHandler.sendMessage(serviceHandler.obtainMessage(TOAST_MESSAGE, msg));
+		
 	}
 	/**
 	 * Notify user from a message the sip stack wants to transmit.
@@ -1354,7 +1355,7 @@ public class SipService extends Service {
 				int index = 0;
 				if(c.getCount() > 0) {
     				c.moveToFirst();
-    				do {
+    				do {    					
     					SipProfile account = new SipProfile(c);
     					if (pjService != null && pjService.addAccount(account) ) {
     						hasSomeSuccess = true;

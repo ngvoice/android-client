@@ -21,10 +21,15 @@
 
 package com.csipsimple.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.ServiceConnection;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -33,6 +38,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -45,26 +51,26 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
-import com.actionbarsherlock.internal.nineoldandroids.animation.ValueAnimator;
 import com.actionbarsherlock.internal.utils.UtilityWrapper;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.csipsimple.R;
+import com.csipsimple.api.ISipService;
 import com.csipsimple.api.SipConfigManager;
 import com.csipsimple.api.SipManager;
 import com.csipsimple.api.SipProfile;
+import com.csipsimple.service.SipService;
 import com.csipsimple.ui.account.AccountsEditList;
 import com.csipsimple.ui.calllog.CallLogListFragment;
 import com.csipsimple.ui.dialpad.DialerFragment;
 import com.csipsimple.ui.favorites.FavListFragment;
 import com.csipsimple.ui.help.Help;
 import com.csipsimple.ui.messages.ConversationsListFragment;
-import com.csipsimple.ui.warnings.WarningFragment;
 import com.csipsimple.ui.warnings.WarningUtils;
 import com.csipsimple.ui.warnings.WarningUtils.OnWarningChanged;
 import com.csipsimple.utils.Compatibility;
@@ -80,16 +86,16 @@ import com.csipsimple.utils.backup.BackupWrapper;
 import com.csipsimple.wizards.BasePrefsWizard;
 import com.csipsimple.wizards.WizardUtils.WizardInfo;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.voiceblue.config.ota.OTAConfig;
+import com.voiceblue.config.ota.OTAConfigCallbacks;
+import com.voiceblue.config.ota.OTAConfigMessage;
 
-public class SipHome extends SherlockFragmentActivity implements OnWarningChanged {
+public class SipHome extends SherlockFragmentActivity implements OnWarningChanged, OTAConfigCallbacks  {
     public static final int ACCOUNTS_MENU = Menu.FIRST + 1;
     public static final int PARAMS_MENU = Menu.FIRST + 2;
     public static final int CLOSE_MENU = Menu.FIRST + 3;
     public static final int HELP_MENU = Menu.FIRST + 4;
     public static final int DISTRIB_ACCOUNT_MENU = Menu.FIRST + 5;
-
 
     private static final String THIS_FILE = "SIP_HOME";
 
@@ -186,7 +192,21 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
 
         selectTabWithAction(getIntent());
         Log.setLogLevel(prefProviderWrapper.getLogLevel());             
-    
+        
+        if (!OTAConfig.checkPlayServices(this)) {
+        	Log.e(THIS_FILE, "Google Play Services not available");
+        	finish();
+        	return;
+        }
+        System.out.println("oncreate! =======");
+        
+        /*
+         * Register this App to be able to receive Over-The-Air configuration
+         * parameters
+         */
+        OTAConfig.registerApp(this);
+        
+        bindService(new Intent(this, SipService.class), mConnection, Context.BIND_AUTO_CREATE);
         /*
         // Async check
         asyncSanityChecker = new Thread() {
@@ -197,6 +217,7 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         asyncSanityChecker.start();
         */
     }
+   
 
     /**
      * This is a helper class that implements the management of tabs and all
@@ -442,7 +463,8 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
             } */
             
         }
-
+        
+        
     }
 
 
@@ -494,11 +516,16 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
                 serviceIntent.putExtra(SipManager.EXTRA_OUTGOING_ACTIVITY, new ComponentName(SipHome.this, SipHome.class));
                 startService(serviceIntent);
                 postStartSipService();
+                
+                //getActivity().bindService(new Intent(getActivity(), SipService.class), connection, Context.BIND_AUTO_CREATE);
+                
+                // bid
+                //
             };
         };
         t.start();
-
     }
+    
 
     private void postStartSipService() {
         // If we have never set fast settings
@@ -568,7 +595,6 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
             }
         }
         super.onPause();
-
     }
 
     @Override
@@ -585,7 +611,7 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         Log.d(THIS_FILE, "WE CAN NOW start SIP service");
         startSipService();
         
-        applyTheme();
+        applyTheme();               
     }
     
     private ArrayList<View> getVisibleLeafs(View v) {
@@ -747,6 +773,9 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         disconnect(false);
         super.onDestroy();
         Log.d(THIS_FILE, "---DESTROY SIP HOME END---");
+        
+        if (mConnection != null)
+        	unbindService(mConnection);
     }
 
 
@@ -879,9 +908,6 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         }
     }
     
-    
-    
-    
     // Warning view
     
     private List<String> warningList = new ArrayList<String>();
@@ -947,5 +973,45 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
     @Override
     public void onWarningRemoved(String warnKey) {
         applyWarning(warnKey, false);
-    }
+    }       
+
+    
+    private ISipService mSipService;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName arg0, IBinder arg1) {
+        	mSipService = ISipService.Stub.asInterface(arg1);                	
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        	mSipService = null;
+        }
+    };
+    
+	@Override
+	public void onOTAConfigRegistrationResult(boolean registered) {
+		
+		Toast.makeText(this, registered ? "Registered on push server" : "Nope!", Toast.LENGTH_LONG).show();
+		
+		//OTAConfig.sendMessage("hola", "mundo");
+	}
+	
+	@Override 
+	public void onOTAConfigMessageReceived(OTAConfigMessage message) {
+		try {
+			
+			if (message.isRegister()) {				
+				mSipService.reAddAllAccounts();
+				Log.i(THIS_FILE, "Received register request");
+			}
+			else if (message.isUnregister()) {
+				mSipService.removeAllAccounts();
+				Log.i(THIS_FILE, "Received unregister request");
+			}			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	} 
 }
