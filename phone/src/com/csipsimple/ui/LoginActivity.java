@@ -32,7 +32,9 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-				
+		
+		ConfigLoader.setupDefaultPreferences(this);
+		
 		if (!isFirstTimeConfiguration()) {
 			showMainScreen();
 			return;
@@ -75,7 +77,6 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 					new ConfigDownloaderTask(LoginActivity.this)
 						.execute(new AccessInformation(txtUsername.getText().toString(), 
 														txtPassword.getText().toString()));
-					
 				}
 				catch (Exception e) {
 					mProgressDialog.dismiss();
@@ -131,7 +132,6 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 				null, 
 				null);
 
-
 		return (c.getCount() == 0);
 	}
 	
@@ -174,15 +174,12 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		finally {
 			mProgressDialog.dismiss();
 		}
-	
 	}
 	
 	private void showMainScreen() {
-
 		Intent home = new Intent(LoginActivity.this, SipHome.class);
 		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(home);
 		finish();
 	}
-
 }

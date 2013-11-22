@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.csipsimple.R;
 import com.csipsimple.api.ISipService;
 import com.csipsimple.service.SipService;
 import com.csipsimple.ui.SipHome;
@@ -71,14 +72,12 @@ public class OTAConfigService extends IntentService {
 	            // If it's a regular GCM message, do some work.
 	            } else if (GoogleCloudMessaging.
 	                    MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+//	                sendNotification("Received: " + extras.toString());
 	                String message = extras.getString("message");
-	                //sendNotification("Received: " + extras.toString());
-	                Log.i(TAG, "Received: " + extras.toString());
 	                
 	                // called when app is stopped or destroyed
 	                if (OTAConfig.getCaller() == null) {
 	                	if (mSipService == null) {
-	                		System.out.println("-------==== adding message to queue!");
 	                		mMsgQueue.add(message);
 	                		bindService(new Intent(this, SipService.class), mConnection, Context.BIND_AUTO_CREATE);
 	                	}
@@ -86,7 +85,7 @@ public class OTAConfigService extends IntentService {
 	                		processOTAConfigMessageReceived(new OTAConfigMessage(message));
 	                }
 	                else
-	                	OTAConfig.messageReceived(extras.getString("message"));
+	                	OTAConfig.messageReceived(this, extras.getString("message"));
 	            }
 	        }
         }
@@ -97,24 +96,20 @@ public class OTAConfigService extends IntentService {
         OTAConfigBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    // Put the message into a notification and post it.
-    // This is just one simple example of what you might choose to do with
-    // a GCM message.
     private void sendNotification(String msg) {
-        mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) 
+        						this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, SipHome.class), 0);
+                new Intent(this, SipHome.class), 0);               
 
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-        //.setSmallIcon(R.drawable.ic_stat_gcm)
-        .setContentTitle("GCM Notification")
-        .setStyle(new NotificationCompat.BigTextStyle()
-        .bigText(msg))
-        .setContentText(msg);
-
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+		        .setSmallIcon(R.drawable.vb_logo)
+		        .setContentTitle("OTA Config Received")
+		        //.setStyle(new NotificationCompat.BigTextStyle()
+		        //.bigText(msg))
+		        .setContentText(msg);		        
+        
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
@@ -145,7 +140,7 @@ public class OTAConfigService extends IntentService {
 		try {
 			
 			if (mSipService == null)
-				throw new Exception("mSipService is null");
+				throw new Exception("SipService is null");
 			
 			mSipService.sipStart();
 			

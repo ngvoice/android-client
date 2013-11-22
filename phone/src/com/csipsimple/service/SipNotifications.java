@@ -225,6 +225,7 @@ public class SipNotifications {
 			Log.e(THIS_FILE, "Trying to create a service notification from outside the service");
 			return;
 		}
+				
 		int icon = R.drawable.ic_stat_sipok;
 		CharSequence tickerText = context.getString(R.string.service_ticker_registered_text);
 		long when = System.currentTimeMillis();

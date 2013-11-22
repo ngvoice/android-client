@@ -44,8 +44,6 @@ import java.util.Set;
 
 
 public class WizardUtils {
-	
-	
 	public static class WizardInfo {
 		public String label;
 		public String id;

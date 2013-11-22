@@ -992,9 +992,10 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
 	@Override
 	public void onOTAConfigRegistrationResult(boolean registered) {
 		
-		Toast.makeText(this, registered ? "Registered on push server" : "Nope!", Toast.LENGTH_LONG).show();
-		
-		//OTAConfig.sendMessage("hola", "mundo");
+		Toast.makeText(this, registered ? 
+									getString(R.string.voiceblue_ota_reg_succeeded) : 
+									getString(R.string.voiceblue_ota_reg_failed), 
+						Toast.LENGTH_SHORT).show();
 	}
 	
 	@Override 
@@ -1008,7 +1009,10 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
 			else if (message.isUnregister()) {
 				mSipService.removeAllAccounts();
 				Log.i(THIS_FILE, "Received unregister request");
-			}			
+			}
+			else {
+				Log.i(THIS_FILE, "Received unhandled request");
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

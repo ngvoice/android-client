@@ -5,10 +5,13 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract.Profile;
 
+import com.csipsimple.api.SipConfigManager;
 import com.csipsimple.api.SipProfile;
 import com.csipsimple.db.DBProvider;
 import com.csipsimple.utils.Log;
+import com.csipsimple.utils.PreferencesWrapper;
 
 public class ConfigLoader {
 
@@ -84,9 +87,84 @@ public class ConfigLoader {
 		
 		return null;
 	}
-
-//	public static void setLoadedAccount(VoiceBlueAccount mLoadedAccount) {
-//		ConfigLoader.mLoadedAccount = mLoadedAccount;
-//	}
 	
+	public static void setupDefaultPreferences(Context ctx) {
+		PreferencesWrapper prefs = new PreferencesWrapper(ctx);
+		
+		String g722CodecWb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_WB),
+			   pcmaCodecWb = SipConfigManager.getCodecKey("PCMA/8000/1", SipConfigManager.CODEC_WB),
+			   pcmuCodecWb = SipConfigManager.getCodecKey("PCMU/8000/1", SipConfigManager.CODEC_WB),
+			   isacCodecWb = SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_WB),
+			   gsmCodecWb  = SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_WB),
+			   silk24CodecWb  = SipConfigManager.getCodecKey("SILK/24000/1", SipConfigManager.CODEC_WB);
+		
+		String gsmCodecNb  = SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_NB),
+			   isacCodecNb = SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_NB),
+			   pcmaCodecNb = SipConfigManager.getCodecKey("PCMA/8000/1", SipConfigManager.CODEC_NB),			   
+			   pcmuCodecNb = SipConfigManager.getCodecKey("PCMU/8000/1", SipConfigManager.CODEC_NB),
+			   g722CodecNb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_NB),
+			   silk24CodecNb  = SipConfigManager.getCodecKey("SILK/24000/1", SipConfigManager.CODEC_NB),
+			   silk8CodecNb = SipConfigManager.getCodecKey("SILK/8000/1", SipConfigManager.CODEC_NB);
+		
+		
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.INTEGRATE_WITH_DIALER, true);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.INTEGRATE_WITH_CALLLOGS, true);
+		
+	    SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_3G_IN, true);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_3G_OUT, true);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_GPRS_IN, false);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_GPRS_OUT, false);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_EDGE_IN, false);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_EDGE_OUT, false);
+		
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_WIFI_IN, true);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_WIFI_OUT, true);
+		
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_IN, true);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_OUT, true);
+		
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.LOCK_WIFI, false);			
+		
+		
+		
+		// codecs setup
+		System.out.println("codec-> " + SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_WB));
+		// wide band
+		SipConfigManager.setPreferenceStringValue(ctx, g722CodecWb, "300");
+		SipConfigManager.setPreferenceStringValue(ctx, pcmaCodecWb, "250");
+		SipConfigManager.setPreferenceStringValue(ctx, pcmuCodecWb, "240");
+		SipConfigManager.setPreferenceStringValue(ctx, isacCodecWb, "240");
+		SipConfigManager.setPreferenceStringValue(ctx, gsmCodecWb, "0");
+		SipConfigManager.setPreferenceStringValue(ctx, silk24CodecWb, "0");
+		
+		SipConfigManager.setPreferenceStringValue(ctx, gsmCodecNb, "300");
+		SipConfigManager.setPreferenceStringValue(ctx, isacCodecNb, "250");
+		SipConfigManager.setPreferenceStringValue(ctx, pcmuCodecNb, "0");
+		SipConfigManager.setPreferenceStringValue(ctx, pcmaCodecNb, "0");
+		SipConfigManager.setPreferenceStringValue(ctx, g722CodecNb, "0");
+		SipConfigManager.setPreferenceStringValue(ctx, silk8CodecNb, "0");
+		SipConfigManager.setPreferenceStringValue(ctx, silk24CodecNb, "0");
+		
+/*		// narrow band
+		SipConfigManager.setPreferenceStringValue(ctx, 
+				SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_NB), 
+					"0");
+		
+		SipConfigManager.setPreferenceStringValue(ctx, 
+				SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_NB), 
+					"10");*/
+
+		
+/*		prefs.startEditing();		
+		
+		prefs.setCodecPriority("G722/16000/1", SipConfigManager.CODEC_WB,"0");
+		prefs.setCodecPriority("PCMA/8000/1", SipConfigManager.CODEC_WB,"210");
+		prefs.setCodecPriority("PCMU/8000/1", SipConfigManager.CODEC_WB,"200");               
+        prefs.setCodecPriority("ISAC/16000/1", SipConfigManager.CODEC_WB,"245");
+        
+        prefs.setCodecPriority("GSM/8000/1", SipConfigManager.CODEC_NB, "0");
+        prefs.setCodecPriority("ISAC/16000/1", SipConfigManager.CODEC_WB,"245");
+        
+        prefs.endEditing(); */
+	}
 }

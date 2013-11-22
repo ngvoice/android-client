@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.csipsimple.api.SipConfigManager;
 import com.csipsimple.ui.LoginActivity;
 import com.csipsimple.ui.SipHome;
 import com.google.android.gms.common.ConnectionResult;
@@ -122,9 +123,11 @@ public class OTAConfig {
         editor.commit();
     }
     
-    public static void messageReceived(String message) {
-    	
-    	getCaller().onOTAConfigMessageReceived(new OTAConfigMessage(message));
+    public static void messageReceived(Context ctx, String message) {
+    	OTAConfigMessage config = new OTAConfigMessage(message);
+//    	if (config.isRegister())
+//    		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_3G_IN, true);
+    	getCaller().onOTAConfigMessageReceived(config);    	
     }
     
     public static void registerToVoiceBlue(final Context ctx) {
@@ -148,7 +151,6 @@ public class OTAConfig {
 												.append("&gcm_key=")
 												.append(mRegID)
 												.toString();
-					System.out.println("===>" + URL);
 					
 					HttpClient httpClient = new DefaultHttpClient();
 					HttpResponse response	= httpClient.execute(new HttpGet(URL));

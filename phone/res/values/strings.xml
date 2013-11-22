@@ -130,4 +130,6 @@
     <string name="voiceblue_fetching_config">Fetching configuration...</string>
     <string name="voiceblue_username_empty">Username cannot be empty</string>
     <string name="voiceblue_password_empty">Password cannot be empty</string>
+    <string name="voiceblue_ota_reg_succeeded">Registered on Push Server </string>
+    <string name="voiceblue_ota_reg_failed">Registration on Push Server failed</string>
 </resources>
