@@ -1,4 +1,4 @@
-package com.csipsimple.ui;
+package com.voiceble.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,7 +18,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.csipsimple.R;
+import com.csipsimple.api.SipConfigManager;
 import com.csipsimple.api.SipProfile;
+import com.csipsimple.ui.SipHome;
 import com.voiceblue.config.AccessInformation;
 import com.voiceblue.config.ConfigDownloaderCallbacks;
 import com.voiceblue.config.ConfigDownloaderResult;
@@ -28,7 +30,10 @@ import com.voiceblue.config.VoiceBlueAccount;
 
 public class LoginActivity extends Activity implements ConfigDownloaderCallbacks {
 
-	ProgressDialog mProgressDialog;
+	private ProgressDialog mProgressDialog;
+	private EditText mTxtUsername;
+	private EditText mTxtPassword;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,8 +51,8 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		TextView lnkPasswordForgotten = (TextView) findViewById(R.id.lnkPasswordForgotten);		
 		TextView lnkNewAccount = (TextView) findViewById(R.id.lnkNewAccount);
 		
-		final EditText txtUsername = (EditText) findViewById(R.id.txtUsername);
-		final EditText txtPassword = (EditText) findViewById(R.id.txtPassword);
+		mTxtUsername = (EditText) findViewById(R.id.txtUsername);
+		mTxtPassword = (EditText) findViewById(R.id.txtPassword);
 		
 		lnkPasswordForgotten.setMovementMethod(LinkMovementMethod.getInstance());
 		lnkNewAccount.setMovementMethod(LinkMovementMethod.getInstance());
@@ -68,15 +73,15 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 				mProgressDialog.show();
 				
 				try {
-					if (txtUsername.getText().length() == 0)
+					if (mTxtUsername.getText().length() == 0)
 						throw new Exception(getString(R.string.voiceblue_username_empty));
 					
-					if (txtPassword.getText().length() == 0)
+					if (mTxtPassword.getText().length() == 0)
 						throw new Exception(getString(R.string.voiceblue_password_empty));
 					
 					new ConfigDownloaderTask(LoginActivity.this)
-						.execute(new AccessInformation(txtUsername.getText().toString(), 
-														txtPassword.getText().toString()));
+						.execute(new AccessInformation(mTxtUsername.getText().toString(), 
+														mTxtPassword.getText().toString()));
 				}
 				catch (Exception e) {
 					mProgressDialog.dismiss();
@@ -142,6 +147,14 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 				throw new Exception(getString(R.string.voiceblue_invalid_credential));
 						
 			VoiceBlueAccount acc = ConfigLoader.loadFromResult(result);
+			
+			// update username/password of the web portal access
+			SipConfigManager.setPreferenceStringValue(this, 
+														AccessInformation.USERNAME_FIELD_KEY, 
+														mTxtUsername.getText().toString());
+			SipConfigManager.setPreferenceStringValue(this, 
+														AccessInformation.PASSWORD_FIELD_KEY, 
+														mTxtPassword.getText().toString());
 			
 			if (acc == null)
 				throw new Exception("Something went wrong parsing your config");			

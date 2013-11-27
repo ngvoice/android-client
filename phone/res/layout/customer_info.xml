@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_height="16dp"
+        layout="@layout/generic_list_progress_view" />
+
+    <RelativeLayout        
+        android:layout_width="match_parent"
+        android:layout_height="229dp" >
+
+        <TextView
+            android:id="@+id/txtCustomerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/ImageView01"
+            android:gravity="center"
+            android:text="Carlos Ruiz Diaz"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txtCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/txtCustomerName"
+            android:layout_toRightOf="@+id/ImageView01"
+            android:gravity="center"
+            android:text="ngvoice GmbH"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_action_user" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ImageView01"
+            android:layout_marginRight="15dp"
+            android:src="@android:drawable/presence_online" />
+
+        <TextView
+            android:id="@+id/txtAccountType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txtCompany"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageView3"
+            android:gravity="center"
+            android:text="Active | Prepaid Account"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ImageView
+            android:id="@+id/ivFlag"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/txtCompany"
+            android:layout_marginLeft="18dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_flag_paraguay" />
+
+        <Button
+            android:id="@+id/btnLoginToAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ivFlag"
+            android:layout_marginTop="23dp"
+            android:text="Login to my account" />
+
+        <Button
+            android:id="@+id/btnCallCustomerService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/btnLoginToAccount"
+            android:layout_marginBottom="5dp"
+            android:text="Call customer service" />
+
+        <View
+            android:id="@+id/call_log_divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dip"
+            android:layout_below="@+id/btnCallCustomerService"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerHorizontal="true"
+            android:background="#55ffffff" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutPrepaid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/btnBuyCredit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:text="Buy credit" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"            
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="49dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_money_bag" />
+
+        <TextView
+            android:id="@+id/txtCreditLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/imageView1"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:gravity="center"
+            android:text="USD 55.30"
+            android:layout_centerVertical="true" 
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="42dp" >
+    </ListView>
+
+    
+     
+</LinearLayout>

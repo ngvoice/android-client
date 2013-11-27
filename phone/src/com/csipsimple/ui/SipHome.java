@@ -28,9 +28,8 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.ServiceConnection;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -85,7 +84,8 @@ import com.csipsimple.utils.UriUtils;
 import com.csipsimple.utils.backup.BackupWrapper;
 import com.csipsimple.wizards.BasePrefsWizard;
 import com.csipsimple.wizards.WizardUtils.WizardInfo;
-
+import com.voiceble.ui.VoiceBlueCustomerInfoFragment;
+import com.voiceble.ui.VoiceBlueWebFragment;
 import com.voiceblue.config.ota.OTAConfig;
 import com.voiceblue.config.ota.OTAConfigCallbacks;
 import com.voiceblue.config.ota.OTAConfigMessage;
@@ -104,7 +104,9 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
     private final static int TAB_ID_FAVORITES = 2;
     private final static int TAB_ID_MESSAGES = 3;
     //private final static int TAB_ID_WARNING = 4;
-
+    private final static int TAB_ID_VBWEB = 5;
+    private final static int TAB_ID_CUSTOMER_INFO = 6;
+    
     // protected static final int PICKUP_PHONE = 0;
     private static final int REQUEST_EDIT_DISTRIBUTION_ACCOUNT = 0;
 
@@ -151,18 +153,23 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         Tab callLogTab = ab.newTab()
                  .setContentDescription(R.string.calllog_tab_name_text)
                 .setIcon(R.drawable.ic_ab_history_holo_dark);
-        Tab favoritesTab = null;
+        /*Tab favoritesTab = null;
         if(CustomDistribution.supportFavorites()) {
             favoritesTab = ab.newTab()
                     .setContentDescription(R.string.favorites_tab_name_text)
                     .setIcon(R.drawable.ic_ab_favourites_holo_dark);
         }
+        */
         Tab messagingTab = null;
-        if (CustomDistribution.supportMessaging()) {
+    
+        /*if (CustomDistribution.supportMessaging()) {
             messagingTab = ab.newTab()
                     .setContentDescription(R.string.messages_tab_name_text)
                     .setIcon(R.drawable.ic_ab_text_holo_dark);
-        }
+        }*/
+        
+        Tab voiceBlueWebTab = ab.newTab().setIcon(R.drawable.ic_action_web_site);
+        Tab customerInfoTab = ab.newTab().setIcon(R.drawable.ic_action_user);
         
         /*warningTab = ab.newTab().setIcon(android.R.drawable.ic_dialog_alert);
         warningTabfadeAnim = ObjectAnimator.ofInt(warningTab.getIcon(), "alpha", 255, 100);
@@ -176,13 +183,18 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         mTabsAdapter = new TabsAdapter(this, getSupportActionBar(), mViewPager);
         mTabsAdapter.addTab(dialerTab, DialerFragment.class, TAB_ID_DIALER);
         mTabsAdapter.addTab(callLogTab, CallLogListFragment.class, TAB_ID_CALL_LOG);
-        if(favoritesTab != null) {
-            mTabsAdapter.addTab(favoritesTab, FavListFragment.class, TAB_ID_FAVORITES);
+        
+        /*if(favoritesTab != null) {
+                      mTabsAdapter.addTab(favoritesTab, FavListFragment.class, TAB_ID_FAVORITES);
         }
+        
         if (messagingTab != null) {
             mTabsAdapter.addTab(messagingTab, ConversationsListFragment.class, TAB_ID_MESSAGES);
         }
+        */
         
+        mTabsAdapter.addTab(voiceBlueWebTab, VoiceBlueWebFragment.class, TAB_ID_VBWEB);
+        mTabsAdapter.addTab(customerInfoTab, VoiceBlueCustomerInfoFragment.class, TAB_ID_CUSTOMER_INFO);
 
         hasTriedOnceActivateAcc = false;
 
@@ -198,7 +210,6 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         	finish();
         	return;
         }
-        System.out.println("oncreate! =======");
         
         /*
          * Register this App to be able to receive Over-The-Air configuration
@@ -376,7 +387,9 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
     private DialerFragment mDialpadFragment;
     private CallLogListFragment mCallLogFragment;
     private ConversationsListFragment mMessagesFragment;
-    private FavListFragment mPhoneFavoriteFragment;
+    //private FavListFragment mPhoneFavoriteFragment;
+    private VoiceBlueWebFragment mVBWebFragment;
+    private VoiceBlueCustomerInfoFragment mCustomerInfoFragment;
     //private WarningFragment mWarningFragment;
 
     private Fragment getFragmentAt(int position) {
@@ -384,15 +397,24 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         if(id != null) {
             if (id == TAB_ID_DIALER) {
                 return mDialpadFragment;
-            } else if (id == TAB_ID_CALL_LOG) {
+            } 
+            else if (id == TAB_ID_CALL_LOG) {
                 return mCallLogFragment;
-            } else if (id == TAB_ID_MESSAGES) {
+            } 
+            else if (id == TAB_ID_MESSAGES) {
                 return mMessagesFragment;
-            } else if (id == TAB_ID_FAVORITES) {
-                return mPhoneFavoriteFragment;
+/*            } else if (id == TAB_ID_FAVORITES) {
+                return mPhoneFavoriteFragment; */
+            } 
+            else if (id == TAB_ID_VBWEB) {
+                return mVBWebFragment;
+            }
+            else if (id == TAB_ID_CUSTOMER_INFO) {
+                return mCustomerInfoFragment;
+            }
             /*} else if (id == TAB_ID_WARNING) {
                 return mWarningFragment;*/
-            }
+            
         }
         throw new IllegalStateException("Unknown fragment index: " + position);
     }
@@ -448,14 +470,21 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
             if (initTabId == tabId && tabId != null && tabId == TAB_ID_MESSAGES) {
                 mMessagesFragment.onVisibilityChanged(true);
                 initTabId = null;
+            }	            
+        } else if (fragment instanceof VoiceBlueWebFragment) {
+        	mVBWebFragment = (VoiceBlueWebFragment) fragment;
+            if (initTabId == tabId && tabId != null && tabId == TAB_ID_VBWEB) {
+            //	mVBWebFragment.onVisibilityChanged(true);
+                initTabId = null;
             }
-        } else if (fragment instanceof FavListFragment) {
+            
+/*        } else if (fragment instanceof FavListFragment) {
             mPhoneFavoriteFragment = (FavListFragment) fragment;
             if (initTabId == tabId && tabId != null && tabId == TAB_ID_FAVORITES) {
                 mPhoneFavoriteFragment.onVisibilityChanged(true);
                 initTabId = null;
             }
- /*       } else if (fragment instanceof WarningFragment) {
+       } else if (fragment instanceof WarningFragment) {
             mWarningFragment = (WarningFragment) fragment;
             synchronized (warningList) {
                 mWarningFragment.setWarningList(warningList);
@@ -784,12 +813,13 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
 
         int actionRoom = getResources().getBoolean(R.bool.menu_in_bar) ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER;
         
-        WizardInfo distribWizard = CustomDistribution.getCustomDistributionWizard();
+        /*WizardInfo distribWizard = CustomDistribution.getCustomDistributionWizard();
         if (distribWizard != null) {
             menu.add(Menu.NONE, DISTRIB_ACCOUNT_MENU, Menu.NONE, "My " + distribWizard.label)
                     .setIcon(distribWizard.icon)
                     .setShowAsAction(actionRoom);
-        }
+        }*/
+        
         if (CustomDistribution.distributionWantsOtherAccounts()) {
             int accountRoom = actionRoom;
             if(Compatibility.isCompatible(13)) {
@@ -800,14 +830,16 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
                     .setIcon(R.drawable.ic_menu_account_list)
                     .setAlphabeticShortcut('a')
                     .setShowAsAction( accountRoom ); */
-        }
+        }        
+        
         menu.add(Menu.NONE, PARAMS_MENU, Menu.NONE, R.string.prefs)
                 .setIcon(android.R.drawable.ic_menu_preferences)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
         menu.add(Menu.NONE, HELP_MENU, Menu.NONE, R.string.help)
                 .setIcon(android.R.drawable.ic_menu_help)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER); 
+        
         menu.add(Menu.NONE, CLOSE_MENU, Menu.NONE, R.string.menu_disconnect)
                 .setIcon(R.drawable.ic_lock_power_off)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);

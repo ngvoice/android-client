@@ -64,11 +64,13 @@ public class OTAConfigService extends IntentService {
 	             */
 	            if (GoogleCloudMessaging.
 	                    MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-	                sendNotification("Send error: " + extras.toString());
+	                //sendNotification("Send error: " + extras.toString());
+	            	;
 	            } else if (GoogleCloudMessaging.
 	                    MESSAGE_TYPE_DELETED.equals(messageType)) {
-	                sendNotification("Deleted messages on server: " +
-	                        extras.toString());
+	                //sendNotification("Deleted messages on server: " +
+	                //        extras.toString());
+	            	;
 	            // If it's a regular GCM message, do some work.
 	            } else if (GoogleCloudMessaging.
 	                    MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -106,8 +108,6 @@ public class OTAConfigService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 		        .setSmallIcon(R.drawable.vb_logo)
 		        .setContentTitle("OTA Config Received")
-		        //.setStyle(new NotificationCompat.BigTextStyle()
-		        //.bigText(msg))
 		        .setContentText(msg);		        
         
         mBuilder.setContentIntent(contentIntent);

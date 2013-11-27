@@ -19,11 +19,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.csipsimple.api.SipConfigManager;
-import com.csipsimple.ui.LoginActivity;
 import com.csipsimple.ui.SipHome;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.voiceble.ui.LoginActivity;
 import com.voiceblue.config.ConfigLoader;
 import com.voiceblue.config.VoiceBlueAccount;
 

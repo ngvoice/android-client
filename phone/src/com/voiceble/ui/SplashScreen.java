@@ -1,4 +1,4 @@
-package com.csipsimple.ui;
+package com.voiceble.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,7 +22,7 @@ public class SplashScreen extends Activity {
 		setContentView(R.layout.activity_splash_screen);
 		
 		TextView label = (TextView) findViewById(R.id.textView1);
-		label.setText(Html.fromHtml("<b><font color=#000000>Voice</font><font color=#3333FF>blue</font><font color=#000000>.com</font></b>"));
+		label.setText(Html.fromHtml("<b><font color=#000000>voice</font><font color=#3333FF>blue</font><font color=#000000>.com</font></b>"));
 		
 		new Thread(new Runnable() {
 			

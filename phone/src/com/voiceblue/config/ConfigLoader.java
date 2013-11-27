@@ -89,8 +89,6 @@ public class ConfigLoader {
 	}
 	
 	public static void setupDefaultPreferences(Context ctx) {
-		PreferencesWrapper prefs = new PreferencesWrapper(ctx);
-		
 		String g722CodecWb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_WB),
 			   pcmaCodecWb = SipConfigManager.getCodecKey("PCMA/8000/1", SipConfigManager.CODEC_WB),
 			   pcmuCodecWb = SipConfigManager.getCodecKey("PCMU/8000/1", SipConfigManager.CODEC_WB),
@@ -125,10 +123,7 @@ public class ConfigLoader {
 		
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.LOCK_WIFI, false);			
 		
-		
-		
-		// codecs setup
-		System.out.println("codec-> " + SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_WB));
+				
 		// wide band
 		SipConfigManager.setPreferenceStringValue(ctx, g722CodecWb, "300");
 		SipConfigManager.setPreferenceStringValue(ctx, pcmaCodecWb, "250");
@@ -137,6 +132,7 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceStringValue(ctx, gsmCodecWb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, silk24CodecWb, "0");
 		
+		// narrow band
 		SipConfigManager.setPreferenceStringValue(ctx, gsmCodecNb, "300");
 		SipConfigManager.setPreferenceStringValue(ctx, isacCodecNb, "250");
 		SipConfigManager.setPreferenceStringValue(ctx, pcmuCodecNb, "0");
@@ -144,27 +140,5 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceStringValue(ctx, g722CodecNb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, silk8CodecNb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, silk24CodecNb, "0");
-		
-/*		// narrow band
-		SipConfigManager.setPreferenceStringValue(ctx, 
-				SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_NB), 
-					"0");
-		
-		SipConfigManager.setPreferenceStringValue(ctx, 
-				SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_NB), 
-					"10");*/
-
-		
-/*		prefs.startEditing();		
-		
-		prefs.setCodecPriority("G722/16000/1", SipConfigManager.CODEC_WB,"0");
-		prefs.setCodecPriority("PCMA/8000/1", SipConfigManager.CODEC_WB,"210");
-		prefs.setCodecPriority("PCMU/8000/1", SipConfigManager.CODEC_WB,"200");               
-        prefs.setCodecPriority("ISAC/16000/1", SipConfigManager.CODEC_WB,"245");
-        
-        prefs.setCodecPriority("GSM/8000/1", SipConfigManager.CODEC_NB, "0");
-        prefs.setCodecPriority("ISAC/16000/1", SipConfigManager.CODEC_WB,"245");
-        
-        prefs.endEditing(); */
 	}
 }

@@ -122,6 +122,7 @@
         <meta-data
             android:name="app_channel"
             android:value="trunk" />
+        
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIL5x8Klvg-Y8nV4j4PNSy2JH6yQZ49yKbrqKJAw" />
@@ -141,7 +142,7 @@
             android:value="true" />
 
         <activity
-            android:name="com.csipsimple.ui.SplashScreen"
+            android:name="com.voiceble.ui.SplashScreen"
             android:icon="@drawable/vb_logo"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -556,7 +557,7 @@
         </activity>
         <activity
             android:theme="@style/Theme.Splash"
-            android:name="com.csipsimple.ui.LoginActivity"
+            android:name="com.voiceble.ui.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
     </application>

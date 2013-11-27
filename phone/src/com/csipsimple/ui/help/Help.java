@@ -54,8 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Help extends SherlockDialogFragment implements OnItemClickListener {
-	
-	
 	private static final String THIS_FILE = "Help";
 	private PreferencesProviderWrapper prefsWrapper;
 	
@@ -126,24 +124,24 @@ public class Help extends SherlockDialogFragment implements OnItemClickListener 
 		}
 		
 		// Issue list 
-		if(CustomDistribution.showIssueList()) {
-			items.add(new HelpEntry(android.R.drawable.ic_menu_view, R.string.view_existing_issues, OPEN_ISSUES));
-		}
+//		if(CustomDistribution.showIssueList()) {
+//			items.add(new HelpEntry(android.R.drawable.ic_menu_view, R.string.view_existing_issues, OPEN_ISSUES));
+//		}
 		
 		// Log collector
-		if(!TextUtils.isEmpty(CustomDistribution.getSupportEmail()) ) {
+/*		if(!TextUtils.isEmpty(CustomDistribution.getSupportEmail()) ) {
 			if(isRecording()) {
 		        items.add(new HelpEntry( android.R.drawable.ic_menu_send , R.string.send_logs, SEND_LOGS));
 			}else {
 		        items.add(new HelpEntry( android.R.drawable.ic_menu_save , R.string.record_logs, START_LOGS));
 			}
 		}
-
+*/
         items.add(new HelpEntry(android.R.drawable.ic_menu_gallery, R.string.legal_information, LEGALS));
         
-        if(NightlyUpdater.isNightlyBuild(getActivity())){
-			items.add(new HelpEntry(R.drawable.ic_launcher_nightly, R.string.update_nightly_build, NIGHTLY));
-		}
+//        if(NightlyUpdater.isNightlyBuild(getActivity())){
+//			items.add(new HelpEntry(R.drawable.ic_launcher_nightly, R.string.update_nightly_build, NIGHTLY));
+//		}
 		
         lv.setAdapter(new HelpArrayAdapter(getActivity(), items));
         
