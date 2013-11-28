@@ -27,4 +27,6 @@ Screenshots
 
 ![Configuration loader](http://i.imgur.com/BBlrwqN.png)
 
-![Dialer](http://i.imgur.com/y0XZuMl.png)
+![Dialer](http://i.imgur.com/duPyn4s.png)
+
+![Customer Info](http://i.imgur.com/TFQGSPS.png)
