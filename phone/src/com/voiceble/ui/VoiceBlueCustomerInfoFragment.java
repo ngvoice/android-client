@@ -22,11 +22,11 @@ import com.voiceblue.config.AccessInformation;
 import com.voiceblue.config.ConfigDownloaderCallbacks;
 import com.voiceblue.config.ConfigDownloaderResult;
 import com.voiceblue.config.ConfigDownloaderTask;
+import com.voiceblue.config.VoiceBlueURL;
 import com.voiceblue.customer.VoiceBlueCustomerInfo;
 
 public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implements ConfigDownloaderCallbacks {
-	
-	private final String CUSTOMER_INFO_URL = "http://home.caruizdiaz.com/subscriber-info.php";
+		
 	private final String TAG = "VoiceBlueCustomerInfoFragment";
 	
 	private TextView mTxtCustomerName;
@@ -90,7 +90,7 @@ public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implemen
     	mProgressContainer = v.findViewById(R.id.progressContainer);    	
     	mPrepaidLayout = v.findViewById(R.id.layoutPrepaid);
     	
-    	new ConfigDownloaderTask(this).execute(new AccessInformation(CUSTOMER_INFO_URL)
+    	new ConfigDownloaderTask(this).execute(new AccessInformation(VoiceBlueURL.CUSTOMER_INFO)
     												.loadCredentialFromConfigurationFile(v.getContext()));
         return v;
     }
@@ -107,8 +107,7 @@ public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implemen
 
 	@Override
 	public void onDownladingCancelled() {
-		// TODO Auto-generated method stub
-		
+		showResult("Download cancelled");		
 	}
 
 	@Override
@@ -134,9 +133,7 @@ public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implemen
 						.setStatus(jsonResult.getString("status"))
 						.setExpirationDate(jsonResult.getString("exp_date"));
 			
-			renderResult(customerInfo);
-			
-			mProgressContainer.setVisibility(View.GONE);
+			renderResult(customerInfo);					
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -151,14 +148,15 @@ public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implemen
 	}
 	
 	private void renderResult(VoiceBlueCustomerInfo customerInfo) {											
-				
+		mProgressContainer.setVisibility(View.GONE);
+		
 		mTxtCustomerName.setText(customerInfo.getName());
 		mTxtCompany.setText(customerInfo.getCompany());
 		
 		mTxtAccountType.setText((customerInfo.isActive() ? 
-										"Active | " :  
+										getString(R.string.voiceblue_active) +  " | " :  
 										"Not Active | " )
-										+ customerInfo.getAccountTypeDescription() + "  account");
+								+ customerInfo.getAccountTypeDescription(getActivity()));
 		
 		if (customerInfo.getFlagResource() == -1) {
 			mIVFlag.setVisibility(View.GONE);
@@ -184,10 +182,9 @@ public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implemen
 		txt.setText(message);
 	}
 	
-	private void goToOnlinePortal() {
-		String url = "https://vb-crm.ng-voice.com/login";
+	private void goToOnlinePortal() {		
 		Intent i = new Intent(Intent.ACTION_VIEW);
-		i.setData(Uri.parse(url));
+		i.setData(Uri.parse(VoiceBlueURL.CRM));
 		startActivity(i);
 	}
 }

@@ -9,13 +9,8 @@ import android.webkit.WebViewClient;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.csipsimple.R;
-import com.csipsimple.ui.SipHome.ViewPagerVisibilityListener;
-import com.csipsimple.ui.favorites.FavAdapter;
 
-public class VoiceBlueWebFragment extends SherlockListFragment /*implements ViewPagerVisibilityListener*/ {
-	private FavAdapter mAdapter;
-    private boolean mDualPane;
-
+public class VoiceBlueWebFragment extends SherlockListFragment {
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -27,15 +22,6 @@ public class VoiceBlueWebFragment extends SherlockListFragment /*implements View
         super.onActivityCreated(savedInstanceState);
     }
 
-    private void attachAdapter() {
-        if(getListAdapter() == null) {
-            if(mAdapter == null) {
-                mAdapter = new FavAdapter(getActivity(), null);
-            }
-            setListAdapter(mAdapter);
-        }
-    }
-    
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,9 +47,4 @@ public class VoiceBlueWebFragment extends SherlockListFragment /*implements View
         return v;
     }
 
-/*	@Override
-	public void onVisibilityChanged(boolean visible) {
-		// TODO Auto-generated method stub
-		
-	} */
 }

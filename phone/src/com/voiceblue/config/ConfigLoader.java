@@ -60,9 +60,9 @@ public class ConfigLoader {
 		if (c != null) {
 			try {				
 				if(c.getCount() > 0) {
+					
 					// load only the first
 					// TODO load every account and register all of them
-    				
 					c.moveToFirst();
     				SipProfile account = new SipProfile(c);
     				mLoadedAccount = new VoiceBlueAccount();

@@ -5,12 +5,10 @@ import android.content.Context;
 import com.csipsimple.api.SipConfigManager;
 
 public class AccessInformation {
-	public final String DEFAULT_URL = "https://clientconfig.ng-voice.com/";
-	
 	public static final String USERNAME_FIELD_KEY = "vb_username";
 	public static final String PASSWORD_FIELD_KEY = "vb_password";
 	
-	private String mURL	= DEFAULT_URL;
+	private String mURL	= VoiceBlueURL.CLIENT_CONFIG;
 	private String mUsername;
 	private String mPassword;
 	

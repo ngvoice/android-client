@@ -38,8 +38,6 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		ConfigLoader.setupDefaultPreferences(this);
-		
 		if (!isFirstTimeConfiguration()) {
 			showMainScreen();
 			return;
@@ -179,6 +177,8 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 				showError("> 0!");
 			}*/				
 					
+			ConfigLoader.setupDefaultPreferences(this);
+			
 			showMainScreen();
 		}
 		catch(Exception e) {

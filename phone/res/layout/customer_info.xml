@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/ImageView01"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:src="@android:drawable/presence_online" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/ivFlag"
             android:layout_marginTop="23dp"
-            android:text="Login to my account" />
+            android:text="@string/voiceblue_login_account" />
 
         <Button
             android:id="@+id/btnCallCustomerService"
@@ -92,7 +92,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/btnLoginToAccount"
             android:layout_marginBottom="5dp"
-            android:text="Call customer service" />
+            android:text="@string/voiceblue_call_service" />
 
         <View
             android:id="@+id/call_log_divider"
@@ -118,7 +118,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:text="Buy credit" />
+            android:text="@string/voiceblue_buy_credit" />
 
         <ImageView
             android:id="@+id/imageView1"
@@ -141,7 +141,7 @@
             android:layout_toRightOf="@+id/imageView1"
             android:gravity="center"
             android:text="USD 55.30"
-            android:layout_centerVertical="true" 
+            android:layout_centerVertical="true"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </RelativeLayout>
@@ -151,7 +151,5 @@
         android:layout_width="fill_parent"
         android:layout_height="42dp" >
     </ListView>
-
-    
      
 </LinearLayout>

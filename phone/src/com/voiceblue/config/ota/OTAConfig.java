@@ -1,29 +1,20 @@
 package com.voiceblue.config.ota;
 
-import java.io.ByteArrayOutputStream;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.csipsimple.api.SipConfigManager;
-import com.csipsimple.ui.SipHome;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.voiceble.ui.LoginActivity;
 import com.voiceblue.config.ConfigLoader;
 import com.voiceblue.config.VoiceBlueAccount;
 
@@ -42,7 +33,7 @@ public class OTAConfig {
 	private static GoogleCloudMessaging mGCM;
 	private static String mRegID;
 	private static OTAConfigCallbacks mCaller;
-	private static AtomicInteger mMsgId = new AtomicInteger(1);
+	//private static AtomicInteger mMsgId = new AtomicInteger(1);
 	
     public static boolean checkPlayServices(Activity activity) {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);

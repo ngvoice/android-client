@@ -132,4 +132,13 @@
     <string name="voiceblue_password_empty">Password cannot be empty</string>
     <string name="voiceblue_ota_reg_succeeded">Registered on Push Server </string>
     <string name="voiceblue_ota_reg_failed">Registration on Push Server failed</string>
+        
+    <string name="voiceblue_active">Active</string>
+    <string name="voiceblue_prepaid_account">Prepaid Account</string>
+    <string name="voiceblue_invoice_account">Invoice Account</string>
+    <string name="voiceblue_direct_debit_account">Direct Debit Account</string>
+    <string name="voiceblue_login_account">Login to my account</string>
+    <string name="voiceblue_call_service">Call customer service</string>
+    <string name="voiceblue_buy_credit">Buy credit</string>
+    
 </resources>

@@ -1,5 +1,7 @@
 package com.voiceblue.customer;
 
+import android.content.Context;
+
 import com.csipsimple.R;
 
 public class VoiceBlueCustomerInfo {
@@ -93,13 +95,13 @@ public class VoiceBlueCustomerInfo {
 		return mStatus.toLowerCase().equals("active");
 	}
 
-	public String getAccountTypeDescription() {
+	public String getAccountTypeDescription(Context cxtx) {
 		if (mAccountType.equals("PP"))
-			return "Prepaid";
+			return cxtx.getString(R.string.voiceblue_prepaid_account);
 		else if (mAccountType.equals("I"))
-			return "Invoice";
+			return cxtx.getString(R.string.voiceblue_invoice_account);
 		else if (mAccountType.equals("DD"))
-			return "Direct Debit";
+			return cxtx.getString(R.string.voiceblue_direct_debit_account);
 		else
 			return "Unknown";
 	}
