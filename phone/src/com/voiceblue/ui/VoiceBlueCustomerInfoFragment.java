@@ -1,4 +1,4 @@
-package com.voiceble.ui;
+package com.voiceblue.ui;
 
 import org.json.JSONObject;
 

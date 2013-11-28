@@ -84,11 +84,11 @@ import com.csipsimple.utils.UriUtils;
 import com.csipsimple.utils.backup.BackupWrapper;
 import com.csipsimple.wizards.BasePrefsWizard;
 import com.csipsimple.wizards.WizardUtils.WizardInfo;
-import com.voiceble.ui.VoiceBlueCustomerInfoFragment;
-import com.voiceble.ui.VoiceBlueWebFragment;
 import com.voiceblue.config.ota.OTAConfig;
 import com.voiceblue.config.ota.OTAConfigCallbacks;
 import com.voiceblue.config.ota.OTAConfigMessage;
+import com.voiceblue.ui.VoiceBlueCustomerInfoFragment;
+import com.voiceblue.ui.VoiceBlueWebFragment;
 
 public class SipHome extends SherlockFragmentActivity implements OnWarningChanged, OTAConfigCallbacks  {
     public static final int ACCOUNTS_MENU = Menu.FIRST + 1;
