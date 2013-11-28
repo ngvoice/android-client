@@ -18,7 +18,7 @@ Apart from the very well known features of the Csipsiple softphone, this custom 
 - custom codec list selection for NB and WB
 - mobile push notifications using Google Cloud Messaging. This allows us to trigger configuration reloading, registration
 and unregistration on demand, etc.
-- auto-wake-up to receive calls if needed (using GCM)
+- auto-waking-up to receive calls if needed (using GCM)
 
 Screenshots
 ==============
