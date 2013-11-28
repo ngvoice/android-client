@@ -95,11 +95,12 @@ public class ConfigLoader {
 			   isacCodecWb = SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_WB),
 			   gsmCodecWb  = SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_WB),
 			   silk24CodecWb  = SipConfigManager.getCodecKey("SILK/24000/1", SipConfigManager.CODEC_WB);
-		
+			   
 		String gsmCodecNb  = SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_NB),
 			   isacCodecNb = SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_NB),
 			   pcmaCodecNb = SipConfigManager.getCodecKey("PCMA/8000/1", SipConfigManager.CODEC_NB),			   
 			   pcmuCodecNb = SipConfigManager.getCodecKey("PCMU/8000/1", SipConfigManager.CODEC_NB),
+			   ilbcCodecNb =  SipConfigManager.getCodecKey("iLBC/8000/1", SipConfigManager.CODEC_NB),
 			   g722CodecNb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_NB),
 			   silk24CodecNb  = SipConfigManager.getCodecKey("SILK/24000/1", SipConfigManager.CODEC_NB),
 			   silk8CodecNb = SipConfigManager.getCodecKey("SILK/8000/1", SipConfigManager.CODEC_NB);
@@ -129,12 +130,15 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceStringValue(ctx, pcmaCodecWb, "250");
 		SipConfigManager.setPreferenceStringValue(ctx, pcmuCodecWb, "240");
 		SipConfigManager.setPreferenceStringValue(ctx, isacCodecWb, "240");
+		
 		SipConfigManager.setPreferenceStringValue(ctx, gsmCodecWb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, silk24CodecWb, "0");
 		
 		// narrow band
-		SipConfigManager.setPreferenceStringValue(ctx, gsmCodecNb, "300");
+		SipConfigManager.setPreferenceStringValue(ctx, ilbcCodecNb, "300");
 		SipConfigManager.setPreferenceStringValue(ctx, isacCodecNb, "250");
+		SipConfigManager.setPreferenceStringValue(ctx, gsmCodecNb, "200");
+		
 		SipConfigManager.setPreferenceStringValue(ctx, pcmuCodecNb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, pcmaCodecNb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, g722CodecNb, "0");

@@ -89,7 +89,7 @@
         android:summary="@string/media_thread_count_desc"
         android:title="@string/media_thread_count" />
 
-    <CheckBoxPreference
+    <!--CheckBoxPreference
         android:defaultValue="true"
         android:key="codecs_per_bandwidth"
         android:summary="@string/codecs_per_bandwidth_desc"
@@ -100,6 +100,7 @@
         android:summary="@string/codecs_availability_text"
         android:title="@string/codecs" >
     </PreferenceScreen>
+    
     <PreferenceScreen
         android:dependency="codecs_per_bandwidth"
         android:key="band_types"
@@ -139,7 +140,7 @@
                 android:summary="@string/codec_h264_bitrate_desc"
                 android:title="@string/codec_h264_bitrate" />
         </PreferenceCategory>
-    </PreferenceScreen>
+    </PreferenceScreen -->
 
     <PreferenceCategory
         android:key="audio_volume"

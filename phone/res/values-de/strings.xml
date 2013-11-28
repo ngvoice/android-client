@@ -106,11 +106,12 @@
   <string name="voiceblue_username_empty">Bitte geben Sie Ihren Benutzernamen an</string>
   <string name="voiceblue_password_empty">Bitte geben Sie Ihr Passwort an</string>
   
-   	<string name="voiceblue_active">Aktiv</string>
+	<string name="voiceblue_active">Aktiv</string>
     <string name="voiceblue_prepaid_account">Zahlungsweise: Prepaid</string>
     <string name="voiceblue_invoice_account">Zahlungsweise: Rechnung</string>
     <string name="voiceblue_direct_debit_account">Zahlungsweise: Rechnung</string>
     <string name="voiceblue_login_account">Mein Konto</string>
     <string name="voiceblue_call_service">Kundendienst kontaktieren</string>
 	<string name="voiceblue_buy_credit">Guthaben aufladen</string>
+	
 </resources>

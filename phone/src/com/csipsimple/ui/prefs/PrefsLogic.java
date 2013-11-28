@@ -178,7 +178,8 @@ public class PrefsLogic {
                 }
                 
                 // Sub activity intent for codecs
-                Preference pf = pfh.findPreference(MEDIA_CODEC_LIST_KEY);
+
+/*              Preference pf = pfh.findPreference(MEDIA_CODEC_LIST_KEY);
                 Intent it = new Intent(ctxt, Codecs.class);
                 pf.setIntent(it);
                 
@@ -217,6 +218,7 @@ public class PrefsLogic {
                 }else {
                     pfh.hidePreference(null, MEDIA_VIDEO_CATEGORY);
                 }
+*/
                 break;
             }
             
