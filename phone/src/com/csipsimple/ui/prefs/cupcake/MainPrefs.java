@@ -70,8 +70,8 @@ public class MainPrefs extends SherlockListActivity {
 				R.drawable.ic_prefs_fast, new Intent(SipManager.ACTION_UI_PREFS_FAST)));
 		prefs_list.add(new PrefGroup(R.string.prefs_network, R.string.prefs_network_desc, 
 				R.drawable.ic_prefs_network, getIntentForType(PrefsLogic.TYPE_NETWORK)));
-//		prefs_list.add(new PrefGroup(R.string.prefs_media, R.string.prefs_media_desc, 
-//				R.drawable.ic_prefs_media, getIntentForType(PrefsLogic.TYPE_MEDIA)));		
+		prefs_list.add(new PrefGroup(R.string.prefs_media, R.string.prefs_media_desc, 
+				R.drawable.ic_prefs_media, getIntentForType(PrefsLogic.TYPE_MEDIA)));		
 		prefs_list.add(new PrefGroup(R.string.prefs_ui, R.string.prefs_ui_desc, 
 				R.drawable.ic_prefs_ui, getIntentForType(PrefsLogic.TYPE_UI)));
 		prefs_list.add(new PrefGroup(R.string.prefs_calls, R.string.prefs_calls_desc, 

@@ -132,6 +132,7 @@
     <string name="voiceblue_password_empty">Password cannot be empty</string>
     <string name="voiceblue_ota_reg_succeeded">Registered on Push Server </string>
     <string name="voiceblue_ota_reg_failed">Registration on Push Server failed</string>
+    <string name="voiceblue_usrpwd_empty">Username and/or Password are missing, please retype them.</string>
         
     <string name="voiceblue_active">Active</string>
     <string name="voiceblue_prepaid_account">Prepaid Account</string>

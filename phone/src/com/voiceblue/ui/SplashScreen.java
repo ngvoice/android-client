@@ -32,15 +32,12 @@ public class SplashScreen extends Activity {
 					Thread.sleep(SPLASH_DURATION);
 					
 					Intent login = new Intent(SplashScreen.this, LoginActivity.class);
+					login.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 					startActivity(login);
 					finish();
 				}
-				catch(Exception e) { /* do nothing */  }
-
-				Intent login = new Intent(SplashScreen.this, LoginActivity.class);
-				login.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-				startActivity(login);
-				finish();
+				catch(Exception e) { /* do nothing */  }			
+				
 			}
 		}).start();
 		/*

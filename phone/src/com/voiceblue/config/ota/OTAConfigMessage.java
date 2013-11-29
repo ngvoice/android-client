@@ -6,6 +6,8 @@ public class OTAConfigMessage {
 	public static final int MSG_UNREGISTER = 2;
 	public static final int MSG_CONFIG_RELOAD = 3;
 	public static final int MSG_KEEP_ALIVE = 4;
+	public static final int MSG_RELOAD_CONFIG = 5;
+	public static final int MSG_RELOAD_CODEC = 6;
 	
 	public static final int MSG_UNKNOWN = 99;
 	
@@ -24,11 +26,13 @@ public class OTAConfigMessage {
 		if (message.equals("register"))
 			setMessageType(OTAConfigMessage.MSG_REGISTER);
     	else if (message.equals("unregister"))
-    		setMessageType(OTAConfigMessage.MSG_UNREGISTER);
-    	else if (message.equals("reload"))
-    		setMessageType(OTAConfigMessage.MSG_CONFIG_RELOAD);
+    		setMessageType(OTAConfigMessage.MSG_UNREGISTER);    	
     	else if (message.equals("keep-alive"))
     		setMessageType(OTAConfigMessage.MSG_KEEP_ALIVE);
+    	else if (message.equals("reload-config"))
+    		setMessageType(OTAConfigMessage.MSG_RELOAD_CONFIG);
+    	else if (message.equals("reload-codec"))
+    		setMessageType(OTAConfigMessage.MSG_RELOAD_CODEC);
     	else
     		setMessageType(OTAConfigMessage.MSG_UNKNOWN);    	
 	}
@@ -53,12 +57,16 @@ public class OTAConfigMessage {
 		return mMessageType == MSG_UNREGISTER;
 	}
 	
-	public boolean isConfigReload() {
-		return mMessageType == MSG_CONFIG_RELOAD;
-	}
-	
 	public boolean isKeepAlive() {
 		return mMessageType == MSG_KEEP_ALIVE;
+	}
+	
+	public boolean isReloadConfig() {
+		return mMessageType == MSG_RELOAD_CONFIG;
+	}
+	
+	public boolean isReloadCodec() {
+		return mMessageType == MSG_RELOAD_CODEC;
 	}
 	
 	public boolean isUnknown() {

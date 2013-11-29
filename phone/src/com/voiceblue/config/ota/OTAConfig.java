@@ -17,10 +17,11 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.voiceblue.config.ConfigLoader;
 import com.voiceblue.config.VoiceBlueAccount;
+import com.voiceblue.config.VoiceBlueURL;
 
 public class OTAConfig {
 	
-	private static final String CONFIG_URL = "http://home.caruizdiaz.com/register-instance.php";
+	public final static String RELOAD_CONFIG_KEY = "cfg_reload";
 	
 	public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";    
@@ -136,7 +137,7 @@ public class OTAConfig {
 					if (account == null)
 						throw new Exception("Couldn't load current voiceblue account!");
 					
-					String URL = new StringBuilder(CONFIG_URL)
+					String URL = new StringBuilder(VoiceBlueURL.REGISTER_INSTANCE)
 												.append("?username=")
 												.append(ConfigLoader.getLoadedAccount().getUsername())
 												.append("&gcm_key=")

@@ -10,7 +10,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
-        android:text="VoiceBlue by ng-voice" />
+        android:text="..." />
 
     <ImageView
         android:id="@+id/imageView1"

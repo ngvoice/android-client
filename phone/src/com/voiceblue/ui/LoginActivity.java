@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -27,21 +28,51 @@ import com.voiceblue.config.ConfigDownloaderResult;
 import com.voiceblue.config.ConfigDownloaderTask;
 import com.voiceblue.config.ConfigLoader;
 import com.voiceblue.config.VoiceBlueAccount;
+import com.voiceblue.config.ota.OTAConfig;
 
 public class LoginActivity extends Activity implements ConfigDownloaderCallbacks {
 
-	private ProgressDialog mProgressDialog;
+	private ProgressDialog mProgressDialog;	
+
 	private EditText mTxtUsername;
 	private EditText mTxtPassword;
+	private String mUsername;	
+	private String mPassword;
+	
+	private final String TAG = "LoginActivity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if (!isFirstTimeConfiguration()) {
+		boolean reloadConfig = forceConfigurationReload();
+		boolean firstTimeConfig = isFirstTimeConfiguration();
+		
+		if (reloadConfig && !firstTimeConfig) {
+			
+			mUsername = SipConfigManager.getPreferenceStringValue(this, AccessInformation.USERNAME_FIELD_KEY);
+			mPassword = SipConfigManager.getPreferenceStringValue(this, AccessInformation.PASSWORD_FIELD_KEY);
+						
+			if (mUsername == null || mPassword == null)
+				showError(getString(R.string.voiceblue_usrpwd_empty));
+			else {
+				// remove all previous accounts, a new one is going to be fetched 
+				getContentResolver().delete(SipProfile.ACCOUNT_URI, null, null);
+
+				setContentView(R.layout.activity_splash_screen);
+				
+				new ConfigDownloaderTask(LoginActivity.this)
+						.execute(new AccessInformation(mUsername, mPassword));
+								
+				return;
+			}
+		}
+		else if (!firstTimeConfig) {
 			showMainScreen();
 			return;
 		}
+		else
+			return;
 		
 		setContentView(R.layout.activity_login);
 		
@@ -50,7 +81,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		TextView lnkNewAccount = (TextView) findViewById(R.id.lnkNewAccount);
 		
 		mTxtUsername = (EditText) findViewById(R.id.txtUsername);
-		mTxtPassword = (EditText) findViewById(R.id.txtPassword);
+		mTxtPassword = (EditText) findViewById(R.id.txtPassword);			
 		
 		lnkPasswordForgotten.setMovementMethod(LinkMovementMethod.getInstance());
 		lnkNewAccount.setMovementMethod(LinkMovementMethod.getInstance());
@@ -63,13 +94,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		btn.setOnClickListener(new View.OnClickListener() {
 		
 			@Override
-			public void onClick(View arg0) {				
-				
-				mProgressDialog = ProgressDialog.show(LoginActivity.this, 
-														null, 
-														getString(R.string.voiceblue_fetching_config));
-				mProgressDialog.show();
-				
+			public void onClick(View arg0) {
 				try {
 					if (mTxtUsername.getText().length() == 0)
 						throw new Exception(getString(R.string.voiceblue_username_empty));
@@ -77,12 +102,16 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 					if (mTxtPassword.getText().length() == 0)
 						throw new Exception(getString(R.string.voiceblue_password_empty));
 					
+					mUsername = mTxtUsername.getText().toString();
+					mPassword = mTxtPassword.getText().toString();
+					
 					new ConfigDownloaderTask(LoginActivity.this)
-						.execute(new AccessInformation(mTxtUsername.getText().toString(), 
-														mTxtPassword.getText().toString()));
+						.execute(new AccessInformation(mUsername, mPassword));
 				}
 				catch (Exception e) {
-					mProgressDialog.dismiss();
+					if (mProgressDialog != null)
+						mProgressDialog.dismiss();
+					
 					showError(e.getMessage());
 				}
 			}
@@ -118,14 +147,17 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 
 	@Override
 	public void onPreDownloading() {
-		// TODO Auto-generated method stub
-		
+		showDownloadingProgress();
 	}
 
 	@Override
 	public void onDownladingCancelled() {
-		mProgressDialog.dismiss();
+		if (mProgressDialog != null)
+			mProgressDialog.dismiss();
+		
+		Log.e(TAG, "Configuration fetch was cancelled");
 		showError("Configuration fetch was cancelled");
+		
 	}
 
 	private boolean isFirstTimeConfiguration() {
@@ -149,10 +181,10 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			// update username/password of the web portal access
 			SipConfigManager.setPreferenceStringValue(this, 
 														AccessInformation.USERNAME_FIELD_KEY, 
-														mTxtUsername.getText().toString());
+														mUsername);
 			SipConfigManager.setPreferenceStringValue(this, 
 														AccessInformation.PASSWORD_FIELD_KEY, 
-														mTxtPassword.getText().toString());
+														mPassword);
 			
 			if (acc == null)
 				throw new Exception("Something went wrong parsing your config");			
@@ -171,21 +203,17 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 				values.put(SipProfile.FIELD_REG_USE_PROXY, acc.getRegUseProxy());
 				
 				getContentResolver().insert(SipProfile.ACCOUNT_URI, values);
-			}
-			/*else {
-				mProgressDialog.dismiss();
-				showError("> 0!");
-			}*/				
+			}	
 					
-			ConfigLoader.setupDefaultPreferences(this);
-			
 			showMainScreen();
+			
+			ConfigLoader.setupDefaultPreferences(this);
 		}
 		catch(Exception e) {
+			if (mProgressDialog != null)
+				mProgressDialog.dismiss();
+		
 			showError(e.getMessage());
-		}
-		finally {
-			mProgressDialog.dismiss();
 		}
 	}
 	
@@ -193,6 +221,27 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		Intent home = new Intent(LoginActivity.this, SipHome.class);
 		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(home);
+		
+		if (mProgressDialog != null)
+			mProgressDialog.dismiss();			
+		
 		finish();
+	}
+	
+	private void showDownloadingProgress() {
+		mProgressDialog = ProgressDialog.show(LoginActivity.this, 
+				null, 
+				getString(R.string.voiceblue_fetching_config));
+	}
+	
+	private boolean forceConfigurationReload() {
+		String value = SipConfigManager.getPreferenceStringValue(this, OTAConfig.RELOAD_CONFIG_KEY);
+		
+		if (value != null && value.equals("yes")) {
+			SipConfigManager.setPreferenceStringValue(this, OTAConfig.RELOAD_CONFIG_KEY, "no");
+			return true;
+		}
+				
+		return false;
 	}
 }

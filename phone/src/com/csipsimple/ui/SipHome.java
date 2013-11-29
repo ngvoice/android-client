@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.DialogInterface.OnClickListener;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -87,6 +88,7 @@ import com.csipsimple.wizards.WizardUtils.WizardInfo;
 import com.voiceblue.config.ota.OTAConfig;
 import com.voiceblue.config.ota.OTAConfigCallbacks;
 import com.voiceblue.config.ota.OTAConfigMessage;
+import com.voiceblue.config.ota.OTAConfigService;
 import com.voiceblue.ui.VoiceBlueCustomerInfoFragment;
 import com.voiceblue.ui.VoiceBlueWebFragment;
 
@@ -1031,23 +1033,37 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
 	}
 	
 	@Override 
-	public void onOTAConfigMessageReceived(OTAConfigMessage message) {
-		try {
+	public void onOTAConfigMessageReceived(final OTAConfigMessage message) {
+
+		if (!message.isReloadConfig()) {
+			OTAConfigService.processOTAConfigMessageReceived(message, mSipService, SipHome.this);
+			return;
+		}
+
+		runOnUiThread(new Thread(new Runnable() {
 			
-			if (message.isRegister()) {				
-				mSipService.reAddAllAccounts();
-				Log.i(THIS_FILE, "Received register request");
+			@Override
+			public void run() {
+				
+				if (!onForeground) {
+					// not visible. Just mark for conf reload on next restart
+					SipConfigManager.setPreferenceStringValue(SipHome.this, OTAConfig.RELOAD_CONFIG_KEY, "yes");
+					return; 
+				}
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(SipHome.this);
+				builder.setMessage("The app will restart to apply changes")
+			       		.setTitle("Configuration changed");
+				builder.setPositiveButton("Ok", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {						
+						OTAConfigService.processOTAConfigMessageReceived(message, mSipService, SipHome.this);
+					}
+				});
+				
+				builder.create().show();
 			}
-			else if (message.isUnregister()) {
-				mSipService.removeAllAccounts();
-				Log.i(THIS_FILE, "Received unregister request");
-			}
-			else {
-				Log.i(THIS_FILE, "Received unhandled request");
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		}));
 	} 
 }

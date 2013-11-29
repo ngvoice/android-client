@@ -3,8 +3,8 @@ package com.voiceblue.config.ota;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,18 +15,19 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.csipsimple.R;
 import com.csipsimple.api.ISipService;
+import com.csipsimple.api.SipConfigManager;
+import com.csipsimple.api.SipManager;
 import com.csipsimple.service.SipService;
-import com.csipsimple.ui.SipHome;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.voiceblue.ui.SplashScreen;
 
 public class OTAConfigService extends IntentService {
 
 	private static final String TAG = "OTAConfigService";
 	
 	public static final int NOTIFICATION_ID = 1;
-	private NotificationManager mNotificationManager;
+	//private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
     private List<String> mMsgQueue = new ArrayList<String>();
     
@@ -38,6 +39,7 @@ public class OTAConfigService extends IntentService {
 	public void onCreate() {
 		super.onCreate();
 		bindService(new Intent(this, SipService.class), mConnection, Context.BIND_AUTO_CREATE);
+		
 	}
 	
 	@Override
@@ -84,7 +86,9 @@ public class OTAConfigService extends IntentService {
 	                		bindService(new Intent(this, SipService.class), mConnection, Context.BIND_AUTO_CREATE);
 	                	}
 	                	else
-	                		processOTAConfigMessageReceived(new OTAConfigMessage(message));
+	                		processOTAConfigMessageReceived(new OTAConfigMessage(message), 
+	                											mSipService,
+	                											this);
 	                }
 	                else
 	                	OTAConfig.messageReceived(this, extras.getString("message"));
@@ -97,7 +101,8 @@ public class OTAConfigService extends IntentService {
         
         OTAConfigBroadcastReceiver.completeWakefulIntent(intent);
     }
-
+	
+	/*
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager) 
         						this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -113,8 +118,8 @@ public class OTAConfigService extends IntentService {
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
-    
-    
+    */
+	
     private ISipService mSipService;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -125,7 +130,7 @@ public class OTAConfigService extends IntentService {
         		return;
         	
         	for(String message:mMsgQueue)
-        		processOTAConfigMessageReceived(new OTAConfigMessage(message));
+        		processOTAConfigMessageReceived(new OTAConfigMessage(message), mSipService, OTAConfigService.this);
         	
         	mMsgQueue.clear();
         }
@@ -136,25 +141,53 @@ public class OTAConfigService extends IntentService {
         }
     };   
 		
-	private void processOTAConfigMessageReceived(OTAConfigMessage message) {
+	public static void processOTAConfigMessageReceived(OTAConfigMessage message, ISipService sipService, final Context cxtx) {
 		try {
 			
-			if (mSipService == null)
-				throw new Exception("SipService is null");
+			Log.d(TAG, "Message: [" + message.getMessageContent() + "]");
 			
-			mSipService.sipStart();
+			if (sipService == null)
+				throw new Exception("SipService is null");				
+			
+			//sipService.sipStart();
 			
 			if (message.isRegister()) {
-				mSipService.reAddAllAccounts();
+				sipService.sipStart();
+				sipService.reAddAllAccounts();
 				Log.i(TAG, "Received register request");
 			}
 			else if (message.isUnregister()) {
-				mSipService.removeAllAccounts();
+				sipService.removeAllAccounts();
 				Log.i(TAG, "Received unregister request");
 			}
+			else if (message.isReloadConfig()) {
+				Log.i(TAG, "Received reload-config request");
+				SipConfigManager.setPreferenceStringValue(cxtx, OTAConfig.RELOAD_CONFIG_KEY, "yes");
+				
+				//Intent intent = new Intent(SipManager.ACTION_SIP_REQUEST_RESTART);
+                //cxtx.sendBroadcast(intent);
+                //System.exit(0);
+				
+				sipService.sipStop();
+				restart(cxtx);
+				return;
+			}
+			else if (message.isKeepAlive())
+				;
+			else 
+				Log.e(TAG, "Unknown message");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static void restart(Context cxtx) {
+		
+	    PendingIntent intent = PendingIntent.getActivity(cxtx, 0, new Intent(cxtx, SplashScreen.class), PendingIntent.FLAG_CANCEL_CURRENT);
+	    AlarmManager manager = (AlarmManager) cxtx.getSystemService(Context.ALARM_SERVICE);
+	    manager.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, intent);
+	    
+	    System.exit(0);
 	}
 }
