@@ -24,6 +24,7 @@ public class ConfigLoader {
 			JSONObject config = result.getObjectResult();			
 			
 			JSONArray jsonAcccounts = config.getJSONArray("accounts");
+			JSONObject jsonSettings	= config.getJSONObject("settings");
 			VoiceBlueAccount account = null;
 			
 			// TODO fix this
@@ -38,7 +39,14 @@ public class ConfigLoader {
 				account.setProxy(jsonAcccounts.getJSONObject(i).getString("proxy"));
 				account.setRealm(jsonAcccounts.getJSONObject(i).getString("realm"));
 				account.setRegUseProxy(jsonAcccounts.getJSONObject(i).getString("reg_use_proxy"));
+				
 			}
+			
+			
+			account.setCustomerCareURL(jsonSettings.getString("customer_care_url"));
+			account.setMyAccURL(jsonSettings.getString("myaccount_url"));
+			account.setWebURL(jsonSettings.getString("web_url"));
+			account.setTopUpURL(jsonSettings.getString("topup_url"));
 
 			mLoadedAccount = account;
 			return mLoadedAccount;

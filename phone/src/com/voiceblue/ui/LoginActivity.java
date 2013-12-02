@@ -1,5 +1,7 @@
 package com.voiceblue.ui;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -71,9 +73,13 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			showMainScreen();
 			return;
 		}
-		else
-			return;
+		//else
+		//	return;
 		
+		setupLoginScreen();
+	}
+	
+	private void setupLoginScreen() {
 		setContentView(R.layout.activity_login);
 		
 		Button btn = (Button) findViewById(R.id.btnLogin);
@@ -186,6 +192,20 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 														AccessInformation.PASSWORD_FIELD_KEY, 
 														mPassword);
 			
+			// update common preferences
+			SipConfigManager.setPreferenceStringValue(this, 
+														VoiceBlueAccount.CUSTOMER_CARE_KEY, 
+														acc.getCustomerCareURL());
+			SipConfigManager.setPreferenceStringValue(this, 
+														VoiceBlueAccount.MY_ACCOUNT_KEY, 
+														acc.getMyAccURL());
+			SipConfigManager.setPreferenceStringValue(this, 
+														VoiceBlueAccount.TOP_UP_URL_KEY, 
+														acc.getTopUpURL());
+			SipConfigManager.setPreferenceStringValue(this, 
+														VoiceBlueAccount.WEB_URL_KEY, 
+														acc.getWebURL());
+			
 			if (acc == null)
 				throw new Exception("Something went wrong parsing your config");			
 			
@@ -208,12 +228,26 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			showMainScreen();
 			
 			ConfigLoader.setupDefaultPreferences(this);
+		
+		}
+		catch(JSONException e) {
+			if (mProgressDialog != null)
+				mProgressDialog.dismiss();
+			
+			showError("Something is wrong on the server side. Please contact support");
+			setupLoginScreen();
 		}
 		catch(Exception e) {
 			if (mProgressDialog != null)
 				mProgressDialog.dismiss();
-		
-			showError(e.getMessage());
+			String errorMsg = e.getMessage();
+			
+			if (errorMsg == null || errorMsg.equals(""))
+				errorMsg = "Something bad happened. Please try again and/or contact support.";
+			
+			showError(errorMsg);
+			
+			setupLoginScreen();
 		}
 	}
 	

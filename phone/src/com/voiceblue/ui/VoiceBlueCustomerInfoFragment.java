@@ -13,15 +13,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.csipsimple.R;
+import com.csipsimple.api.SipConfigManager;
+import com.csipsimple.api.SipManager;
+import com.csipsimple.api.SipUri;
 import com.voiceblue.config.AccessInformation;
 import com.voiceblue.config.ConfigDownloaderCallbacks;
 import com.voiceblue.config.ConfigDownloaderResult;
 import com.voiceblue.config.ConfigDownloaderTask;
+import com.voiceblue.config.VoiceBlueAccount;
 import com.voiceblue.config.VoiceBlueURL;
 import com.voiceblue.customer.VoiceBlueCustomerInfo;
 
@@ -73,17 +78,40 @@ public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implemen
 			
 			@Override
 			public void onClick(View v) {
-				goToOnlinePortal();			
+				String myAccURL = SipConfigManager.getPreferenceStringValue(getActivity(), VoiceBlueAccount.MY_ACCOUNT_KEY);;
+				
+				if (myAccURL != null && !myAccURL.equals(""))
+					goToURL(myAccURL);
+				else
+					Toast.makeText(getActivity(), getString(R.string.voiceblue_config_value_missing), Toast.LENGTH_LONG).show();
 			}
 		});    	    
     	
     	mBtnCallCustomerService = (Button) v.findViewById(R.id.btnCallCustomerService);
+    	mBtnCallCustomerService.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String URI = SipConfigManager.getPreferenceStringValue(getActivity(), VoiceBlueAccount.CUSTOMER_CARE_KEY);;
+				
+				if (URI != null && !URI.equals(""))
+					placeCall(URI);
+				else
+					Toast.makeText(getActivity(), getString(R.string.voiceblue_config_value_missing), Toast.LENGTH_LONG).show();
+			}
+		});
+    	
     	mBtnBuyCredit = (Button) v.findViewById(R.id.btnBuyCredit);
     	mBtnBuyCredit.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				goToOnlinePortal();
+				String buyCreditURL = SipConfigManager.getPreferenceStringValue(getActivity(), VoiceBlueAccount.TOP_UP_URL_KEY);
+				
+				if (buyCreditURL != null && !buyCreditURL.equals(""))
+					goToURL(buyCreditURL);
+				else
+					Toast.makeText(getActivity(), getString(R.string.voiceblue_config_value_missing), Toast.LENGTH_LONG).show();
 			}
 		});
     	
@@ -182,9 +210,19 @@ public class VoiceBlueCustomerInfoFragment extends SherlockListFragment implemen
 		txt.setText(message);
 	}
 	
-	private void goToOnlinePortal() {		
-		Intent i = new Intent(Intent.ACTION_VIEW);
-		i.setData(Uri.parse(VoiceBlueURL.CRM));
+	private void goToURL(String url) {		
+		Intent i = new Intent(Intent.ACTION_VIEW);		
+		i.setData(Uri.parse(url));
 		startActivity(i);
 	}
+	
+	 private void placeCall(String uri) {	        
+		 
+		 Intent it = new Intent(Intent.ACTION_CALL);
+		 it.setData(SipUri.forgeSipUri(SipManager.PROTOCOL_CSIP, uri));
+	     it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	     
+	     getActivity().startActivity(it);
+	 }
+
 }

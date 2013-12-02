@@ -141,5 +141,5 @@
     <string name="voiceblue_login_account">Login to my account</string>
     <string name="voiceblue_call_service">Call customer service</string>
     <string name="voiceblue_buy_credit">Buy credit</string>
-    
+    <string name="voiceblue_config_value_missing">Config value is missing. Please contact support.</string>
 </resources>

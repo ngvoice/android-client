@@ -6,11 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.csipsimple.R;
+import com.csipsimple.api.SipConfigManager;
+import com.voiceblue.config.VoiceBlueAccount;
 
 public class VoiceBlueWebFragment extends SherlockListFragment {
+	
+	private static String mWebURL = null;
+	
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -42,7 +48,13 @@ public class VoiceBlueWebFragment extends SherlockListFragment {
             }
         });
         
-        myWebView.loadUrl("http://m.lebara.co.uk/");
+        if (mWebURL == null)
+        	mWebURL = SipConfigManager.getPreferenceStringValue(getActivity(), VoiceBlueAccount.WEB_URL_KEY);
+
+        if (mWebURL != null)
+        	myWebView.loadUrl(mWebURL);
+        else
+        	Toast.makeText(getActivity(), getString(R.string.voiceblue_config_value_missing), Toast.LENGTH_LONG).show();
         
         return v;
     }

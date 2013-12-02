@@ -1,6 +1,12 @@
 package com.voiceblue.config;
 
 public class VoiceBlueAccount {
+	
+	public static final String CUSTOMER_CARE_KEY = "customer_care_url";
+	public static final String MY_ACCOUNT_KEY = "myaccount_url";
+	public static final String WEB_URL_KEY = "web_url";
+	public static final String TOP_UP_URL_KEY = "topup_url";
+	
 	private String mUsername;
 	private String mPassword;
 	private String mDisplayName;
@@ -9,6 +15,11 @@ public class VoiceBlueAccount {
 	private String mProxy;
 	private String mRealm;
 	private String mRegUseProxy;
+	
+	private String mCustomerCareURL;
+	private String mMyAccURL;
+	private String mWebURL;
+	private String mTopUpURL;
 	
 	public String getUsername() {
 		return mUsername;
@@ -58,6 +69,28 @@ public class VoiceBlueAccount {
 	public void setRegUseProxy(String mRegUseProxy) {
 		this.mRegUseProxy = mRegUseProxy;
 	}
-	
-	
+	public String getCustomerCareURL() {
+		return mCustomerCareURL;
+	}
+	public void setCustomerCareURL(String mCustomerCareURL) {
+		this.mCustomerCareURL = mCustomerCareURL;
+	}
+	public String getMyAccURL() {
+		return mMyAccURL;
+	}
+	public void setMyAccURL(String mMyAccURL) {
+		this.mMyAccURL = mMyAccURL;
+	}
+	public String getWebURL() {
+		return mWebURL;
+	}
+	public void setWebURL(String mWebURL) {
+		this.mWebURL = mWebURL;
+	}
+	public String getTopUpURL() {
+		return mTopUpURL;
+	}
+	public void setTopUpURL(String mTopUpURL) {
+		this.mTopUpURL = mTopUpURL;
+	}
 }
