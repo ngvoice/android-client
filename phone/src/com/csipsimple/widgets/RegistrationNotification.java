@@ -96,7 +96,10 @@ public class RegistrationNotification extends RemoteViews {
                 if (wizardInfos != null) {
                     CharSequence dName = accountInfo.getDisplayName();
 
-                    setImageViewResource(icons[i], wizardInfos.icon);
+                    //setImageViewResource(icons[i], wizardInfos.icon);
+                    
+                    setImageViewResource(icons[i], R.drawable.ic_logo_flat_tiny);
+                    
                     if (!TextUtils.isEmpty(dName)) {
                         setTextViewText(texts[i], dName);
                         // setCharSequence(icons[i], "setContentDescription",

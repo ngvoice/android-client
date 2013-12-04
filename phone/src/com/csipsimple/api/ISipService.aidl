@@ -214,4 +214,7 @@ interface ISipService{
 	 * Revoke a ZRTP SAS
 	 */ 
 	void zrtpSASRevoke(int callId);
+	
+	boolean isForceRegistrationOn3g();
+	void setForceRegistrationOn3g(boolean mForceRegistrationOn3g);
 }

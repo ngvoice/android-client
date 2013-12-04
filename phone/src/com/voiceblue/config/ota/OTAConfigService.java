@@ -3,6 +3,7 @@ package com.voiceblue.config.ota;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -10,6 +11,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -19,6 +21,7 @@ import com.csipsimple.api.ISipService;
 import com.csipsimple.api.SipConfigManager;
 import com.csipsimple.api.SipManager;
 import com.csipsimple.service.SipService;
+import com.csipsimple.ui.SipHome;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.voiceblue.ui.SplashScreen;
 
@@ -149,14 +152,15 @@ public class OTAConfigService extends IntentService {
 			if (sipService == null)
 				throw new Exception("SipService is null");				
 			
-			//sipService.sipStart();
-			
 			if (message.isRegister()) {
-				sipService.sipStart();
-				sipService.reAddAllAccounts();
+
+				startSipService(cxtx);
+				
 				Log.i(TAG, "Received register request");
 			}
 			else if (message.isUnregister()) {
+				
+//				sipService.setForceRegistrationOn3g(false);
 				sipService.removeAllAccounts();
 				Log.i(TAG, "Received unregister request");
 			}
@@ -164,16 +168,12 @@ public class OTAConfigService extends IntentService {
 				Log.i(TAG, "Received reload-config request");
 				SipConfigManager.setPreferenceStringValue(cxtx, OTAConfig.RELOAD_CONFIG_KEY, "yes");
 				
-				//Intent intent = new Intent(SipManager.ACTION_SIP_REQUEST_RESTART);
-                //cxtx.sendBroadcast(intent);
-                //System.exit(0);
-				
 				sipService.sipStop();
 				restart(cxtx);
 				return;
 			}
 			else if (message.isKeepAlive())
-				;
+				; // do nothing
 			else 
 				Log.e(TAG, "Unknown message");
 		}
@@ -190,4 +190,17 @@ public class OTAConfigService extends IntentService {
 	    
 	    System.exit(0);
 	}
+	
+	 private static void startSipService(final Context cxtx) {
+	        Thread t = new Thread("StartSip") {
+	            public void run() {
+	                Intent serviceIntent = new Intent(SipManager.INTENT_SIP_SERVICE);
+	                serviceIntent.putExtra(SipManager.EXTRA_OUTGOING_ACTIVITY, new ComponentName(cxtx, SipHome.class));
+	                serviceIntent.putExtra("force_on_3g", true);
+	                
+	                cxtx.startService(serviceIntent);
+	            };
+	        };
+	        t.start();
+	 }
 }

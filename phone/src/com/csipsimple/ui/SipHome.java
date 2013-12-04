@@ -39,6 +39,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -1035,11 +1036,22 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
 	@Override 
 	public void onOTAConfigMessageReceived(final OTAConfigMessage message) {
 
-		if (!message.isReloadConfig()) {
-			OTAConfigService.processOTAConfigMessageReceived(message, mSipService, SipHome.this);
-			return;
+		if (onForeground && message.isRegister()) {
+			try {
+				// do not re-register from outside siphome to avoid restarting the service
+				// If it fails, then go outside using OTAConfigService class
+				mSipService.reAddAllAccounts();
+				return; 
+			}
+			catch(RemoteException e) { e.printStackTrace(); }
 		}
-
+		
+		if (!message.isReloadConfig()) {
+			OTAConfigService.processOTAConfigMessageReceived(message,
+					mSipService, SipHome.this);
+			return;
+		}				
+		
 		runOnUiThread(new Thread(new Runnable() {
 			
 			@Override
@@ -1052,8 +1064,8 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
 				}
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(SipHome.this);
-				builder.setMessage("The app will restart to apply changes")
-			       		.setTitle("Configuration changed");
+				builder.setMessage(getString(R.string.voiceblue_config_changed_msg))
+			       		.setTitle(getString(R.string.voiceblue_config_changed_title));
 				builder.setPositiveButton("Ok", new OnClickListener() {
 					
 					@Override

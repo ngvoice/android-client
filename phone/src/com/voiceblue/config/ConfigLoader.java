@@ -42,6 +42,8 @@ public class ConfigLoader {
 				
 			}
 			
+			//account.setRegURI("sip:192.168.2.103:5060");
+			//account.setProxy("sip:192.168.2.103:5060");
 			
 			account.setCustomerCareURL(jsonSettings.getString("customer_care_url"));
 			account.setMyAccURL(jsonSettings.getString("myaccount_url"));
@@ -117,7 +119,7 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.INTEGRATE_WITH_DIALER, true);
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.INTEGRATE_WITH_CALLLOGS, true);
 		
-	    SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_3G_IN, true);
+	    SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_3G_IN, false);
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_3G_OUT, true);
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_GPRS_IN, false);
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_GPRS_OUT, false);
@@ -127,8 +129,8 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_WIFI_IN, true);
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_WIFI_OUT, true);
 		
-		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_IN, true);
-		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_OUT, true);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_IN, false);
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_OUT, false);
 		
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.LOCK_WIFI, false);			
 		

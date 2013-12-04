@@ -87,10 +87,8 @@ public class Help extends SherlockDialogFragment implements OnItemClickListener 
     	super.onAttach(activity);
     	
     	prefsWrapper = new PreferencesProviderWrapper(getActivity());
-    	
         
     }
-    
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

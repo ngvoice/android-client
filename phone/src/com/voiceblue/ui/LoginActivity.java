@@ -1,5 +1,7 @@
 package com.voiceblue.ui;
 
+import javax.net.ssl.SSLException;
+
 import org.json.JSONException;
 
 import android.app.Activity;
@@ -228,7 +230,17 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			showMainScreen();
 			
 			ConfigLoader.setupDefaultPreferences(this);
+			
+			// update config reload to "no"
+			SipConfigManager.setPreferenceStringValue(this, OTAConfig.RELOAD_CONFIG_KEY, "no");
 		
+		}
+		catch(SSLException e) {
+			if (mProgressDialog != null)
+				mProgressDialog.dismiss();
+			
+			showError("Contact is taking too long to complete. Please try again");
+			setupLoginScreen();
 		}
 		catch(JSONException e) {
 			if (mProgressDialog != null)
@@ -270,12 +282,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 	
 	private boolean forceConfigurationReload() {
 		String value = SipConfigManager.getPreferenceStringValue(this, OTAConfig.RELOAD_CONFIG_KEY);
-		
-		if (value != null && value.equals("yes")) {
-			SipConfigManager.setPreferenceStringValue(this, OTAConfig.RELOAD_CONFIG_KEY, "no");
-			return true;
-		}
-				
-		return false;
+
+		return (value != null && value.equals("yes"));
 	}
 }

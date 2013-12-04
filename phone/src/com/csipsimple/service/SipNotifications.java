@@ -226,13 +226,13 @@ public class SipNotifications {
 			return;
 		}
 				
-		int icon = R.drawable.ic_stat_sipok;
+		int icon = R.drawable.ic_logo_flat_tiny;
 		CharSequence tickerText = context.getString(R.string.service_ticker_registered_text);
 		long when = System.currentTimeMillis();
 		
 
         Builder nb = new NotificationCompat.Builder(context);
-        nb.setSmallIcon(icon);
+        nb.setSmallIcon(icon);        
         nb.setTicker(tickerText);
         nb.setWhen(when);
 		Intent notificationIntent = new Intent(SipManager.ACTION_SIP_DIALER);

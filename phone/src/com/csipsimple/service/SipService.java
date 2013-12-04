@@ -78,6 +78,7 @@ import com.csipsimple.utils.ExtraPlugins.DynActivityPlugin;
 import com.csipsimple.utils.Log;
 import com.csipsimple.utils.PreferencesProviderWrapper;
 import com.csipsimple.utils.PreferencesWrapper;
+import com.voiceblue.config.ota.OTAConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -829,6 +830,22 @@ public class SipService extends Service {
             });
         }
 
+        private boolean mForceRegistrationOn3g = false;
+        
+		@Override
+		public boolean isForceRegistrationOn3g() throws RemoteException {
+			// TODO Auto-generated method stub
+			//return true;
+			return mForceRegistrationOn3g;
+		}
+
+		@Override
+		public void setForceRegistrationOn3g(boolean forceRegistrationOn3g)
+				throws RemoteException {
+			// TODO Auto-generated method stub
+			mForceRegistrationOn3g = forceRegistrationOn3g; 
+		}
+
 
 
 		
@@ -900,6 +917,9 @@ public class SipService extends Service {
 		}
 
 		public void onChange(boolean selfChange) {
+			
+			System.out.println("status changed!");
+			
 			Log.d(THIS_FILE, "Accounts status.onChange( " + selfChange + ")");
 			updateRegistrationsState();
 		}
@@ -963,7 +983,9 @@ public class SipService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		singleton = this;
-
+		
+		System.out.println("CREATE!");
+		
 		Log.i(THIS_FILE, "Create SIP Service");
 		prefsWrapper = new PreferencesProviderWrapper(this);
 		Log.setLogLevel(prefsWrapper.getLogLevel());
@@ -996,10 +1018,14 @@ public class SipService extends Service {
 		unregisterBroadcasts();
 		unregisterServiceBroadcasts();
 		notificationManager.onServiceDestroy();
+		
+		System.out.println("DESTROY!");
+		
 		getExecutor().execute(new FinalizeDestroyRunnable());
 	}
 	
 	public void cleanStop () {
+		
 		getExecutor().execute(new DestroyRunnable());
 	}
 	
@@ -1130,8 +1156,18 @@ public class SipService extends Service {
     		    ComponentName outActivity = (ComponentName) p;
     		    registerForOutgoing(outActivity);
     		}
+    		
+    		Bundle extras = intent.getExtras();
+			
+    		if (extras != null)	
+    			mForceOn3g = extras.getBoolean("force_on_3g", false);		   
+    		else
+    			mForceOn3g = false;
+
 		}
 		
+		System.out.println("=> force on 3g: " + mForceOn3g);
+
         // Check connectivity, else just finish itself
         if (!isConnectivityValid()) {
             notifyUserOfMessage(R.string.connection_not_valid);
@@ -1202,11 +1238,27 @@ public class SipService extends Service {
         }
 	}
 	
+	public boolean mForceOn3g = false;
+	
 	public boolean isConnectivityValid() {
+		
+		/*try {
+			System.out.println("====> cnn valid?" + binder.isForceRegistrationOn3g());
+
+			if (binder.isForceRegistrationOn3g())
+		    	return true;
+		}
+		catch(RemoteException e) { e.printStackTrace(); } */
+		
+		if (mForceOn3g)
+			return true;
+	    
 	    if(prefsWrapper.getPreferenceBooleanValue(PreferencesWrapper.HAS_BEEN_QUIT, false)) {
 	        return false;
 	    }
+	    
 	    boolean valid = prefsWrapper.isValidConnectionForIncoming();
+	    
 	    if(activitiesForOutgoing.size() > 0) {
 	        valid |= prefsWrapper.isValidConnectionForOutgoing();
 	    }
@@ -1225,6 +1277,7 @@ public class SipService extends Service {
 		if (pjService.tryToLoadStack()) {
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -1250,6 +1303,8 @@ public class SipService extends Service {
 	private void startSipStack() throws SameThreadException {
 		//Cache some prefs
 		supportMultipleCalls = prefsWrapper.getPreferenceBooleanValue(SipConfigManager.SUPPORT_MULTIPLE_CALLS);
+		
+		System.out.println("START SIP SERVER");
 		
 		if(!isConnectivityValid()) {
 		    notifyUserOfMessage(R.string.connection_not_valid);
@@ -1277,7 +1332,11 @@ public class SipService extends Service {
 	        registerBroadcasts();
 			Log.d(THIS_FILE, "Add all accounts");
 			addAllAccounts();
+			
+			System.out.println("STARTED");
 		}
+		
+		
 	}
 	
 	/**
@@ -1285,7 +1344,10 @@ public class SipService extends Service {
 	 * @return true if can be stopped, false if there is a pending call and the sip service should not be stopped
 	 */
 	public boolean stopSipStack() throws SameThreadException {
-		Log.d(THIS_FILE, "Stop sip stack");
+		Log.d(THIS_FILE, "Stop sip stack");		
+			
+		System.out.println("STOP SIP STACK");
+		
 		boolean canStop = true;
 		if(pjService != null) {
 			canStop &= pjService.sipStop();
@@ -1309,7 +1371,9 @@ public class SipService extends Service {
             unregisterBroadcasts();
 			releaseResources();
 		}
-
+		
+		System.out.println("STOPPED? " + canStop);
+		
 		return canStop;
 	}
 	
@@ -1345,8 +1409,9 @@ public class SipService extends Service {
 	 * Add accounts from database
 	 */
 	private void addAllAccounts() throws SameThreadException {
-		Log.d(THIS_FILE, "We are adding all accounts right now....");
-
+		Log.i(THIS_FILE, "We are adding all accounts right now....: pjservice is null?" + (pjService == null));
+		//System.out.println(("We are adding all accounts right now....: pjservice is null?" + (pjService == null)));
+		
 		boolean hasSomeSuccess = false;
 		Cursor c = getContentResolver().query(SipProfile.ACCOUNT_URI, DBProvider.ACCOUNT_FULL_PROJECTION, 
 				SipProfile.FIELD_ACTIVE + "=?", new String[] {"1"}, null);
@@ -1371,7 +1436,9 @@ public class SipService extends Service {
 		}
 		
 		hasSomeActiveAccount = hasSomeSuccess;
-
+		System.out.println("hasSomeActiveAccount? " + hasSomeActiveAccount);
+		System.out.println("pjService null? " + (pjService == null));
+		
 		if (hasSomeSuccess) {
 			acquireResources();
 			
@@ -1446,6 +1513,7 @@ public class SipService extends Service {
 		ArrayList<SipProfileState> activeProfilesState = new ArrayList<SipProfileState>();
 		Cursor c = getContentResolver().query(SipProfile.ACCOUNT_STATUS_URI, null, null, null, null);
 		if (c != null) {
+			System.out.println("cursor: " + c.getCount());
 			try {
 				if(c.getCount() > 0) {
 					c.moveToFirst();
@@ -1465,7 +1533,8 @@ public class SipService extends Service {
 		
 		Collections.sort(activeProfilesState, SipProfileState.getComparator());
 		
-		
+		System.out.println("->size: " + activeProfilesState.size());
+		System.out.println("->sts bar: " + prefsWrapper.getPreferenceBooleanValue(SipConfigManager.ICON_IN_STATUS_BAR));
 
 		// Handle status bar notification
 		if (activeProfilesState.size() > 0 && 
@@ -2013,5 +2082,4 @@ public class SipService extends Service {
     public PresenceStatus getPresence() {
         return presence;
     }
-
 }

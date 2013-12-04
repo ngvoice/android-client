@@ -114,4 +114,8 @@
     <string name="voiceblue_call_service">Kundendienst kontaktieren</string>
 	<string name="voiceblue_buy_credit">Guthaben aufladen</string>
 	
+	<string name="voiceblue_config_value_missing">Einstellung fehlt. Bitte wenden Sie sich an den Kundendienst.</string>
+   <string name="voiceblue_config_changed_title">Konfiguration aktualisiert</string>
+   <string name="voiceblue_config_changed_msg">Um die Einstellungen zu übernehmen, muss die App neu gestartet werden.</string>
+	
 </resources>

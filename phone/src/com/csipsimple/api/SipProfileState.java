@@ -506,6 +506,12 @@ public class SipProfileState implements Parcelable, Serializable{
 	 * @return true if it should be possible to make a call using the associated account.
 	 */
 	public boolean isValidForCall() {
+		
+		System.out.println("active? " + active);
+		System.out.println("added to stack? " + isAddedToStack());
+		System.out.println("sts code? " + getStatusCode());
+		
+		
 		if(active) {
 			if(TextUtils.isEmpty(getRegUri())) {
 				return true;

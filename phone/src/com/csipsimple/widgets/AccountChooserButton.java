@@ -293,8 +293,9 @@ public class AccountChooserButton extends LinearLayout implements OnClickListene
             }
         } else {
             textView.setText(account.display_name);
-            imageView.setImageDrawable(new BitmapDrawable(getResources(), WizardUtils.getWizardBitmap(getContext(),
-                    account)));
+            //imageView.setImageDrawable(new BitmapDrawable(getResources(), WizardUtils.getWizardBitmap(getContext(),
+            //        account)));
+            imageView.setImageResource(R.drawable.ic_logo_flat_tiny);
         }
         if (onAccountChange != null) {
             onAccountChange.onChooseAccount(account);

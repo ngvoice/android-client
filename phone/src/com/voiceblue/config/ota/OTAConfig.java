@@ -23,6 +23,8 @@ public class OTAConfig {
 	
 	public final static String RELOAD_CONFIG_KEY = "cfg_reload";
 	
+	public static String FORCE_REGISTRATION_ON_3G_KEY = "force_3g_registration";
+	
 	public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";    
     
@@ -169,6 +171,11 @@ public class OTAConfig {
     }
 	public static OTAConfigCallbacks getCaller() {
 		return mCaller;
+	}
+	
+	public static SharedPreferences getSharedPrefs(Context cxtx) {
+		SharedPreferences sp = cxtx.getSharedPreferences("prefs", Activity.MODE_PRIVATE);
+		return sp;
 	}
 
 }
