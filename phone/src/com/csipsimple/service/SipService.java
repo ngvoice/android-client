@@ -1348,6 +1348,8 @@ public class SipService extends Service {
 			
 		System.out.println("STOP SIP STACK");
 		
+		mForceOn3g = false;
+		
 		boolean canStop = true;
 		if(pjService != null) {
 			canStop &= pjService.sipStop();

@@ -36,8 +36,7 @@ public class SplashScreen extends Activity {
 					startActivity(login);
 					finish();
 				}
-				catch(Exception e) { /* do nothing */  }			
-				
+				catch(Exception e) { /* do nothing */ }			
 			}
 		}).start();
 		/*

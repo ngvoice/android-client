@@ -41,8 +41,7 @@ public class OTAConfigService extends IntentService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		bindService(new Intent(this, SipService.class), mConnection, Context.BIND_AUTO_CREATE);
-		
+		bindService(new Intent(this, SipService.class), mConnection, Context.BIND_AUTO_CREATE);		
 	}
 	
 	@Override
@@ -155,13 +154,14 @@ public class OTAConfigService extends IntentService {
 			if (message.isRegister()) {
 
 				startSipService(cxtx);
-				
+				sipService.reAddAllAccounts();
 				Log.i(TAG, "Received register request");
 			}
 			else if (message.isUnregister()) {
 				
 //				sipService.setForceRegistrationOn3g(false);
-				sipService.removeAllAccounts();
+				//sipService.removeAllAccounts();
+				sipService.sipStop();
 				Log.i(TAG, "Received unregister request");
 			}
 			else if (message.isReloadConfig()) {
@@ -201,6 +201,7 @@ public class OTAConfigService extends IntentService {
 	                cxtx.startService(serviceIntent);
 	            };
 	        };
+	        
 	        t.start();
 	 }
 }

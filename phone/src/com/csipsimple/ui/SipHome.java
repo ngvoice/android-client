@@ -641,7 +641,7 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         sendFragmentVisibilityChange(mViewPager.getCurrentItem(), true);
         
         Log.d(THIS_FILE, "WE CAN NOW start SIP service");
-        startSipService();
+        startSipService();  
         
         applyTheme();               
     }
@@ -1015,7 +1015,11 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName arg0, IBinder arg1) {
-        	mSipService = ISipService.Stub.asInterface(arg1);                	
+        	mSipService = ISipService.Stub.asInterface(arg1);     
+        	
+        /*    try {
+            	mSipService.addAllAccounts();
+            } catch (RemoteException e) { e.printStackTrace(); } */
         }
 
         @Override
