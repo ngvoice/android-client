@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="voiceblue_create_account">&lt;a href=&quot;http://voiceblue.com&quot;&gt; ¿Nuevo aquí? Crea una cuenta gratis &lt;/a&gt;</string>
+    <string name="voiceblue_password_forgotten">&lt;a href=&quot;http://voiceblue.com&quot;&gt; ¿Olvidó su contraseña? &lt;/a&gt;</string>
+	<string name="voiceblue_invalid_credential">Usuario y/o password inválido</string>
+    <string name="voiceblue_login">Iniciar sesión</string>
+    <string name="voiceblue_username">Usuario</string>
+    <string name="voiceblue_password">Contraseña</string>
+    <string name="voiceblue_fetching_config">Obteniendo configuración...</string>
+    <string name="voiceblue_username_empty">Usuario no puede estar vacío</string>
+    <string name="voiceblue_password_empty">Contraseá no puede estar vacía</string>
+    <string name="voiceblue_ota_reg_succeeded">Registrado en el Push Server </string>
+    <string name="voiceblue_ota_reg_failed">Registración en el Push Server ha fallado</string>
+    <string name="voiceblue_usrpwd_empty">Usuario y/o contraseña están vacíos, por favor reingreselas.</string>
+        
+    <string name="voiceblue_active">Activo</string>
+    <string name="voiceblue_prepaid_account">Cuenta Prepago</string>
+    <string name="voiceblue_invoice_account">Cuesta Post Pago</string>
+    <string name="voiceblue_direct_debit_account">Cuenta Débito Directo</string>
+    <string name="voiceblue_login_account">Entrar a mi cuenta</string>
+    <string name="voiceblue_call_service">Llamar a atención al cliente</string>
+    <string name="voiceblue_buy_credit">Comprar saldo</string>
+    
+    <string name="voiceblue_config_value_missing">Valor de configuración no está. Contactar con servicio técnico</string>
+    <string name="voiceblue_config_changed_title">La configuración ha cambiado</string>
+    <string name="voiceblue_config_changed_msg">La aplicación se reiniciará para aplicar los cambios.</string>
+    
+</resources>

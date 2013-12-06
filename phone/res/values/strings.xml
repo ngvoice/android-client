@@ -120,29 +120,5 @@
     
     <string name="app_name">Voice Blue</string>
     <string name="title_activity_login">LoginActivity</string>    
-    
-    <string name="voiceblue_create_account">&lt;a href=&quot;http://voiceblue.com&quot;&gt; New to Voiceblue? Create a free account &lt;/a&gt;</string>
-    <string name="voiceblue_password_forgotten">&lt;a href=&quot;http://voiceblue.com&quot;&gt; Forgot Password? &lt;/a&gt;</string>
-	<string name="voiceblue_invalid_credential">Invalid username and/or password</string>
-    <string name="voiceblue_login">Log In</string>
-    <string name="voiceblue_username">Username</string>
-    <string name="voiceblue_password">Password</string>
-    <string name="voiceblue_fetching_config">Fetching configuration...</string>
-    <string name="voiceblue_username_empty">Username cannot be empty</string>
-    <string name="voiceblue_password_empty">Password cannot be empty</string>
-    <string name="voiceblue_ota_reg_succeeded">Registered on Push Server </string>
-    <string name="voiceblue_ota_reg_failed">Registration on Push Server failed</string>
-    <string name="voiceblue_usrpwd_empty">Username and/or Password are missing, please retype them.</string>
-        
-    <string name="voiceblue_active">Active</string>
-    <string name="voiceblue_prepaid_account">Prepaid Account</string>
-    <string name="voiceblue_invoice_account">Invoice Account</string>
-    <string name="voiceblue_direct_debit_account">Direct Debit Account</string>
-    <string name="voiceblue_login_account">Login to my account</string>
-    <string name="voiceblue_call_service">Call customer service</string>
-    <string name="voiceblue_buy_credit">Buy credit</string>
-    
-    <string name="voiceblue_config_value_missing">Config value is missing. Please contact support.</string>
-    <string name="voiceblue_config_changed_title">Configuration changed</string>
-    <string name="voiceblue_config_changed_msg">The app needs to restart to apply the changes.</string>
+       
 </resources>
