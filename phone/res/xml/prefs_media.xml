@@ -145,35 +145,35 @@
     <PreferenceCategory
         android:key="audio_volume"
         android:title="@string/audio_volume" >
-        <com.csipsimple.widgets.SeekBarPreference
+        <com.voiceblue.phone.widgets.SeekBarPreference
             android:defaultValue="1.0"
             android:key="snd_mic_level"
             android:max="15"
             android:summary="@string/snd_mic_level_desc"
             android:text="dB"
             android:title="@string/snd_mic_level" />
-        <com.csipsimple.widgets.SeekBarPreference
+        <com.voiceblue.phone.widgets.SeekBarPreference
             android:defaultValue="1.0"
             android:key="snd_speaker_level"
             android:max="15"
             android:summary="@string/snd_speaker_level_desc"
             android:text="dB"
             android:title="@string/snd_speaker_level" />
-        <com.csipsimple.widgets.SeekBarPreference
+        <com.voiceblue.phone.widgets.SeekBarPreference
             android:defaultValue="1.0"
             android:key="snd_bt_mic_level"
             android:max="15"
             android:summary="@string/snd_mic_level_desc"
             android:text="dB"
             android:title="@string/snd_bt_mic_level" />
-        <com.csipsimple.widgets.SeekBarPreference
+        <com.voiceblue.phone.widgets.SeekBarPreference
             android:defaultValue="1.0"
             android:key="snd_bt_speaker_level"
             android:max="15"
             android:summary="@string/snd_speaker_level_desc"
             android:text="dB"
             android:title="@string/snd_bt_speaker_level" />
-        <com.csipsimple.widgets.SeekBarPreference
+        <com.voiceblue.phone.widgets.SeekBarPreference
             android:defaultValue="8.0"
             android:key="snd_stream_level"
             android:max="10"

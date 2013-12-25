@@ -25,7 +25,7 @@
     android:gravity="bottom"
     android:orientation="horizontal" >
 
-    <com.csipsimple.widgets.DontPressWithParentLayout
+    <com.voiceblue.phone.widgets.DontPressWithParentLayout
         android:id="@+id/indicator"
         style="@style/list_left_column"
         android:layout_height="?android:attr/listPreferredItemHeight"
@@ -52,9 +52,9 @@
             android:contentDescription="@string/activate_account"
             android:paddingTop="4dip"
             android:src="@drawable/ic_indicator_off" />
-    </com.csipsimple.widgets.DontPressWithParentLayout>
+    </com.voiceblue.phone.widgets.DontPressWithParentLayout>
 
-    <com.csipsimple.widgets.DontPressWithParentLayout
+    <com.voiceblue.phone.widgets.DontPressWithParentLayout
         android:id="@+id/grabber"
         style="@style/list_left_column"
         android:layout_height="?android:attr/listPreferredItemHeight"
@@ -68,7 +68,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/empty_description"
             android:src="@drawable/grabber" />
-    </com.csipsimple.widgets.DontPressWithParentLayout>
+    </com.voiceblue.phone.widgets.DontPressWithParentLayout>
 
     <ImageView
         android:layout_width="1dip"

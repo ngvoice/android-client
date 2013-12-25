@@ -15,7 +15,7 @@
      limitations under the License.
 -->
 
-<com.csipsimple.widgets.CheckableListItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.voiceblue.phone.widgets.CheckableListItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -45,7 +45,7 @@
         android:nextFocusRight="@+id/secondary_action_icon"
         android:orientation="horizontal" >
 
-        <com.csipsimple.widgets.contactbadge.QuickContactBadge
+        <com.voiceblue.phone.widgets.contactbadge.QuickContactBadge
             android:id="@+id/quick_contact_photo"
             android:layout_width="@dimen/call_log_list_contact_photo_size"
             android:layout_height="@dimen/call_log_list_contact_photo_size"
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/call_log_icon_margin"
-                    class="com.csipsimple.ui.calllog.CallTypeIconsView" />
+                    class="com.voiceblue.phone.ui.calllog.CallTypeIconsView" />
 
                 <TextView
                     android:id="@+id/call_count_and_date"
@@ -133,4 +133,4 @@
         android:layout_marginRight="@dimen/call_log_outer_margin"
         android:background="#55ffffff" />
 
-</com.csipsimple.widgets.CheckableListItemView>
+</com.voiceblue.phone.widgets.CheckableListItemView>

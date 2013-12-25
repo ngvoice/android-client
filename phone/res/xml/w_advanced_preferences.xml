@@ -40,7 +40,7 @@
         android:singleLine="true"
         android:title="@string/w_advanced_auth_id" />
 
-    <com.csipsimple.widgets.PasswordPreference
+    <com.voiceblue.phone.widgets.PasswordPreference
         android:key="password"
         android:password="true"
         android:singleLine="true"

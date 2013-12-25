@@ -47,7 +47,7 @@
             android:summary="@string/w_expert_username_desc"
             android:title="@string/w_expert_username" />
 
-        <com.csipsimple.widgets.PasswordPreference
+        <com.voiceblue.phone.widgets.PasswordPreference
             android:key="data"
             android:password="true"
             android:summary="@string/w_expert_data_desc"

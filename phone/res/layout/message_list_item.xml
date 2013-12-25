@@ -24,7 +24,7 @@
     android:layout_height="wrap_content"
     android:background="#333" >
 
-    <com.csipsimple.widgets.contactbadge.QuickContactBadge
+    <com.voiceblue.phone.widgets.contactbadge.QuickContactBadge
         android:id="@+id/quick_contact_photo"
         android:layout_width="@dimen/message_contact_photo_size"
         android:layout_height="@dimen/message_contact_photo_size"

@@ -51,7 +51,7 @@
             -->
             <!-- Grid for active calls -->
 
-            <com.csipsimple.ui.incall.InCallInfoGrid
+            <com.voiceblue.phone.ui.incall.InCallInfoGrid
                 android:id="@+id/activeCallsGrid"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
@@ -62,7 +62,7 @@
 
             <!-- Grid for held calls -->
 
-            <com.csipsimple.ui.incall.InCallInfoGrid
+            <com.voiceblue.phone.ui.incall.InCallInfoGrid
                 android:id="@+id/heldCallsGrid"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
@@ -74,7 +74,7 @@
 
         <!-- Answer slider/buttons -->
 
-        <com.csipsimple.ui.incall.locker.InCallAnswerControls
+        <com.voiceblue.phone.ui.incall.locker.InCallAnswerControls
             android:id="@+id/inCallAnswerControls"
             android:layout_width="match_parent"
             android:layout_height="0dip"
@@ -83,14 +83,14 @@
 
         <!-- Wraps split action bar manually managed -->
 
-        <com.csipsimple.ui.incall.InCallControls
+        <com.voiceblue.phone.ui.incall.InCallControls
             android:id="@+id/inCallControls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/incall_bottom_bar_bg" />
     </LinearLayout>
 
-    <com.csipsimple.ui.incall.locker.ScreenLocker
+    <com.voiceblue.phone.ui.incall.locker.ScreenLocker
         android:id="@+id/lockerOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -105,6 +105,6 @@
 			android:text="@string/touch_lock" android:textAppearance="?android:attr/textAppearanceLarge"
 			android:background="@drawable/dialpad_lock" />
         -->
-    </com.csipsimple.ui.incall.locker.ScreenLocker>
+    </com.voiceblue.phone.ui.incall.locker.ScreenLocker>
 
 </RelativeLayout>

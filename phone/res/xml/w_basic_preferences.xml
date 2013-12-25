@@ -40,7 +40,7 @@
         android:summary="@string/w_common_server_desc"
         android:title="@string/w_common_server" />
 
-    <com.csipsimple.widgets.PasswordPreference
+    <com.voiceblue.phone.widgets.PasswordPreference
         android:dialogMessage="@string/w_basic_password_desc"
         android:key="password"
         android:password="true"

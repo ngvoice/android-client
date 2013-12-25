@@ -16,7 +16,7 @@
 -->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="com.csipsimple.widgets.AccountWidgetConfigure"
+    android:configure="com.voiceblue.phone.widgets.AccountWidgetConfigure"
     android:initialLayout="@layout/widget"
     android:minHeight="40dp"
     android:minResizeHeight="40dp"

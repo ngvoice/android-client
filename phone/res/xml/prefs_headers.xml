@@ -23,7 +23,7 @@
         android:title="@string/prefs_fast" >
     </header>
     <header
-        android:fragment="com.csipsimple.ui.prefs.hc.PrefsLoaderFragment"
+        android:fragment="com.voiceblue.phone.ui.prefs.hc.PrefsLoaderFragment"
         android:icon="@drawable/ic_prefs_network"
         android:summary="@string/prefs_network_desc"
         android:title="@string/prefs_network" >
@@ -32,7 +32,7 @@
             android:value="20" />
     </header>
     <header
-        android:fragment="com.csipsimple.ui.prefs.hc.PrefsLoaderFragment"
+        android:fragment="com.voiceblue.phone.ui.prefs.hc.PrefsLoaderFragment"
         android:icon="@drawable/ic_prefs_media"
         android:summary="@string/prefs_media_desc"
         android:title="@string/prefs_media" >
@@ -41,7 +41,7 @@
             android:value="0" />
     </header>
     <header
-        android:fragment="com.csipsimple.ui.prefs.hc.PrefsLoaderFragment"
+        android:fragment="com.voiceblue.phone.ui.prefs.hc.PrefsLoaderFragment"
         android:icon="@drawable/ic_prefs_ui"
         android:summary="@string/prefs_ui_desc"
         android:title="@string/prefs_ui" >
@@ -50,7 +50,7 @@
             android:value="60" />
     </header>
     <header
-        android:fragment="com.csipsimple.ui.prefs.hc.PrefsLoaderFragment"
+        android:fragment="com.voiceblue.phone.ui.prefs.hc.PrefsLoaderFragment"
         android:icon="@drawable/ic_prefs_calls"
         android:summary="@string/prefs_calls_desc"
         android:title="@string/prefs_calls" >

@@ -21,7 +21,7 @@
     along with CSipSimple.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<com.csipsimple.ui.dialpad.DialerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.voiceblue.phone.ui.dialpad.DialerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/top_digit_dialer"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -48,7 +48,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
-        <com.csipsimple.ui.dialpad.DigitsEditText
+        <com.voiceblue.phone.ui.dialpad.DigitsEditText
             android:id="@+id/digitsText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -64,7 +64,7 @@
             android:textAppearance="@style/DialtactsDigitsTextAppearance"
             android:textColor="@android:color/white" />
 
-        <com.csipsimple.widgets.AccountChooserButton
+        <com.voiceblue.phone.widgets.AccountChooserButton
             android:id="@+id/accountChooserButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -84,4 +84,4 @@
 
     <include layout="@layout/dialpad_compose" />
 
-</com.csipsimple.ui.dialpad.DialerLayout>
+</com.voiceblue.phone.ui.dialpad.DialerLayout>

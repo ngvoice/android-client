@@ -31,7 +31,7 @@
 			android:singleLine="true"
 			android:title="@string/w_authorization_auth_name"/>
 			
-		<com.csipsimple.widgets.PasswordPreference android:key="password"
+		<com.voiceblue.phone.widgets.PasswordPreference android:key="password"
 			android:singleLine="true"
 			android:password="true"
 			android:title="@string/w_common_password"/>

@@ -31,7 +31,7 @@
         android:orientation="horizontal"
     >
         <view
-            class="com.csipsimple.ui.calllog.CallTypeIconsView"
+            class="com.voiceblue.phone.ui.calllog.CallTypeIconsView"
             android:id="@+id/call_type_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

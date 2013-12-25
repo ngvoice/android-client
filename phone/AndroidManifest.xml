@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.csipsimple"
+    package="com.voiceblue.phone"
     android:installLocation="auto"
-    android:versionCode="2269"
+    android:versionCode="2270"
     android:versionName="1.01.00" >
 
     <supports-screens
@@ -111,7 +111,7 @@
 
     <application
         android:allowBackup="true"
-        android:backupAgent="com.csipsimple.backup.SipBackupAgent"
+        android:backupAgent="com.voiceblue.phone.backup.SipBackupAgent"
         android:hardwareAccelerated="true"
         android:icon="@drawable/vb_logo"
         android:label="@string/app_name" >              
@@ -142,7 +142,7 @@
             android:value="true" />
 
         <activity
-            android:name="com.voiceblue.ui.SplashScreen"
+            android:name="com.voiceblue.custom.ui.SplashScreen"
             android:icon="@drawable/vb_logo"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -150,7 +150,6 @@
             android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -158,19 +157,19 @@
         <!-- Main service -->
         <!-- Require at least the configure permission to use -->
         <service
-            android:name="com.csipsimple.service.SipService"
+            android:name="com.voiceblue.phone.service.SipService"
             android:exported="true"
             android:permission="android.permission.CONFIGURE_SIP"
             android:process=":sipStack" >
             <intent-filter>
-                <action android:name="com.csipsimple.service.SipService" />
-                <action android:name="com.csipsimple.service.SipConfiguration" />
+                <action android:name="com.voiceblue.phone.service.SipService" />
+                <action android:name="com.voiceblue.phone.service.SipConfiguration" />
             </intent-filter>
         </service>
-        <service android:name="com.csipsimple.service.Downloader" />		
+        <service android:name="com.voiceblue.phone.service.Downloader" />		
 		
         <receiver
-            android:name="com.csipsimple.service.DeviceStateReceiver"
+            android:name="com.voiceblue.phone.service.DeviceStateReceiver"
             android:process=":sipStack" >
 
             <!-- Here filter for protected-broadcasts -->
@@ -187,16 +186,16 @@
         </receiver>
         
         <receiver
-            android:name="com.csipsimple.service.DeviceStateReceiver"
+            android:name="com.voiceblue.phone.service.DeviceStateReceiver"
             android:permission="android.permission.CONFIGURE_SIP"
             android:process=":sipStack" >
             <intent-filter>
-                <action android:name="com.csipsimple.accounts.activate" />
+                <action android:name="com.voiceblue.phone.accounts.activate" />
             </intent-filter>
         </receiver>
 
 		<receiver
-            android:name="com.voiceblue.config.ota.OTAConfigBroadcastReceiver"
+            android:name="com.voiceblue.custom.config.ota.OTAConfigBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             
             <intent-filter>
@@ -204,100 +203,100 @@
                 <category android:name="com.voiceblue.config.ota" />
             </intent-filter>
         </receiver>       
-        <service android:name="com.voiceblue.config.ota.OTAConfigService" />
+        <service android:name="com.voiceblue.custom.config.ota.OTAConfigService" />
         
         
         <!-- Main ui -->
         <activity
-            android:name="com.csipsimple.ui.calllog.CallLogDetailsActivity"
+            android:name="com.voiceblue.phone.ui.calllog.CallLogDetailsActivity"
             android:theme="@style/DarkTheme" />
 
         <!-- Accounts -->
         <activity
-            android:name="com.csipsimple.ui.filters.AccountFilters"
+            android:name="com.voiceblue.phone.ui.filters.AccountFilters"
             android:configChanges="orientation"
             android:label="@string/filters"
             android:theme="@style/DarkTheme" />
         <activity
-            android:name="com.csipsimple.ui.filters.EditFilter"
+            android:name="com.voiceblue.phone.ui.filters.EditFilter"
             android:configChanges="orientation"
             android:label="@string/filters"
             android:theme="@style/DarkTheme" />
         <activity
-            android:name="com.csipsimple.wizards.WizardChooser"
+            android:name="com.voiceblue.phone.wizards.WizardChooser"
             android:configChanges="orientation"
             android:label="@string/choose_wizard"
             android:theme="@style/DarkTheme.Dialog" />
 
         <!-- Preferences -->
         <activity
-            android:name="com.csipsimple.ui.prefs.hc.MainPrefs"
+            android:name="com.voiceblue.phone.ui.prefs.hc.MainPrefs"
             android:configChanges="orientation"
             android:enabled="@bool/use_hc_prefs"
             android:label="@string/prefs"
             android:permission="android.permission.CONFIGURE_SIP"
             android:theme="@style/DarkTheme" >
             <intent-filter>
-                <action android:name="com.csipsimple.ui.action.PREFS_GLOBAL" />
+                <action android:name="com.voiceblue.phone.ui.action.PREFS_GLOBAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.csipsimple.ui.prefs.cupcake.MainPrefs"
+            android:name="com.voiceblue.phone.ui.prefs.cupcake.MainPrefs"
             android:configChanges="orientation"
             android:enabled="@bool/use_cupcake_prefs"
             android:label="@string/prefs"
             android:permission="android.permission.CONFIGURE_SIP"
             android:theme="@style/DarkTheme" >
             <intent-filter>
-                <action android:name="com.csipsimple.ui.action.PREFS_GLOBAL" />
+                <action android:name="com.voiceblue.phone.ui.action.PREFS_GLOBAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.csipsimple.ui.prefs.cupcake.PrefsLoaderActivity"
+            android:name="com.voiceblue.phone.ui.prefs.cupcake.PrefsLoaderActivity"
             android:label=""
             android:theme="@style/DarkTheme" />
         <activity
-            android:name="com.csipsimple.ui.prefs.PrefsFilters"
+            android:name="com.voiceblue.phone.ui.prefs.PrefsFilters"
             android:configChanges="orientation"
             android:label="@string/filters"
             android:theme="@style/DarkTheme" />
         <activity
-            android:name="com.csipsimple.ui.prefs.PrefsFast"
+            android:name="com.voiceblue.phone.ui.prefs.PrefsFast"
             android:configChanges="orientation"
             android:label="@string/prefs_fast"
             android:permission="android.permission.CONFIGURE_SIP"
             android:theme="@style/DarkTheme.Dialog" >
             <intent-filter>
-                <action android:name="com.csipsimple.ui.action.PREFS_FAST" />
+                <action android:name="com.voiceblue.phone.ui.action.PREFS_FAST" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.csipsimple.ui.prefs.Codecs"
+            android:name="com.voiceblue.phone.ui.prefs.Codecs"
             android:configChanges="orientation"
             android:label="@string/codecs"
             android:theme="@style/DarkTheme" />
         <activity
-            android:name="com.csipsimple.ui.prefs.AudioTester"
+            android:name="com.voiceblue.phone.ui.prefs.AudioTester"
             android:label="@string/test_audio"
             android:screenOrientation="portrait"
             android:theme="@style/DarkTheme.Dialog" />
 
         <!-- Wizards -->
         <activity
-            android:name="com.csipsimple.wizards.BasePrefsWizard"
+            android:name="com.voiceblue.phone.wizards.BasePrefsWizard"
             android:configChanges="orientation"
             android:label="@string/edit"
             android:theme="@style/DarkTheme" />
 
         <!-- Call management -->
         <receiver
-            android:name="com.csipsimple.service.OutgoingCall"
+            android:name="com.voiceblue.phone.service.OutgoingCall"
             android:permission="android.permission.CALL_PHONE"
             android:process=":sipStack" >
 
@@ -308,7 +307,7 @@
         </receiver>
 
         <activity
-            android:name="com.csipsimple.ui.outgoingcall.OutgoingCallChooser"
+            android:name="com.voiceblue.phone.ui.outgoingcall.OutgoingCallChooser"
             android:allowTaskReparenting="false"
             android:configChanges="orientation"
             android:excludeFromRecents="true"
@@ -339,12 +338,12 @@
         </activity>
 
         <activity-alias
-            android:name="com.csipsimple.ui.PrivilegedOutgoingSipCallBroadcaster"
+            android:name="com.voiceblue.phone.ui.PrivilegedOutgoingSipCallBroadcaster"
             android:configChanges="orientation"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:permission="android.permission.CALL_PRIVILEGED"
-            android:targetActivity="com.csipsimple.ui.outgoingcall.OutgoingCallChooser"
+            android:targetActivity="com.voiceblue.phone.ui.outgoingcall.OutgoingCallChooser"
             android:theme="@style/DarkTheme.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.CALL_PRIVILEGED" />
@@ -355,14 +354,14 @@
             </intent-filter>
         </activity-alias>
         <activity-alias
-            android:name="com.csipsimple.ui.PrivilegedOutgoingCallBroadcaster"
+            android:name="com.voiceblue.phone.ui.PrivilegedOutgoingCallBroadcaster"
             android:configChanges="orientation"
             android:enabled="false"
             android:excludeFromRecents="true"
             android:label="@string/sip_call"
             android:launchMode="singleTask"
             android:permission="android.permission.CALL_PRIVILEGED"
-            android:targetActivity="com.csipsimple.ui.outgoingcall.OutgoingCallChooser"
+            android:targetActivity="com.voiceblue.phone.ui.outgoingcall.OutgoingCallChooser"
             android:theme="@style/DarkTheme.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.CALL_PRIVILEGED" />
@@ -391,7 +390,7 @@
 
         <!-- To be able to do video, this has to be launched in sipStack process -->
         <activity
-            android:name="com.csipsimple.ui.incall.InCallActivity"
+            android:name="com.voiceblue.phone.ui.incall.InCallActivity"
             android:allowTaskReparenting="true"
             android:configChanges="orientation"
             android:excludeFromRecents="true"
@@ -401,34 +400,34 @@
             android:taskAffinity=""
             android:theme="@style/DarkTheme.NoTitle" >
             <intent-filter android:priority="10" >
-                <action android:name="com.csipsimple.phone.action.INCALL" />
+                <action android:name="com.voiceblue.phone.phone.action.INCALL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.csipsimple.ui.PickupSipUri"
+            android:name="com.voiceblue.phone.ui.PickupSipUri"
             android:configChanges="orientation"
             android:label="@string/pickup_sip_uri"
             android:theme="@style/DarkTheme" />
         <activity
-            android:name="com.csipsimple.ui.incall.InCallMediaControl"
+            android:name="com.voiceblue.phone.ui.incall.InCallMediaControl"
             android:configChanges="orientation"
             android:label="@string/prefs_media"
-            android:taskAffinity="com.csipsimple.ui.incall.InCallActivity"
+            android:taskAffinity="com.voiceblue.phone.ui.incall.InCallActivity"
             android:theme="@style/DarkTheme.Dialog" />
 
-        <receiver android:name="com.csipsimple.service.HeadsetButtonReceiver" />
+        <receiver android:name="com.voiceblue.phone.service.HeadsetButtonReceiver" />
 
         <!-- Widget -->
         <receiver
-            android:name="com.csipsimple.widgets.AccountWidgetProvider"
+            android:name="com.voiceblue.phone.widgets.AccountWidgetProvider"
             android:icon="@drawable/vb_logo"
             android:label="@string/gadget_title" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.csipsimple.service.ACCOUNT_CHANGED" />
-                <action android:name="com.csipsimple.service.REGISTRATION_CHANGED" />
+                <action android:name="com.voiceblue.phone.service.ACCOUNT_CHANGED" />
+                <action android:name="com.voiceblue.phone.service.REGISTRATION_CHANGED" />
             </intent-filter>
 
             <meta-data
@@ -437,7 +436,7 @@
         </receiver>
 
         <activity
-            android:name="com.csipsimple.widgets.AccountWidgetConfigure"
+            android:name="com.voiceblue.phone.widgets.AccountWidgetConfigure"
             android:theme="@style/DarkTheme" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -445,7 +444,7 @@
         </activity>
 
         <receiver
-            android:name="com.csipsimple.widgets.ShortcutWidgetProvider"
+            android:name="com.voiceblue.phone.widgets.ShortcutWidgetProvider"
             android:icon="@drawable/vb_logo"
             android:label="@string/csipsimple_shortcut" >
             <intent-filter>
@@ -458,7 +457,7 @@
         </receiver>
 
         <activity
-            android:name="com.csipsimple.widgets.ShortcutWidgetConfigure"
+            android:name="com.voiceblue.phone.widgets.ShortcutWidgetConfigure"
             android:theme="@style/DarkTheme" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -467,7 +466,7 @@
 
         <!-- Messages -->
         <activity
-            android:name="com.csipsimple.ui.messages.MessageActivity"
+            android:name="com.voiceblue.phone.ui.messages.MessageActivity"
             android:configChanges="orientation"
             android:launchMode="singleTop"
             android:theme="@style/DarkTheme"
@@ -476,32 +475,32 @@
         <!-- Embedded plugins -->
         <!-- Call handlers android:process=":telCallHandler" -->
         <receiver
-            android:name="com.csipsimple.plugins.telephony.CallHandler"
+            android:name="com.voiceblue.phone.plugins.telephony.CallHandler"
             android:permission="android.permission.PROCESS_OUTGOING_CALLS"
             android:process=":sipStack" >
             <intent-filter>
-                <action android:name="com.csipsimple.phone.action.HANDLE_CALL" />
+                <action android:name="com.voiceblue.phone.phone.action.HANDLE_CALL" />
             </intent-filter>
         </receiver>
 
         <!-- Databases providers -->
         <provider
-            android:name="com.csipsimple.service.PreferenceProvider"
-            android:authorities="com.csipsimple.prefs"
+            android:name="com.voiceblue.phone.service.PreferenceProvider"
+            android:authorities="com.voiceblue.phone.prefs"
             android:permission="android.permission.CONFIGURE_SIP" />
         <provider
-            android:name="com.csipsimple.db.DBProvider"
-            android:authorities="com.csipsimple.db"
+            android:name="com.voiceblue.phone.db.DBProvider"
+            android:authorities="com.voiceblue.phone.db"
             android:permission="android.permission.CONFIGURE_SIP"
             android:process=":sipStack" />
 
         <!-- New UI -->
         <activity
-            android:name="com.csipsimple.ui.account.AccountsEditList"
+            android:name="com.voiceblue.phone.ui.account.AccountsEditList"
             android:label="@string/accounts"
             android:theme="@style/DarkTheme" />
         <activity
-            android:name="com.csipsimple.ui.account.AccountEdit"
+            android:name="com.voiceblue.phone.ui.account.AccountEdit"
             android:theme="@style/DarkTheme" />
 
         <!-- Extra codecs -->
@@ -512,22 +511,22 @@
 
         <!-- Extra wizard creation account activities -->
         <activity
-            android:name="com.csipsimple.wizards.impl.MondotalkCreate"
+            android:name="com.voiceblue.phone.wizards.impl.MondotalkCreate"
             android:theme="@style/DarkTheme" />
         <!--
         activity
-            android:name="com.csipsimple.ui.SplashScreen"
+            android:name="com.voiceblue.phone.ui.SplashScreen"
             android:label="@string/title_activity_splash_screen" >
         </activity
         -->
         <activity
-            android:name="com.csipsimple.ui.SipHome"
+            android:name="com.voiceblue.phone.ui.SipHome"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/DarkTheme"
             android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter android:priority="10" >
-                <action android:name="com.csipsimple.phone.action.DIALER" />
+                <action android:name="com.voiceblue.phone.phone.action.DIALER" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -540,24 +539,24 @@
                 <data android:scheme="csip" />
             </intent-filter>
             <intent-filter android:priority="10" >
-                <action android:name="com.csipsimple.phone.action.CALLLOG" />
+                <action android:name="com.voiceblue.phone.phone.action.CALLLOG" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter android:priority="10" >
-                <action android:name="com.csipsimple.phone.action.FAVORITES" />
+                <action android:name="com.voiceblue.phone.phone.action.FAVORITES" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter android:priority="10" >
-                <action android:name="com.csipsimple.phone.action.MESSAGES" />
+                <action android:name="com.voiceblue.phone.phone.action.MESSAGES" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:theme="@style/Theme.Splash"
-            android:name="com.voiceblue.ui.LoginActivity"
+            android:name="com.voiceblue.custom.ui.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
     </application>

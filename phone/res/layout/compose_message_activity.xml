@@ -61,7 +61,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall" >
         </TextView>
 
-        <com.csipsimple.widgets.AccountChooserButton
+        <com.voiceblue.phone.widgets.AccountChooserButton
             android:id="@+id/accountChooserButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

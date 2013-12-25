@@ -39,7 +39,7 @@
         android:textColor="@android:color/white"
         android:textSize="28sp" />
 
-    <com.csipsimple.widgets.Dialpad
+    <com.voiceblue.phone.widgets.Dialpad
         android:id="@+id/dialPad"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

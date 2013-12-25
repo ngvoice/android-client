@@ -131,7 +131,7 @@
                         android:textColor="#FFFFFF" />
                 </LinearLayout>
 
-                <com.csipsimple.widgets.AccountChooserButton
+                <com.voiceblue.phone.widgets.AccountChooserButton
                     android:id="@+id/call_choose_account"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent" />

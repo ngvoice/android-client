@@ -29,10 +29,10 @@
 			android:singleLine="true"
 			android:title="@string/w_common_username"></EditTextPreference>
 			
-		<com.csipsimple.widgets.PasswordPreference android:key="password"
+		<com.voiceblue.phone.widgets.PasswordPreference android:key="password"
 			android:singleLine="true"
 			android:password="true"
-			android:title="@string/w_common_password"></com.csipsimple.widgets.PasswordPreference>
+			android:title="@string/w_common_password"></com.voiceblue.phone.widgets.PasswordPreference>
 
 		<EditTextPreference android:key="server"
 			android:singleLine="true"

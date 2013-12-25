@@ -3,5 +3,5 @@
     android:id="@+id/list"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    class="com.csipsimple.ui.outgoingcall.OutgoingCallListFragment" />
+    class="com.voiceblue.phone.ui.outgoingcall.OutgoingCallListFragment" />
 
