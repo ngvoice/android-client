@@ -213,7 +213,7 @@ public class PreferencesWrapper {
 		//Calls
 		put(SipConfigManager.AUTO_RECORD_CALLS, false);
 		put(SipConfigManager.SUPPORT_MULTIPLE_CALLS, false);
-        put(SipConfigManager.USE_VIDEO, false);
+        	put(SipConfigManager.USE_VIDEO, true);
 		
 		//Secure
 		put(SipConfigManager.TLS_VERIFY_SERVER, false);

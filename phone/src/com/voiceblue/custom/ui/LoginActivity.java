@@ -52,7 +52,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		
 		boolean reloadConfig = forceConfigurationReload();
 		boolean firstTimeConfig = isFirstTimeConfiguration();
-		reloadConfig = true;		
+		//reloadConfig = true;		
 		
 		if (reloadConfig && !firstTimeConfig) {
 			
@@ -228,6 +228,9 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			}	
 					
 			showMainScreen();
+			
+			// enable video by default
+			SipConfigManager.setPreferenceBooleanValue(this, SipConfigManager.USE_VIDEO, true);
 			
 			ConfigLoader.setupDefaultPreferences(this);
 			

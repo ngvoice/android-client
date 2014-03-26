@@ -171,7 +171,8 @@ public class PrefsLogic {
                     
                     pfh.hidePreference(null, MEDIA_BAND_TYPE_KEY);
                     pfh.hidePreference(null, MEDIA_AUDIO_TROUBLESHOOT_KEY);
-                }else {
+                }
+                else {
                     // Bind only if not removed
                     pfh.setPreferenceScreenType(MEDIA_AUDIO_TROUBLESHOOT_KEY, TYPE_MEDIA_TROUBLESHOOT);
                     pfh.setPreferenceScreenType(MEDIA_BAND_TYPE_KEY, TYPE_MEDIA_BAND_TYPE);
