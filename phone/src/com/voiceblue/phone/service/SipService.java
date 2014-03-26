@@ -918,8 +918,6 @@ public class SipService extends Service {
 
 		public void onChange(boolean selfChange) {
 			
-			System.out.println("status changed!");
-			
 			Log.d(THIS_FILE, "Accounts status.onChange( " + selfChange + ")");
 			updateRegistrationsState();
 		}
@@ -984,8 +982,6 @@ public class SipService extends Service {
 		super.onCreate();
 		singleton = this;
 		
-		System.out.println("CREATE!");
-		
 		Log.i(THIS_FILE, "Create SIP Service");
 		prefsWrapper = new PreferencesProviderWrapper(this);
 		Log.setLogLevel(prefsWrapper.getLogLevel());
@@ -1018,8 +1014,6 @@ public class SipService extends Service {
 		unregisterBroadcasts();
 		unregisterServiceBroadcasts();
 		notificationManager.onServiceDestroy();
-		
-		System.out.println("DESTROY!");
 		
 		getExecutor().execute(new FinalizeDestroyRunnable());
 	}
@@ -1165,8 +1159,6 @@ public class SipService extends Service {
     			mForceOn3g = false;
 
 		}
-		
-		System.out.println("=> force on 3g: " + mForceOn3g);
 
         // Check connectivity, else just finish itself
         if (!isConnectivityValid()) {
@@ -1243,8 +1235,6 @@ public class SipService extends Service {
 	public boolean isConnectivityValid() {
 		
 		/*try {
-			System.out.println("====> cnn valid?" + binder.isForceRegistrationOn3g());
-
 			if (binder.isForceRegistrationOn3g())
 		    	return true;
 		}
@@ -1304,8 +1294,6 @@ public class SipService extends Service {
 		//Cache some prefs
 		supportMultipleCalls = prefsWrapper.getPreferenceBooleanValue(SipConfigManager.SUPPORT_MULTIPLE_CALLS);
 		
-		System.out.println("START SIP SERVER");
-		
 		if(!isConnectivityValid()) {
 		    notifyUserOfMessage(R.string.connection_not_valid);
 			Log.e(THIS_FILE, "No need to start sip");
@@ -1332,8 +1320,6 @@ public class SipService extends Service {
 	        registerBroadcasts();
 			Log.d(THIS_FILE, "Add all accounts");
 			addAllAccounts();
-			
-			System.out.println("STARTED");
 		}
 		
 		
@@ -1346,8 +1332,6 @@ public class SipService extends Service {
 	public boolean stopSipStack() throws SameThreadException {
 		Log.d(THIS_FILE, "Stop sip stack");		
 			
-		System.out.println("STOP SIP STACK");
-		
 		mForceOn3g = false;
 		
 		boolean canStop = true;
@@ -1373,8 +1357,6 @@ public class SipService extends Service {
             unregisterBroadcasts();
 			releaseResources();
 		}
-		
-		System.out.println("STOPPED? " + canStop);
 		
 		return canStop;
 	}
@@ -1438,8 +1420,6 @@ public class SipService extends Service {
 		}
 		
 		hasSomeActiveAccount = hasSomeSuccess;
-		System.out.println("hasSomeActiveAccount? " + hasSomeActiveAccount);
-		System.out.println("pjService null? " + (pjService == null));
 		
 		if (hasSomeSuccess) {
 			acquireResources();
@@ -1515,7 +1495,6 @@ public class SipService extends Service {
 		ArrayList<SipProfileState> activeProfilesState = new ArrayList<SipProfileState>();
 		Cursor c = getContentResolver().query(SipProfile.ACCOUNT_STATUS_URI, null, null, null, null);
 		if (c != null) {
-			System.out.println("cursor: " + c.getCount());
 			try {
 				if(c.getCount() > 0) {
 					c.moveToFirst();
@@ -1535,9 +1514,6 @@ public class SipService extends Service {
 		
 		Collections.sort(activeProfilesState, SipProfileState.getComparator());
 		
-		System.out.println("->size: " + activeProfilesState.size());
-		System.out.println("->sts bar: " + prefsWrapper.getPreferenceBooleanValue(SipConfigManager.ICON_IN_STATUS_BAR));
-
 		// Handle status bar notification
 		if (activeProfilesState.size() > 0 && 
 				prefsWrapper.getPreferenceBooleanValue(SipConfigManager.ICON_IN_STATUS_BAR)) {

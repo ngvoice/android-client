@@ -34,8 +34,6 @@ public class SplashScreen extends Activity {
 					Intent login = new Intent(SplashScreen.this, LoginActivity.class);
 					//Intent login = new Intent(SplashScreen.this, SipHome.class);
 					
-					System.out.println("starting new app");
-					
 					//login.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 					startActivity(login);
 					finish();

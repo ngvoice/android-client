@@ -332,7 +332,7 @@ public class PjSipService {
                     audImp.setShared_lib_path(pjsua.pj_str_copy(openslLib.getAbsolutePath()));
                     cssCfg.setAudio_implementation(audImp);
                     Log.d(THIS_FILE, "Use OpenSL-ES implementation");
-                }
+                }                               
 
                 // Video implementation
                 if (prefsWrapper.getPreferenceBooleanValue(SipConfigManager.USE_VIDEO)) {
@@ -340,11 +340,11 @@ public class PjSipService {
                     // converter
                     Map<String, DynCodecInfos> videoPlugins = ExtraPlugins.getDynCodecPlugins(
                             service, SipManager.ACTION_GET_VIDEO_PLUGIN);
-
+                    
                     if (videoPlugins.size() > 0) {
                         DynCodecInfos videoPlugin = videoPlugins.values().iterator().next();
                         pj_str_t pjVideoFile = pjsua.pj_str_copy(videoPlugin.libraryPath);
-                        Log.d(THIS_FILE, "Load video plugin at " + videoPlugin.libraryPath);
+                        Log.d(THIS_FILE, "Load video plugin at " + videoPlugin.libraryPath);                        
                         // Render
                         {
                             dynamic_factory vidImpl = cssCfg.getVideo_render_implementation();

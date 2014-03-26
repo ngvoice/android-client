@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.voiceblue.phone"
     android:installLocation="auto"
-    android:versionCode="2270"
+    android:versionCode="2272"
     android:versionName="1.01.00" >
 
     <supports-screens
@@ -203,8 +203,7 @@
                 <category android:name="com.voiceblue.config.ota" />
             </intent-filter>
         </receiver>       
-        <service android:name="com.voiceblue.custom.config.ota.OTAConfigService" />
-        
+        <service android:name="com.voiceblue.custom.config.ota.OTAConfigService" />        
         
         <!-- Main ui -->
         <activity
@@ -285,9 +284,7 @@
             android:name="com.voiceblue.phone.ui.prefs.AudioTester"
             android:label="@string/test_audio"
             android:screenOrientation="portrait"
-            android:theme="@style/DarkTheme.Dialog" />
-
-        <!-- Wizards -->
+            android:theme="@style/DarkTheme.Dialog" />        
         <activity
             android:name="com.voiceblue.phone.wizards.BasePrefsWizard"
             android:configChanges="orientation"
@@ -401,7 +398,6 @@
             android:theme="@style/DarkTheme.NoTitle" >
             <intent-filter android:priority="10" >
                 <action android:name="com.voiceblue.phone.phone.action.INCALL" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -559,6 +555,70 @@
             android:name="com.voiceblue.custom.ui.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        
+        
+          <!-- Receiver for standard video -->
+        <receiver android:name="com.voiceblue.phone.plugin.video.PluginReceiver" >
+            <intent-filter>
+                <action android:name="com.voiceblue.phone.plugins.action.REGISTER_VIDEO" />
+            </intent-filter>
+
+            <meta-data
+                android:name="lib_name"
+                android:value="libpj_video_android.so" />
+            <!-- For now it does not matter in the future we should have one per device, codec, and converter (if needed) -->
+            <meta-data
+                android:name="init_factory"
+                android:value="pjmedia_webrtc_vid_render_factory" />
+        </receiver>
+
+        <!--
+        Receiver for video capture
+        <receiver android:name=".CaptureReceiver" >
+            <intent-filter>
+                <action android:name="com.csipsimple.plugins.action.REGISTER_CAPTURE_VIDEO" />
+            </intent-filter>
+
+            <meta-data
+                android:name="lib_name"
+                android:value="libpj_screen_capture_android.so" />
+            <meta-data
+                android:name="init_factory"
+                android:value="pjmedia_webrtc_vid_capture_factory" />
+        </receiver>
+        -->
+        <receiver android:name="com.voiceblue.phone.plugin.video.PluginReceiverFfmpeg" >
+            <intent-filter>
+                <action android:name="com.voiceblue.phone.codecs.action.REGISTER_VIDEO_CODEC" />
+            </intent-filter>
+
+            <meta-data
+                android:name="lib_name"
+                android:value="libpj_video_android.so" />
+            <meta-data
+                android:name="init_factory"
+                android:value="pjmedia_codec_ffmpeg_vid_init" />
+            <meta-data
+                android:name="deinit_factory"
+                android:value="pjmedia_codec_ffmpeg_vid_deinit" />
+        </receiver>
+        <receiver android:name="com.voiceblue.phone.plugin.video.PluginReceiverVpx" >
+            <intent-filter>
+                <action android:name="com.voiceblue.phone.codecs.action.REGISTER_VIDEO_CODEC" />
+            </intent-filter>
+
+            <meta-data
+                android:name="lib_name"
+                android:value="libpj_vpx.so" />
+            <meta-data
+                android:name="init_factory"
+                android:value="pjmedia_codec_vpx_init" />
+            <meta-data
+                android:name="deinit_factory"
+                android:value="pjmedia_codec_vpx_deinit" />
+        </receiver>    
+        
+        
     </application>
 
 </manifest>

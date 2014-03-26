@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CSipSimple Video Plugin</string>
+    <string name="permlab_configureSip">Use sip</string>
+    <string name="permdesc_configureSip">Place SIP calls, send SIP messages and control SIP communications</string>
+
+</resources>

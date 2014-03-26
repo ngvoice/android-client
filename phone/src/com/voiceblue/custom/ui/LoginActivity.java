@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.sip.SipManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -47,13 +48,12 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		System.out.println("created");
 		super.onCreate(savedInstanceState);
 		
 		boolean reloadConfig = forceConfigurationReload();
 		boolean firstTimeConfig = isFirstTimeConfiguration();
+		reloadConfig = true;		
 		
-		System.out.println("comparing");
 		if (reloadConfig && !firstTimeConfig) {
 			
 			mUsername = SipConfigManager.getPreferenceStringValue(this, AccessInformation.USERNAME_FIELD_KEY);
@@ -77,8 +77,6 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			showMainScreen();
 			return;
 		}
-		//else
-		//	return;
 		
 		setupLoginScreen();
 	}
@@ -211,7 +209,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 														acc.getWebURL());
 			
 			if (acc == null)
-				throw new Exception("Something went wrong parsing your config");			
+				throw new Exception("Something went wrong parsing your config");		
 			
 			if (isFirstTimeConfiguration()) {
 			
@@ -266,7 +264,6 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 	}
 	
 	private void showMainScreen() {
-		System.out.println("going to main");
 		Intent home = new Intent(LoginActivity.this, SipHome.class);
 		home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(home);

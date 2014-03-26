@@ -38,13 +38,9 @@ public class ConfigLoader {
 				account.setAccID(jsonAcccounts.getJSONObject(i).getString("acc_id"));
 				account.setProxy(jsonAcccounts.getJSONObject(i).getString("proxy"));
 				account.setRealm(jsonAcccounts.getJSONObject(i).getString("realm"));
-				account.setRegUseProxy(jsonAcccounts.getJSONObject(i).getString("reg_use_proxy"));
-				
+				account.setRegUseProxy(jsonAcccounts.getJSONObject(i).getString("reg_use_proxy"));								
 			}
-			
-			//account.setRegURI("sip:192.168.2.103:5060");
-			//account.setProxy("sip:192.168.2.103:5060");
-			
+								
 			account.setCustomerCareURL(jsonSettings.getString("customer_care_url"));
 			account.setMyAccURL(jsonSettings.getString("myaccount_url"));
 			account.setWebURL(jsonSettings.getString("web_url"));
@@ -104,8 +100,11 @@ public class ConfigLoader {
 			   pcmuCodecWb = SipConfigManager.getCodecKey("PCMU/8000/1", SipConfigManager.CODEC_WB),
 			   isacCodecWb = SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_WB),
 			   gsmCodecWb  = SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_WB),
-			   silk24CodecWb  = SipConfigManager.getCodecKey("SILK/24000/1", SipConfigManager.CODEC_WB);
-			   
+			   silk24CodecWb  = SipConfigManager.getCodecKey("SILK/24000/1", SipConfigManager.CODEC_WB),
+			   h264CodecWb  = SipConfigManager.getCodecKey("H264/97", SipConfigManager.CODEC_WB),
+			   h263CodecWb  = SipConfigManager.getCodecKey("H263-1998/96", SipConfigManager.CODEC_WB),
+			   vp8CodecWb =  SipConfigManager.getCodecKey("VP8/102", SipConfigManager.CODEC_WB);
+				
 		String gsmCodecNb  = SipConfigManager.getCodecKey("GSM/8000/1", SipConfigManager.CODEC_NB),
 			   isacCodecNb = SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_NB),
 			   pcmaCodecNb = SipConfigManager.getCodecKey("PCMA/8000/1", SipConfigManager.CODEC_NB),			   
@@ -113,7 +112,10 @@ public class ConfigLoader {
 			   ilbcCodecNb =  SipConfigManager.getCodecKey("iLBC/8000/1", SipConfigManager.CODEC_NB),
 			   g722CodecNb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_NB),
 			   silk24CodecNb  = SipConfigManager.getCodecKey("SILK/24000/1", SipConfigManager.CODEC_NB),
-			   silk8CodecNb = SipConfigManager.getCodecKey("SILK/8000/1", SipConfigManager.CODEC_NB);
+			   silk8CodecNb = SipConfigManager.getCodecKey("SILK/8000/1", SipConfigManager.CODEC_NB),
+			   h264CodecNb  = SipConfigManager.getCodecKey("H264/97", SipConfigManager.CODEC_NB),
+			   h263CodecNb  = SipConfigManager.getCodecKey("H263-1998/96", SipConfigManager.CODEC_NB),
+			   vp8CodecNb =  SipConfigManager.getCodecKey("VP8/102", SipConfigManager.CODEC_NB);
 		
 		
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.INTEGRATE_WITH_DIALER, true);
@@ -133,7 +135,6 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_OUT, false);
 		
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.LOCK_WIFI, false);			
-		
 				
 		// wide band
 		SipConfigManager.setPreferenceStringValue(ctx, g722CodecWb, "300");
@@ -154,5 +155,15 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceStringValue(ctx, g722CodecNb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, silk8CodecNb, "0");
 		SipConfigManager.setPreferenceStringValue(ctx, silk24CodecNb, "0");
+		
+		// wide band video codecs
+		SipConfigManager.setPreferenceStringValue(ctx, h264CodecWb, "200");
+		SipConfigManager.setPreferenceStringValue(ctx, h263CodecWb, "255");
+		SipConfigManager.setPreferenceStringValue(ctx, vp8CodecWb, "0");		
+		
+		// narrow band video codecs
+		SipConfigManager.setPreferenceStringValue(ctx, h264CodecNb, "200");
+		SipConfigManager.setPreferenceStringValue(ctx, h263CodecNb, "255");
+		SipConfigManager.setPreferenceStringValue(ctx, vp8CodecNb, "0");
 	}
 }
