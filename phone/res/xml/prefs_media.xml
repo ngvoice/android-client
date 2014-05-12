@@ -205,7 +205,7 @@
             android:summary="@string/auto_detect_speaker_desc"
             android:title="@string/auto_detect_speaker" />
     </PreferenceCategory>
-    <PreferenceCategory
+    <!-- PreferenceCategory
         android:key="video_category"
         android:title="@string/video" >
         <ListPreference
@@ -213,7 +213,7 @@
             android:key="video_capture_size"
             android:summary="@string/video_capture_size_desc"
             android:title="@string/video_capture_size" />
-    </PreferenceCategory>
+    </PreferenceCategory-->
 
     <PreferenceScreen
         android:key="audio_troubleshooting"
