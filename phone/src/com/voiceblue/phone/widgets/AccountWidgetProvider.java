@@ -39,8 +39,8 @@ import com.voiceblue.phone.R;
 import com.voiceblue.phone.api.SipManager;
 import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.utils.AccountListUtils;
-import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.AccountListUtils.AccountStatusDisplay;
+import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.wizards.WizardUtils;
 
 public class AccountWidgetProvider extends AppWidgetProvider {

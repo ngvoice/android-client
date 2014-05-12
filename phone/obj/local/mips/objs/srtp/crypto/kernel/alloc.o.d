@@ -1,5 +1,5 @@
-obj/local/mips/objs/srtp//crypto/kernel/alloc.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/kernel/alloc.c \
+obj/local/mips/objs/srtp/./crypto/kernel/alloc.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/kernel/alloc.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/alloc.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/datatypes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/integers.h \

@@ -238,6 +238,8 @@ obj/local/x86/objs/swig-glue/pj_callback.o: \
  jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/sha1.h \
  jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/srv_resolver.h \
  jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h \
+ jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h \
+ jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h \
  jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h \
  jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/pcap.h \
  jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/http_client.h \
@@ -748,6 +750,10 @@ jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-uti
 jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/srv_resolver.h:
 
 jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h:
+
+jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h:
+
+jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h:
 
 jni/swig-glue/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h:
 

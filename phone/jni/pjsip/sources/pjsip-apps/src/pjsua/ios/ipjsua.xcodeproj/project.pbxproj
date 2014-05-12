@@ -15,6 +15,7 @@
 		3ADCCD2F172E40120007BE8E /* pjsua_app_config.c in Sources */ = {isa = PBXBuildFile; fileRef = 3ADCCD2A172E40120007BE8E /* pjsua_app_config.c */; };
 		3ADCCD30172E40120007BE8E /* pjsua_app_legacy.c in Sources */ = {isa = PBXBuildFile; fileRef = 3ADCCD2B172E40120007BE8E /* pjsua_app_legacy.c */; };
 		3ADCCD31172E40120007BE8E /* pjsua_app.c in Sources */ = {isa = PBXBuildFile; fileRef = 3ADCCD2C172E40120007BE8E /* pjsua_app.c */; };
+		3ADFCCFD1803B00600B0A097 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ADFCCFC1803B00600B0A097 /* AVFoundation.framework */; };
 		3AF0580916F050770046B835 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0580816F050770046B835 /* UIKit.framework */; };
 		3AF0580B16F050770046B835 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0580A16F050770046B835 /* Foundation.framework */; };
 		3AF0580D16F050770046B835 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0580C16F050770046B835 /* CoreGraphics.framework */; };
@@ -42,7 +43,6 @@
 		3AF0585516F058290046B835 /* libg7221codec-arm-apple-darwin9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0584E16F058290046B835 /* libg7221codec-arm-apple-darwin9.a */; };
 		3AF0585616F058290046B835 /* libgsmcodec-arm-apple-darwin9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0584F16F058290046B835 /* libgsmcodec-arm-apple-darwin9.a */; };
 		3AF0585716F058290046B835 /* libilbccodec-arm-apple-darwin9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0585016F058290046B835 /* libilbccodec-arm-apple-darwin9.a */; };
-		3AF0585816F058290046B835 /* libmilenage-arm-apple-darwin9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0585116F058290046B835 /* libmilenage-arm-apple-darwin9.a */; };
 		3AF0585916F058290046B835 /* libresample-arm-apple-darwin9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0585216F058290046B835 /* libresample-arm-apple-darwin9.a */; };
 		3AF0585A16F058290046B835 /* libspeex-arm-apple-darwin9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0585316F058290046B835 /* libspeex-arm-apple-darwin9.a */; };
 		3AF0585B16F058290046B835 /* libsrtp-arm-apple-darwin9.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF0585416F058290046B835 /* libsrtp-arm-apple-darwin9.a */; };
@@ -57,6 +57,7 @@
 		3ADCCD2A172E40120007BE8E /* pjsua_app_config.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pjsua_app_config.c; path = ../../pjsua_app_config.c; sourceTree = "<group>"; };
 		3ADCCD2B172E40120007BE8E /* pjsua_app_legacy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pjsua_app_legacy.c; path = ../../pjsua_app_legacy.c; sourceTree = "<group>"; };
 		3ADCCD2C172E40120007BE8E /* pjsua_app.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pjsua_app.c; path = ../../pjsua_app.c; sourceTree = "<group>"; };
+		3ADFCCFC1803B00600B0A097 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		3AF0580416F050770046B835 /* ipjsua.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ipjsua.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AF0580816F050770046B835 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3AF0580A16F050770046B835 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -89,7 +90,6 @@
 		3AF0584E16F058290046B835 /* libg7221codec-arm-apple-darwin9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libg7221codec-arm-apple-darwin9.a"; path = "../../../../third_party/lib/libg7221codec-arm-apple-darwin9.a"; sourceTree = "<group>"; };
 		3AF0584F16F058290046B835 /* libgsmcodec-arm-apple-darwin9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgsmcodec-arm-apple-darwin9.a"; path = "../../../../third_party/lib/libgsmcodec-arm-apple-darwin9.a"; sourceTree = "<group>"; };
 		3AF0585016F058290046B835 /* libilbccodec-arm-apple-darwin9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libilbccodec-arm-apple-darwin9.a"; path = "../../../../third_party/lib/libilbccodec-arm-apple-darwin9.a"; sourceTree = "<group>"; };
-		3AF0585116F058290046B835 /* libmilenage-arm-apple-darwin9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmilenage-arm-apple-darwin9.a"; path = "../../../../third_party/lib/libmilenage-arm-apple-darwin9.a"; sourceTree = "<group>"; };
 		3AF0585216F058290046B835 /* libresample-arm-apple-darwin9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libresample-arm-apple-darwin9.a"; path = "../../../../third_party/lib/libresample-arm-apple-darwin9.a"; sourceTree = "<group>"; };
 		3AF0585316F058290046B835 /* libspeex-arm-apple-darwin9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libspeex-arm-apple-darwin9.a"; path = "../../../../third_party/lib/libspeex-arm-apple-darwin9.a"; sourceTree = "<group>"; };
 		3AF0585416F058290046B835 /* libsrtp-arm-apple-darwin9.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsrtp-arm-apple-darwin9.a"; path = "../../../../third_party/lib/libsrtp-arm-apple-darwin9.a"; sourceTree = "<group>"; };
@@ -100,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ADFCCFD1803B00600B0A097 /* AVFoundation.framework in Frameworks */,
 				3A92069316F1DEA500D49F96 /* CFNetwork.framework in Frameworks */,
 				3A92068F16F1DE7100D49F96 /* AudioToolbox.framework in Frameworks */,
 				3AF0580916F050770046B835 /* UIKit.framework in Frameworks */,
@@ -120,7 +121,6 @@
 				3AF0585516F058290046B835 /* libg7221codec-arm-apple-darwin9.a in Frameworks */,
 				3AF0585616F058290046B835 /* libgsmcodec-arm-apple-darwin9.a in Frameworks */,
 				3AF0585716F058290046B835 /* libilbccodec-arm-apple-darwin9.a in Frameworks */,
-				3AF0585816F058290046B835 /* libmilenage-arm-apple-darwin9.a in Frameworks */,
 				3AF0585916F058290046B835 /* libresample-arm-apple-darwin9.a in Frameworks */,
 				3AF0585A16F058290046B835 /* libspeex-arm-apple-darwin9.a in Frameworks */,
 				3AF0585B16F058290046B835 /* libsrtp-arm-apple-darwin9.a in Frameworks */,
@@ -163,6 +163,7 @@
 		3AF0580716F050770046B835 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3ADFCCFC1803B00600B0A097 /* AVFoundation.framework */,
 				3A92069216F1DEA500D49F96 /* CFNetwork.framework */,
 				3A92068E16F1DE7100D49F96 /* AudioToolbox.framework */,
 				3AF0580816F050770046B835 /* UIKit.framework */,
@@ -208,7 +209,6 @@
 				3AF0584E16F058290046B835 /* libg7221codec-arm-apple-darwin9.a */,
 				3AF0584F16F058290046B835 /* libgsmcodec-arm-apple-darwin9.a */,
 				3AF0585016F058290046B835 /* libilbccodec-arm-apple-darwin9.a */,
-				3AF0585116F058290046B835 /* libmilenage-arm-apple-darwin9.a */,
 				3AF0585216F058290046B835 /* libresample-arm-apple-darwin9.a */,
 				3AF0585316F058290046B835 /* libspeex-arm-apple-darwin9.a */,
 				3AF0585416F058290046B835 /* libsrtp-arm-apple-darwin9.a */,
@@ -420,6 +420,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -454,6 +455,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

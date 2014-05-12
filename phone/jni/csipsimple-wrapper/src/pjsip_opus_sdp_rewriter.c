@@ -98,7 +98,8 @@ static pj_status_t opus_sdp_on_tx_msg(pjsip_tx_data *tdata)
         pjsip_msg_body* body = tdata->msg->body;
         if (opus_sdp_body_is_sdp(body))
         {
-            pjmedia_sdp_attr* opus_attr = opus_sdp_get_opus_rtpmap_attr((pjmedia_sdp_session*) body->data);
+            pjsip_msg_body* new_body = pjsip_msg_body_clone(tdata->pool, body);
+            pjmedia_sdp_attr* opus_attr = opus_sdp_get_opus_rtpmap_attr((pjmedia_sdp_session*) new_body->data);
             if(opus_attr != NULL){
                 pj_str_t new_value;
                 char* found_opus = pj_stristr(&opus_attr->value, &STR_OPUS);
@@ -107,6 +108,7 @@ static pj_status_t opus_sdp_on_tx_msg(pjsip_tx_data *tdata)
                                                                                                                 found_opus - opus_attr->value.ptr, opus_attr->value.ptr,
                                                                                                                 STR_OPUS_RFC_FMT.slen, STR_OPUS_RFC_FMT.ptr);
                 opus_attr->value = new_value;
+                tdata->msg->body = new_body;
             }
         }
     }
@@ -140,11 +142,8 @@ PJ_DECL(pj_status_t) pjsip_opus_sdp_rewriter_init(unsigned target_clock_rate) {
     if(target_clock_rate > 0 && target_clock_rate <= 48000){
         pjopus_internal_clockrate = target_clock_rate;
     }else{
-        pjopus_internal_clockrate = 16000;
+        pjopus_internal_clockrate = 48000;
     }
-    if(target_clock_rate != 48000){
-        return pjsip_endpt_register_module(pjsua_get_pjsip_endpt(),
+    return pjsip_endpt_register_module(pjsua_get_pjsip_endpt(),
                             &pjsua_opus_sdp_rewriter);
-    }
-    return PJ_SUCCESS;
 }

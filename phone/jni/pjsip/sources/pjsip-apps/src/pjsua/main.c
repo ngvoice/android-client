@@ -1,4 +1,4 @@
-/* $Id: main.c 4522 2013-05-23 03:48:31Z riza $ */
+/* $Id: main.c 4752 2014-02-19 08:57:22Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -91,7 +91,7 @@ static void setup_socket_signal()
 static void setup_signal_handler(void) {}
 #endif
 
-int main(int argc, char *argv[])
+int main_func(int argc, char *argv[])
 {
     pj_status_t status = PJ_TRUE;
 
@@ -121,4 +121,10 @@ int main(int argc, char *argv[])
 	    pj_thread_join(sig_thread);
 	}
     }
+    return 0;
+}
+
+int main(int argc, char *argv[])
+{
+    return pj_run_app(&main_func, argc, argv, 0);
 }

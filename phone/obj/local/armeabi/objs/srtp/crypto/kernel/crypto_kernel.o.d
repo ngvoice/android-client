@@ -1,5 +1,5 @@
-obj/local/armeabi/objs/srtp//crypto/kernel/crypto_kernel.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/kernel/crypto_kernel.c \
+obj/local/armeabi/objs/srtp/./crypto/kernel/crypto_kernel.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/kernel/crypto_kernel.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/alloc.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/datatypes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/integers.h \

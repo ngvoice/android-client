@@ -1,5 +1,5 @@
-obj/local/x86/objs/srtp//crypto/replay/rdbx.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/replay/rdbx.c \
+obj/local/x86/objs/srtp/./crypto/replay/rdbx.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/replay/rdbx.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/rdbx.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/datatypes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/integers.h \

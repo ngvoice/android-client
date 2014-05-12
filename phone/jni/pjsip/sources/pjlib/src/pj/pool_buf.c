@@ -1,4 +1,4 @@
-/* $Id: pool_buf.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: pool_buf.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -21,7 +21,7 @@
 #include <pj/assert.h>
 #include <pj/os.h>
 
-struct pj_pool_factory stack_based_factory;
+static struct pj_pool_factory stack_based_factory;
 
 struct creation_param
 {
@@ -43,7 +43,7 @@ static void pool_buf_cleanup(void)
 	is_initialized = 0;
 }
 
-static pj_status_t pool_buf_initialize()
+static pj_status_t pool_buf_initialize(void)
 {
     pj_atexit(&pool_buf_cleanup);
 

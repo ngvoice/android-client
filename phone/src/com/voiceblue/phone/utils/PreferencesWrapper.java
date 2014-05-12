@@ -110,6 +110,7 @@ public class PreferencesWrapper {
 		put(SipConfigManager.TURN_SERVER, "");
 		put(SipConfigManager.TURN_USERNAME, "");
 		put(SipConfigManager.TURN_PASSWORD, "");
+		put(SipConfigManager.TURN_TRANSPORT, "0");
 		put(SipConfigManager.TLS_SERVER_NAME, "");
 		put(SipConfigManager.CA_LIST_FILE, "");
 		put(SipConfigManager.CERT_FILE, "");
@@ -152,6 +153,7 @@ public class PreferencesWrapper {
 		put(SipConfigManager.USE_IPV6, false);
 		put(SipConfigManager.ENABLE_DNS_SRV, false);
 		put(SipConfigManager.ENABLE_ICE, false);
+		put(SipConfigManager.ICE_AGGRESSIVE, true);
 		put(SipConfigManager.ENABLE_TURN, false);
 		put(SipConfigManager.ENABLE_STUN, false);
         put(SipConfigManager.ENABLE_STUN2, false);
@@ -209,11 +211,13 @@ public class PreferencesWrapper {
 		put(HAS_ALREADY_SETUP_SERVICE, false);
 		put(SipConfigManager.LOG_USE_DIRECT_FILE, false);
 		put(SipConfigManager.START_WITH_TEXT_DIALER, false);
+		put(SipConfigManager.REWRITE_RULES_DIALER, false);
 		
 		//Calls
 		put(SipConfigManager.AUTO_RECORD_CALLS, false);
 		put(SipConfigManager.SUPPORT_MULTIPLE_CALLS, false);
         	put(SipConfigManager.USE_VIDEO, true);
+		put(SipConfigManager.PLAY_WAITTONE_ON_HOLD, false);
 		
 		//Secure
 		put(SipConfigManager.TLS_VERIFY_SERVER, false);

@@ -1,4 +1,4 @@
-/* $Id: sip_transport_udp.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: sip_transport_udp.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -620,11 +620,8 @@ static pj_status_t register_to_ioqueue(struct udp_transport *tp)
 /* Start ioqueue asynchronous reading to all rdata */
 static pj_status_t start_async_read(struct udp_transport *tp)
 {
-    pj_ioqueue_t *ioqueue;
     int i;
     pj_status_t status;
-
-    ioqueue = pjsip_endpt_get_ioqueue(tp->base.endpt);
 
     /* Start reading the ioqueue. */
     for (i=0; i<tp->rdata_cnt; ++i) {
@@ -1057,6 +1054,12 @@ PJ_DEF(pj_status_t) pjsip_udp_transport_restart(pjsip_transport *transport,
 
 	    a_name = &bound_name;
 	}
+
+        /* Init local address. */
+        status = pj_sock_getsockname(sock, &tp->base.local_addr, 
+				     &tp->base.addr_len);
+        if (status != PJ_SUCCESS)
+	    return status;
 
 	/* Assign the socket and published address to transport. */
 	udp_set_socket(tp, sock, a_name);

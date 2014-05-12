@@ -226,6 +226,8 @@ obj/local/armeabi-v7a/objs/pjsipjni/src/pjsua_jni_addons.o: \
  jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/sha1.h \
  jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/srv_resolver.h \
  jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h \
+ jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h \
+ jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h \
  jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h \
  jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/pcap.h \
  jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/http_client.h \
@@ -729,6 +731,10 @@ jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/
 jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/srv_resolver.h:
 
 jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h:
+
+jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h:
+
+jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h:
 
 jni/csipsimple-wrapper/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h:
 

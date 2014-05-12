@@ -1575,11 +1575,17 @@ public class SipProfile implements Parcelable {
      * @return the default domain for this account
      */
     public String getDefaultDomain() {
+        ParsedSipContactInfos parsedAoR = SipUri.parseSipContact(acc_id);
         ParsedSipUriInfos parsedInfo = null;
-        if (!TextUtils.isEmpty(reg_uri)) {
-            parsedInfo = SipUri.parseSipUri(reg_uri);
-        } else if (proxies != null && proxies.length > 0) {
-            parsedInfo = SipUri.parseSipUri(proxies[0]);
+        if(TextUtils.isEmpty(parsedAoR.domain)) {
+            // Try to fallback
+            if (!TextUtils.isEmpty(reg_uri)) {
+                parsedInfo = SipUri.parseSipUri(reg_uri);
+            } else if (proxies != null && proxies.length > 0) {
+                parsedInfo = SipUri.parseSipUri(proxies[0]);
+            }
+        }else {
+            parsedInfo = parsedAoR.getServerSipUri();
         }
 
         if (parsedInfo == null) {
@@ -1690,6 +1696,28 @@ public class SipProfile implements Parcelable {
             return parsed.userName;
         }
         return "";
+    }
+    
+    public ParsedSipContactInfos formatCalleeNumber(String fuzzyNumber) {
+        ParsedSipContactInfos finalCallee = SipUri.parseSipContact(fuzzyNumber);
+
+        if (TextUtils.isEmpty(finalCallee.domain)) {
+            String defaultDomain = getDefaultDomain();
+            if(TextUtils.isEmpty(defaultDomain)) {
+                finalCallee.domain = finalCallee.userName;
+                finalCallee.userName = null;
+            }else {
+                finalCallee.domain = defaultDomain;
+            }
+        }
+        if (TextUtils.isEmpty(finalCallee.scheme)) {
+            if (!TextUtils.isEmpty(default_uri_scheme)) {
+                finalCallee.scheme = default_uri_scheme;
+            } else {
+                finalCallee.scheme = SipManager.PROTOCOL_SIP;
+            }
+        }
+        return finalCallee;
     }
 
     // Helpers static factory

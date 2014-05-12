@@ -48,6 +48,8 @@ obj/local/mips/objs/pjsip/src/pjsip-ua/sip_timer.o: \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjmedia/include/pjmedia/config_auto.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/print_util.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/sip_endpoint.h \
+ jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/sip_event.h \
+ jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/sip_transaction.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/log.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/math.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/string.h \
@@ -179,6 +181,10 @@ jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjmedia/include/pjmedia
 jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/print_util.h:
 
 jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/sip_endpoint.h:
+
+jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/sip_event.h:
+
+jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/include/pjsip/sip_transaction.h:
 
 jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/log.h:
 

@@ -320,16 +320,16 @@ offset_aecm_channelAdapt32:
 	.section	.debug_str,"MS",%progbits,1
 .LASF5:
 	.ascii	"long long int\000"
-.LASF14:
-	.ascii	"offset_aecm_dBufClean\000"
+.LASF16:
+	.ascii	"offset_aecm_channelAdapt16\000"
 .LASF0:
 	.ascii	"unsigned int\000"
 .LASF10:
 	.ascii	"offset_aecm_dfaCleanQDomain\000"
 .LASF13:
 	.ascii	"offset_aecm_dBufNoisy\000"
-.LASF16:
-	.ascii	"offset_aecm_channelAdapt16\000"
+.LASF20:
+	.ascii	"/usr/src/csipsimple-read-only/jni/webrtc\000"
 .LASF7:
 	.ascii	"long unsigned int\000"
 .LASF6:
@@ -357,9 +357,9 @@ offset_aecm_channelAdapt32:
 	.ascii	"short unsigned int\000"
 .LASF1:
 	.ascii	"signed char\000"
+.LASF14:
+	.ascii	"offset_aecm_dBufClean\000"
 .LASF3:
 	.ascii	"short int\000"
-.LASF20:
-	.ascii	"/usr/src/CSipSimple-trunk/CSipSimple/jni/webrtc\000"
 	.ident	"GCC: (GNU) 4.6 20120106 (prerelease)"
 	.section	.note.GNU-stack,"",%progbits

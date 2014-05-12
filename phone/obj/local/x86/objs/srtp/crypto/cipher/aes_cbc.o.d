@@ -1,5 +1,5 @@
-obj/local/x86/objs/srtp//crypto/cipher/aes_cbc.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/cipher/aes_cbc.c \
+obj/local/x86/objs/srtp/./crypto/cipher/aes_cbc.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/cipher/aes_cbc.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/aes_cbc.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/aes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../build/srtp/srtp_config.h \

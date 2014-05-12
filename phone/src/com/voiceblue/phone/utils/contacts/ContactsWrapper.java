@@ -21,23 +21,17 @@
 
 package com.voiceblue.phone.utils.contacts;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.telephony.PhoneNumberUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
-import com.voiceblue.phone.R;
 import com.voiceblue.phone.api.SipManager;
 import com.voiceblue.phone.models.CallerInfo;
 import com.voiceblue.phone.utils.Compatibility;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ContactsWrapper {
@@ -95,17 +89,6 @@ public abstract class ContactsWrapper {
     public abstract List<Phone> getPhoneNumbers(Context ctxt, long contactId, int flag);
 
     /**
-     * Find contacts-phone tuple in the contact database based on an user input
-     * string This method make clever search accross several field of the
-     * contact
-     * 
-     * @param ctxt the context of the application
-     * @param constraint the filtering string for the name
-     * @return a cursor to the result
-     */
-    public abstract Cursor searchContact(Context ctxt, CharSequence constraint);
-
-    /**
      * Transform a contact-phone entry into a sip uri
      * 
      * @param ctxt the context of the application
@@ -115,16 +98,13 @@ public abstract class ContactsWrapper {
     public abstract CharSequence transformToSipUri(Context ctxt, Cursor cursor);
 
     /**
-     * Bind to view the contact-phone tuple
-     * View should be expanded from search_contact_list_item.xml
-     * 
-     * @param view the view to fill with infos
+     * Is the cursor content a phone number that should have rewriting rules applied on
      * @param context the context of the application
-     * @param cursor the cursor to the contact-phone tuple
+     * @param cursor the cursor to the contact entry
+     * @return true if a phone number
      */
-    public abstract void bindAutoCompleteView(View view, Context context, Cursor cursor);
-
-
+    public abstract boolean isExternalPhoneNumber(Context context, Cursor cursor);
+    
     /**
      * Bind to view the contact
      * 
@@ -138,9 +118,10 @@ public abstract class ContactsWrapper {
      *  Get a cursor loader on contacts entries based on contact grouping 
      * 
      * @param ctxt the context of the application
+     * @param constraint Search string. If null returns all
      * @return the result cursor
      */
-    public abstract Cursor getContactsPhones(Context ctxt);
+    public abstract Cursor getContactsPhones(Context ctxt, CharSequence constraint);
     
     /**
      * Retrieve list of csip: im entries in a group
@@ -260,78 +241,6 @@ public abstract class ContactsWrapper {
         }
     }
 
-    public void treatContactPickerPositiveResult(final Context ctxt, final Intent data,
-            final OnPhoneNumberSelected l) {
-        Uri contactUri = data.getData();
-        List<String> list = contactUri.getPathSegments();
-        String contactId = list.get(list.size() - 1);
-        treatContactPickerPositiveResult(ctxt, contactId, l);
-    }
-
-    public void treatContactPickerPositiveResult(final Context ctxt, final String contactId,
-            final OnPhoneNumberSelected l) {
-        List<Phone> phones = getPhoneNumbers(ctxt, Long.parseLong(contactId), URI_ALLS);
-
-        if (phones.size() == 0) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(ctxt);
-            builder.setPositiveButton(R.string.ok, null);
-            builder.setTitle(R.string.choose_phone);
-            builder.setMessage(R.string.no_phone_found);
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        } else if (phones.size() == 1) {
-            if (l != null) {
-                l.onTrigger(formatNumber(phones.get(0).getNumber(), phones.get(0).getType()));
-            }
-        } else {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(ctxt);
-
-            ArrayList<String> entries = new ArrayList<String>();
-            for (Phone phone : phones) {
-                entries.add(formatNumber(phone.getNumber(), phone.getType()));
-            }
-
-            final ArrayAdapter<String> phoneChoiceAdapter = new ArrayAdapter<String>(ctxt,
-                    android.R.layout.simple_dropdown_item_1line, entries);
-
-            builder.setTitle(R.string.choose_phone);
-            builder.setAdapter(phoneChoiceAdapter, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (l != null) {
-                        l.onTrigger(phoneChoiceAdapter.getItem(which));
-                    }
-                }
-            });
-            builder.setCancelable(true);
-            builder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Nothing to do
-                    dialog.dismiss();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
-    }
-
-    private String formatNumber(String number, String type) {
-        if (type != null && type.equals(SipManager.PROTOCOL_SIP)) {
-            return "sip:" + number;
-        } else {
-            if (!number.startsWith("sip:")) {
-                // Code from android source :
-                // com/android/phone/OutgoingCallBroadcaster.java
-                // so that we match exactly the same case that an outgoing call
-                // from android
-                String rNumber = PhoneNumberUtils.convertKeypadLettersToDigits(number);
-                return PhoneNumberUtils.stripSeparators(rNumber);
-            }
-            return number;
-        }
-    }
-
     public interface OnPhoneNumberSelected {
         void onTrigger(String number);
     }
@@ -396,5 +305,6 @@ public abstract class ContactsWrapper {
      * @return Caller information of the current application user
      */
     public abstract CallerInfo findSelfInfo(Context ctxt);
+
 
 }

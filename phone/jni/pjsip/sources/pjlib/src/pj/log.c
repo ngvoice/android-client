@@ -1,4 +1,4 @@
-/* $Id: log.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: log.c 4761 2014-02-24 09:02:44Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -107,7 +107,7 @@ static void log_set_indent(int indent)
     pj_thread_local_set(thread_indent_tls_id, (void*)(pj_ssize_t)indent);
 }
 
-static int log_get_raw_indent()
+static int log_get_raw_indent(void)
 {
     return (long)(pj_ssize_t)pj_thread_local_get(thread_indent_tls_id);
 }
@@ -119,13 +119,13 @@ static void log_set_indent(int indent)
     if (log_indent < 0) log_indent = 0;
 }
 
-static int log_get_raw_indent()
+static int log_get_raw_indent(void)
 {
     return log_indent;
 }
 #endif	/* PJ_LOG_ENABLE_INDENT && PJ_HAS_THREADS */
 
-static int log_get_indent()
+static int log_get_indent(void)
 {
     int indent = log_get_raw_indent();
     return indent > LOG_MAX_INDENT ? LOG_MAX_INDENT : indent;
@@ -284,7 +284,8 @@ static void resume_logging(int *saved_level)
 #if PJ_HAS_THREADS
     if (thread_suspended_tls_id != -1) 
     {
-	pj_thread_local_set(thread_suspended_tls_id, (void*)PJ_FALSE);
+	pj_thread_local_set(thread_suspended_tls_id,
+			    (void*)(pj_size_t)PJ_FALSE);
     }
     else
 #endif
@@ -444,6 +445,9 @@ PJ_DEF(void) pj_log( const char *sender, int level,
 	level = 1;
 	print_len = pj_ansi_snprintf(pre, sizeof(log_buffer)-len, 
 				     "<logging error: msg too long>");
+    }
+    if (print_len < 1 || print_len >= (int)(sizeof(log_buffer)-len)) {
+	print_len = sizeof(log_buffer) - len - 1;
     }
     len = len + print_len;
     if (len > 0 && len < (int)sizeof(log_buffer)-2) {

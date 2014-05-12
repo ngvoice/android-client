@@ -1,4 +1,4 @@
-/* $Id: ffmpeg_util.h 3664 2011-07-19 03:42:28Z nanang $ */
+/* $Id: ffmpeg_util.h 4801 2014-03-20 09:42:31Z ismangil $ */
 /*
  * Copyright (C) 2010-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -36,6 +36,10 @@
 
 #include <libavutil/avutil.h>
 #include <libavcodec/avcodec.h>
+
+#ifndef CodecID
+  #define CodecID AVCodecID
+#endif
 
 void pjmedia_ffmpeg_add_ref();
 void pjmedia_ffmpeg_dec_ref();

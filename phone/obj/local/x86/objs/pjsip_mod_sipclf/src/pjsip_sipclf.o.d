@@ -102,7 +102,9 @@ obj/local/x86/objs/pjsip_mod_sipclf/src/pjsip_sipclf.o: \
  jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/sha1.h \
  jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/srv_resolver.h \
  jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h \
+ jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h \
  jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/xml.h \
+ jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h \
  jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h \
  jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/pcap.h \
  jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/http_client.h \
@@ -454,7 +456,11 @@ jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pj
 
 jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h:
 
+jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h:
+
 jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/xml.h:
+
+jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h:
 
 jni/pjsip_mod_sipclf/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h:
 

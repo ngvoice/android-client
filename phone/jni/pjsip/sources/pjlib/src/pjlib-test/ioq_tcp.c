@@ -1,4 +1,4 @@
-/* $Id: ioq_tcp.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: ioq_tcp.c 4550 2013-07-02 11:45:57Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -254,7 +254,7 @@ static int compliance_test_0(pj_bool_t allow_concur)
     pj_ioqueue_op_key_t accept_op;
     int bufsize = BUF_MIN_SIZE;
     int status = -1;
-    pj_ssize_t pending_op = 0;
+    int pending_op = 0;
     pj_timestamp t_elapsed;
     pj_str_t s;
     pj_status_t rc;
@@ -467,7 +467,7 @@ on_error:
     if (ioque != NULL)
 	pj_ioqueue_destroy(ioque);
     pj_pool_release(pool);
-    return (int)status;
+    return status;
 
 }
 

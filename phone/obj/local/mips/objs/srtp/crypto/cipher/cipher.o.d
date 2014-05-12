@@ -1,5 +1,5 @@
-obj/local/mips/objs/srtp//crypto/cipher/cipher.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/cipher/cipher.c \
+obj/local/mips/objs/srtp/./crypto/cipher/cipher.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/cipher/cipher.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/cipher.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/datatypes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/integers.h \

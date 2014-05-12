@@ -1,4 +1,4 @@
-/* $Id: pjsua_pres.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: pjsua_pres.c 4713 2014-01-23 08:13:11Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -74,10 +74,10 @@ struct buddy_lock
 };
 
 /* Acquire lock to the specified buddy_id */
-pj_status_t lock_buddy(const char *title,
-		       pjsua_buddy_id buddy_id,
-		       struct buddy_lock *lck,
-		       unsigned _unused_)
+static pj_status_t lock_buddy(const char *title,
+			      pjsua_buddy_id buddy_id,
+			      struct buddy_lock *lck,
+			      unsigned _unused_)
 {
     enum { MAX_RETRY=50 };
     pj_bool_t has_pjsua_lock = PJ_FALSE;
@@ -2094,7 +2094,7 @@ pj_status_t pjsua_start_mwi(pjsua_acc_id acc_id, pj_bool_t force_renew)
 
     acc = &pjsua_var.acc[acc_id];
 
-    if (!acc->cfg.mwi_enabled) {
+    if (!acc->cfg.mwi_enabled || !acc->regc) {
 	if (acc->mwi_sub) {
 	    /* Terminate MWI subscription */
 	    pjsip_evsub *sub = acc->mwi_sub;

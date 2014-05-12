@@ -232,6 +232,8 @@ obj/local/armeabi/objs/pj_video_android/__/__/android_sources/pjmedia/src/pjmedi
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/sha1.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/srv_resolver.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/dns_server.h \
+ jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/string.h \
+ jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/json.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/stun_simple.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/pcap.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/http_client.h \
@@ -740,6 +742,10 @@ jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/
 jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/srv_resolver.h:
 
 jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/dns_server.h:
+
+jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/string.h:
+
+jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/json.h:
 
 jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/stun_simple.h:
 

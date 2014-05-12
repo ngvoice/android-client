@@ -37,8 +37,8 @@ import com.voiceblue.phone.models.Filter;
 import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.PreferencesWrapper;
 import com.voiceblue.phone.wizards.utils.AccountCreationFirstView;
-import com.voiceblue.phone.wizards.utils.AccountCreationWebview;
 import com.voiceblue.phone.wizards.utils.AccountCreationFirstView.OnAccountCreationFirstViewListener;
+import com.voiceblue.phone.wizards.utils.AccountCreationWebview;
 import com.voiceblue.phone.wizards.utils.AccountCreationWebview.OnAccountCreationDoneListener;
 
 import org.apache.http.client.methods.HttpGet;

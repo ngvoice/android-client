@@ -33,11 +33,11 @@ import android.text.TextUtils;
 import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.models.Filter;
 import com.voiceblue.phone.utils.AccountListUtils;
+import com.voiceblue.phone.utils.AccountListUtils.AccountStatusDisplay;
 import com.voiceblue.phone.utils.CallHandlerPlugin;
+import com.voiceblue.phone.utils.CallHandlerPlugin.OnLoadListener;
 import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.PreferencesProviderWrapper;
-import com.voiceblue.phone.utils.AccountListUtils.AccountStatusDisplay;
-import com.voiceblue.phone.utils.CallHandlerPlugin.OnLoadListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;

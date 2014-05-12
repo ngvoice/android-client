@@ -1,5 +1,5 @@
-obj/local/armeabi-v7a/objs/srtp//pjlib/srtp_err.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//pjlib/srtp_err.c \
+obj/local/armeabi-v7a/objs/srtp/./pjlib/srtp_err.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./pjlib/srtp_err.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/err.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/datatypes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/integers.h \

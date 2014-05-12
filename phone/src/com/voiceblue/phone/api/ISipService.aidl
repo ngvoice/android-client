@@ -214,7 +214,13 @@ interface ISipService{
 	 * Revoke a ZRTP SAS
 	 */ 
 	void zrtpSASRevoke(int callId);
-	
-	boolean isForceRegistrationOn3g();
-	void setForceRegistrationOn3g(boolean mForceRegistrationOn3g);
+	/**
+	 * Get nat type detected by the sip stack
+	 * @return String representing nat type detected by the stack. Empty string if nothing detected yet.
+	 */
+	 String getLocalNatType();
+	 
+	 boolean isForceRegistrationOn3g();
+     void setForceRegistrationOn3g(boolean mForceRegistrationOn3g);
+	 
 }

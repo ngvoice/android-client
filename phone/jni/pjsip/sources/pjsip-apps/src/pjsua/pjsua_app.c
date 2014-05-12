@@ -1,4 +1,4 @@
-/* $Id: pjsua_app.c 4525 2013-05-28 12:03:36Z riza $ */
+/* $Id: pjsua_app.c 4724 2014-01-31 08:52:09Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -325,8 +325,8 @@ static void on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id,
 		  notif_st,
 		  call_info.remote_info.ptr,
 		  call_info.local_info.ptr,
-		  (app_config.use_cli?"c a":"a"),
-		  (app_config.use_cli?"c g":"h")));
+		  (app_config.use_cli?"ca a":"a"),
+		  (app_config.use_cli?"g":"h")));
     }
 }
 
@@ -782,7 +782,7 @@ static void on_call_transfer_status(pjsua_call_id call_id,
 
     if (status_code/100 == 2) {
 	PJ_LOG(3,(THIS_FILE, 
-	          "Call %d: call transfered successfully, disconnecting call",
+	          "Call %d: call transferred successfully, disconnecting call",
 		  call_id));
 	pjsua_call_hangup(call_id, PJSIP_SC_GONE, NULL, NULL);
 	*p_cont = PJ_FALSE;
@@ -847,7 +847,7 @@ static void on_mwi_info(pjsua_acc_id acc_id, pjsua_mwi_info *mwi_info)
 	return;
     }
 
-    body.ptr = mwi_info->rdata->msg_info.msg->body->data;
+    body.ptr = (char *)mwi_info->rdata->msg_info.msg->body->data;
     body.slen = mwi_info->rdata->msg_info.msg->body->len;
 
     PJ_LOG(3,(THIS_FILE, " Body:\n%.*s", (int)body.slen, body.ptr));
@@ -1077,33 +1077,35 @@ static void simple_registrar(pjsip_rx_data *rdata)
     pj_status_t status;
 
     status = pjsip_endpt_create_response(pjsua_get_pjsip_endpt(),
-				 rdata, 200, NULL, &tdata);
+					 rdata, 200, NULL, &tdata);
     if (status != PJ_SUCCESS)
     return;
 
-    exp = pjsip_msg_find_hdr(rdata->msg_info.msg, PJSIP_H_EXPIRES, NULL);
+    exp = (pjsip_expires_hdr *)pjsip_msg_find_hdr(rdata->msg_info.msg, 
+						  PJSIP_H_EXPIRES, NULL);
 
     h = rdata->msg_info.msg->hdr.next;
     while (h != &rdata->msg_info.msg->hdr) {
-    if (h->type == PJSIP_H_CONTACT) {
-    const pjsip_contact_hdr *c = (const pjsip_contact_hdr*)h;
-    int e = c->expires;
+	if (h->type == PJSIP_H_CONTACT) {
+	    const pjsip_contact_hdr *c = (const pjsip_contact_hdr*)h;
+	    int e = c->expires;
 
-    if (e < 0) {
-	if (exp)
-	    e = exp->ivalue;
-	else
-	    e = 3600;
-    }
+	    if (e < 0) {
+		if (exp)
+		    e = exp->ivalue;
+		else
+		    e = 3600;
+	    }
 
-    if (e > 0) {
-	pjsip_contact_hdr *nc = pjsip_hdr_clone(tdata->pool, h);
-	nc->expires = e;
-	pjsip_msg_add_hdr(tdata->msg, (pjsip_hdr*)nc);
-	++cnt;
-    }
-    }
-    h = h->next;
+	    if (e > 0) {
+		pjsip_contact_hdr *nc = (pjsip_contact_hdr *)pjsip_hdr_clone(
+								tdata->pool, h);
+		nc->expires = e;
+		pjsip_msg_add_hdr(tdata->msg, (pjsip_hdr*)nc);
+		++cnt;
+	    }
+	}
+	h = h->next;
     }
 
     srv = pjsip_generic_string_hdr_create(tdata->pool, NULL, NULL);
@@ -1164,8 +1166,8 @@ static pj_bool_t default_mod_on_rx_request(pjsip_rx_data *rdata)
 	cap_hdr = pjsip_endpt_get_capability(pjsua_get_pjsip_endpt(), 
 					     PJSIP_H_ALLOW, NULL);
 	if (cap_hdr) {
-	    pjsip_msg_add_hdr(tdata->msg, pjsip_hdr_clone(tdata->pool, 
-							   cap_hdr));
+	    pjsip_msg_add_hdr(tdata->msg, (pjsip_hdr *)pjsip_hdr_clone(
+							 tdata->pool, cap_hdr));
 	}
     }
 
@@ -1279,6 +1281,7 @@ static pj_status_t app_init()
     pjsua_transport_id transport_id = -1;
     pjsua_transport_config tcp_cfg;
     unsigned i;
+    pj_pool_t *tmp_pool;
     pj_status_t status;
 
     /** Create pjsua **/
@@ -1288,6 +1291,7 @@ static pj_status_t app_init()
 
     /* Create pool for application */
     app_config.pool = pjsua_pool_create("pjsua-app", 1000, 1000);
+    tmp_pool = pjsua_pool_create("tmp-pjsua", 1000, 1000);;
 
     /* Init CLI & its FE settings */
     if (!app_running) {
@@ -1299,8 +1303,10 @@ static pj_status_t app_init()
 
     /** Parse args **/
     status = load_config(app_cfg.argc, app_cfg.argv, &uri_arg);
-    if (status != PJ_SUCCESS)
+    if (status != PJ_SUCCESS) {
+	pj_pool_release(tmp_pool);
 	return status;
+    }
 
     /* Initialize application callbacks */
     app_config.cfg.cb.on_call_state = &on_call_state;
@@ -1339,8 +1345,10 @@ static pj_status_t app_init()
     /* Initialize pjsua */
     status = pjsua_init(&app_config.cfg, &app_config.log_cfg,
 			&app_config.media_cfg);
-    if (status != PJ_SUCCESS)
+    if (status != PJ_SUCCESS) {
+	pj_pool_release(tmp_pool);
 	return status;
+    }
 
     /* Initialize our module to handle otherwise unhandled request */
     status = pjsip_endpt_register_module(pjsua_get_pjsip_endpt(),
@@ -1585,12 +1593,17 @@ static pj_status_t app_init()
 
 	/* Add local account */
 	pjsua_acc_add_local(transport_id, PJ_TRUE, &aid);
-	if (PJMEDIA_HAS_VIDEO) {
+
+	/* Adjust local account config based on pjsua app config */
+	{
 	    pjsua_acc_config acc_cfg;
-	    pjsua_acc_get_config(aid, &acc_cfg);
+	    pjsua_acc_get_config(aid, tmp_pool, &acc_cfg);
+
 	    app_config_init_video(&acc_cfg);
+	    acc_cfg.rtp_cfg = app_config.rtp_cfg;
 	    pjsua_acc_modify(aid, &acc_cfg);
 	}
+
 	//pjsua_acc_set_transport(aid, transport_id);
 	pjsua_acc_set_online_status(current_acc, PJ_TRUE);
 
@@ -1624,14 +1637,18 @@ static pj_status_t app_init()
 
 	/* Add local account */
 	pjsua_acc_add_local(transport_id, PJ_TRUE, &aid);
-	if (PJMEDIA_HAS_VIDEO) {
+
+	/* Adjust local account config based on pjsua app config */
+	{
 	    pjsua_acc_config acc_cfg;
-	    pjsua_acc_get_config(aid, &acc_cfg);
+	    pjsua_acc_get_config(aid, tmp_pool, &acc_cfg);
+
 	    app_config_init_video(&acc_cfg);
-	    if (app_config.ipv6)
-		acc_cfg.ipv6_media_use = PJSUA_IPV6_ENABLED;
+	    acc_cfg.rtp_cfg = app_config.rtp_cfg;
+	    acc_cfg.ipv6_media_use = PJSUA_IPV6_ENABLED;
 	    pjsua_acc_modify(aid, &acc_cfg);
 	}
+
 	//pjsua_acc_set_transport(aid, transport_id);
 	pjsua_acc_set_online_status(current_acc, PJ_TRUE);
 
@@ -1658,12 +1675,17 @@ static pj_status_t app_init()
 
 	/* Add local account */
 	pjsua_acc_add_local(transport_id, PJ_TRUE, &aid);
-	if (PJMEDIA_HAS_VIDEO) {
+
+	/* Adjust local account config based on pjsua app config */
+	{
 	    pjsua_acc_config acc_cfg;
-	    pjsua_acc_get_config(aid, &acc_cfg);
+	    pjsua_acc_get_config(aid, tmp_pool, &acc_cfg);
+
 	    app_config_init_video(&acc_cfg);
+	    acc_cfg.rtp_cfg = app_config.rtp_cfg;
 	    pjsua_acc_modify(aid, &acc_cfg);
 	}
+
 	pjsua_acc_set_online_status(current_acc, PJ_TRUE);
 
     }
@@ -1683,14 +1705,18 @@ static pj_status_t app_init()
 
 	/* Add local account */
 	pjsua_acc_add_local(transport_id, PJ_TRUE, &aid);
-	if (PJMEDIA_HAS_VIDEO) {
+
+	/* Adjust local account config based on pjsua app config */
+	{
 	    pjsua_acc_config acc_cfg;
-	    pjsua_acc_get_config(aid, &acc_cfg);
+	    pjsua_acc_get_config(aid, tmp_pool, &acc_cfg);
+
 	    app_config_init_video(&acc_cfg);
-	    if (app_config.ipv6)
-		acc_cfg.ipv6_media_use = PJSUA_IPV6_ENABLED;
+	    acc_cfg.rtp_cfg = app_config.rtp_cfg;
+	    acc_cfg.ipv6_media_use = PJSUA_IPV6_ENABLED;
 	    pjsua_acc_modify(aid, &acc_cfg);
 	}
+
 	//pjsua_acc_set_transport(aid, transport_id);
 	pjsua_acc_set_online_status(current_acc, PJ_TRUE);
     }
@@ -1718,12 +1744,17 @@ static pj_status_t app_init()
 	
 	/* Add local account */
 	pjsua_acc_add_local(transport_id, PJ_FALSE, &acc_id);
-	if (PJMEDIA_HAS_VIDEO) {
+
+	/* Adjust local account config based on pjsua app config */
+	{
 	    pjsua_acc_config acc_cfg;
-	    pjsua_acc_get_config(acc_id, &acc_cfg);
+	    pjsua_acc_get_config(acc_id, tmp_pool, &acc_cfg);
+
 	    app_config_init_video(&acc_cfg);
+	    acc_cfg.rtp_cfg = app_config.rtp_cfg;
 	    pjsua_acc_modify(acc_id, &acc_cfg);
 	}
+
 	pjsua_acc_set_online_status(acc_id, PJ_TRUE);
     }
 
@@ -1742,14 +1773,18 @@ static pj_status_t app_init()
 
 	/* Add local account */
 	pjsua_acc_add_local(transport_id, PJ_TRUE, &aid);
-	if (PJMEDIA_HAS_VIDEO) {
+
+	/* Adjust local account config based on pjsua app config */
+	{
 	    pjsua_acc_config acc_cfg;
-	    pjsua_acc_get_config(aid, &acc_cfg);
+	    pjsua_acc_get_config(aid, tmp_pool, &acc_cfg);
+
 	    app_config_init_video(&acc_cfg);
-	    if (app_config.ipv6)
-		acc_cfg.ipv6_media_use = PJSUA_IPV6_ENABLED;
+	    acc_cfg.rtp_cfg = app_config.rtp_cfg;
+	    acc_cfg.ipv6_media_use = PJSUA_IPV6_ENABLED;
 	    pjsua_acc_modify(aid, &acc_cfg);
 	}
+
 	//pjsua_acc_set_transport(aid, transport_id);
 	pjsua_acc_set_online_status(current_acc, PJ_TRUE);
     }
@@ -1829,9 +1864,11 @@ static pj_status_t app_init()
     call_opt.aud_cnt = app_config.aud_cnt;
     call_opt.vid_cnt = app_config.vid.vid_cnt;
 
+    pj_pool_release(tmp_pool);
     return PJ_SUCCESS;
 
 on_error:
+    pj_pool_release(tmp_pool);
     app_destroy();
     return status;
 }

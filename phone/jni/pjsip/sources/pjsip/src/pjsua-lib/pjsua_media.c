@@ -1,4 +1,4 @@
-/* $Id: pjsua_media.c 4544 2013-06-26 01:02:02Z bennylp $ */
+/* $Id: pjsua_media.c 4750 2014-02-19 04:11:43Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -179,7 +179,7 @@ pj_status_t pjsua_media_subsys_start(void)
  */
 pj_status_t pjsua_media_subsys_destroy(unsigned flags)
 {
-    unsigned i;
+    PJ_UNUSED_ARG(flags);
 
     PJ_LOG(4,(THIS_FILE, "Shutting down media.."));
     pj_log_push_indent();
@@ -191,6 +191,8 @@ pj_status_t pjsua_media_subsys_destroy(unsigned flags)
 	pjsua_aud_subsys_destroy();
     }
 
+#if 0
+    // This part has been moved out to pjsua_destroy() (see also #1717).
     /* Close media transports */
     for (i=0; i<pjsua_var.ua_cfg.max_calls; ++i) {
         /* TODO: check if we're not allowed to send to network in the
@@ -199,6 +201,7 @@ pj_status_t pjsua_media_subsys_destroy(unsigned flags)
 	PJ_UNUSED_ARG(flags);
 	pjsua_media_channel_deinit(i);
     }
+#endif
 
     /* Destroy media endpoint. */
     if (pjsua_var.med_endpt) {
@@ -826,10 +829,23 @@ static pj_status_t create_ice_media_transport(
     /* Wait until transport is initialized, or time out */
     if (!async) {
 	pj_bool_t has_pjsua_lock = PJSUA_LOCK_IS_LOCKED();
+	pjsip_dialog *dlg = call_med->call->inv ?
+				call_med->call->inv->dlg : NULL;
         if (has_pjsua_lock)
 	    PJSUA_UNLOCK();
+        if (dlg) {
+            /* Don't lock otherwise deadlock:
+             * https://trac.pjsip.org/repos/ticket/1737
+             */
+            ++dlg->sess_count;
+            pjsip_dlg_dec_lock(dlg);
+        }
         while (call_med->tp_ready == PJ_EPENDING) {
 	    pjsua_handle_events(100);
+        }
+        if (dlg) {
+            pjsip_dlg_inc_lock(dlg);
+            --dlg->sess_count;
         }
 	if (has_pjsua_lock)
 	    PJSUA_LOCK();
@@ -1288,6 +1304,20 @@ on_return:
     return status;
 }
 
+/* Determine if call's media is being changed, for example when video is being
+ * added. Then we can reject incoming re-INVITE, for example. This is the
+ * solution for https://trac.pjsip.org/repos/ticket/1738
+ */
+pj_bool_t  pjsua_call_media_is_changing(pjsua_call *call)
+{
+    /* The problem in #1738 occurs because we do handle_events() loop while
+     * adding media, which could cause incoming re-INVITE to be processed and
+     * cause havoc. Since the handle_events() loop only happens while adding
+     * media, it is sufficient to only check if "prov > cnt" for now.
+     */
+    return call->med_prov_cnt > call->med_cnt;
+}
+
 /* Initialize the media line */
 pj_status_t pjsua_call_media_init(pjsua_call_media *call_med,
                                   pjmedia_type type,
@@ -1383,7 +1413,7 @@ static pj_status_t media_channel_init_cb(pjsua_call_id call_id,
          * by the last media transport to finish.
          */
         if (info->status != PJ_SUCCESS)
-            pj_memcpy(&call->med_ch_info, info, sizeof(info));
+            pj_memcpy(&call->med_ch_info, info, sizeof(*info));
 
         /* Check whether all the call's medias have finished calling their
          * callbacks.

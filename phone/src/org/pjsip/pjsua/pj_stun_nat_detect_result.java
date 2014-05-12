@@ -51,12 +51,12 @@ public class pj_stun_nat_detect_result {
     return pjsuaJNI.pj_stun_nat_detect_result_status_text_get(swigCPtr, this);
   }
 
-  public void setNat_type(SWIGTYPE_p_pj_stun_nat_type value) {
-    pjsuaJNI.pj_stun_nat_detect_result_nat_type_set(swigCPtr, this, SWIGTYPE_p_pj_stun_nat_type.getCPtr(value));
+  public void setNat_type(pj_stun_nat_type value) {
+    pjsuaJNI.pj_stun_nat_detect_result_nat_type_set(swigCPtr, this, value.swigValue());
   }
 
-  public SWIGTYPE_p_pj_stun_nat_type getNat_type() {
-    return new SWIGTYPE_p_pj_stun_nat_type(pjsuaJNI.pj_stun_nat_detect_result_nat_type_get(swigCPtr, this), true);
+  public pj_stun_nat_type getNat_type() {
+    return pj_stun_nat_type.swigToEnum(pjsuaJNI.pj_stun_nat_detect_result_nat_type_get(swigCPtr, this));
   }
 
   public void setNat_type_name(String value) {

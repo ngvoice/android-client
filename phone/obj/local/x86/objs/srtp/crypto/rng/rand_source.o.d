@@ -1,5 +1,5 @@
-obj/local/x86/objs/srtp//crypto/rng/rand_source.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/rng/rand_source.c \
+obj/local/x86/objs/srtp/./crypto/rng/rand_source.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/rng/rand_source.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../build/srtp/srtp_config.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../../pjlib/include/pj/types.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../../pjlib/include/pj/config.h \

@@ -50,20 +50,20 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.voiceblue.phone.R;
 import com.voiceblue.phone.api.SipCallSession;
+import com.voiceblue.phone.api.SipCallSession.MediaState;
 import com.voiceblue.phone.api.SipConfigManager;
 import com.voiceblue.phone.api.SipManager;
 import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.api.SipUri;
-import com.voiceblue.phone.api.SipCallSession.MediaState;
 import com.voiceblue.phone.api.SipUri.ParsedSipContactInfos;
 import com.voiceblue.phone.models.CallerInfo;
 import com.voiceblue.phone.service.SipService;
 import com.voiceblue.phone.utils.ContactsAsyncHelper;
 import com.voiceblue.phone.utils.CustomDistribution;
 import com.voiceblue.phone.utils.ExtraPlugins;
+import com.voiceblue.phone.utils.ExtraPlugins.DynActivityPlugin;
 import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.PreferencesProviderWrapper;
-import com.voiceblue.phone.utils.ExtraPlugins.DynActivityPlugin;
 
 import org.webrtc.videoengine.ViERenderer;
 
@@ -362,8 +362,9 @@ public class InCallCard extends FrameLayout implements OnClickListener, Callback
         btnMenuBuilder.removeGroup(R.id.controls);
         for(DynActivityPlugin callPlugin : incallPlugins.values()) {
             int minState = callPlugin.getMetaDataInt(SipManager.EXTRA_SIP_CALL_MIN_STATE, SipCallSession.InvState.EARLY);
-            int maxState = callPlugin.getMetaDataInt(SipManager.EXTRA_SIP_CALL_MIN_STATE, SipCallSession.InvState.CONFIRMED);
+            int maxState = callPlugin.getMetaDataInt(SipManager.EXTRA_SIP_CALL_MAX_STATE, SipCallSession.InvState.CONFIRMED);
             int way = callPlugin.getMetaDataInt(SipManager.EXTRA_SIP_CALL_CALL_WAY, (1 << 0 | 1 << 1));
+            Log.d(THIS_FILE, "Can add plugin ? " + minState + ", " + maxState + ", "+ way);
             if(callInfo.getCallState() < minState) {
                 continue;
             }
@@ -378,8 +379,8 @@ public class InCallCard extends FrameLayout implements OnClickListener, Callback
             }
             MenuItem pluginMenu = btnMenuBuilder.add(R.id.controls, MenuBuilder.NONE, MenuBuilder.NONE, callPlugin.getName());
             Intent it = callPlugin.getIntent();
-            it.putExtra(SipManager.EXTRA_CALL_INFO, callInfo);
-            pluginMenu.setIntent(callPlugin.getIntent());
+            it.putExtra(SipManager.EXTRA_CALL_INFO, new SipCallSession(callInfo));
+            pluginMenu.setIntent(it);
         }
         
         

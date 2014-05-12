@@ -1,4 +1,4 @@
-/* $Id: stun_sock.c 4538 2013-06-19 09:06:55Z nanang $ */
+/* $Id: stun_sock.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -211,7 +211,7 @@ PJ_DEF(pj_status_t) pj_stun_sock_create( pj_stun_config *stun_cfg,
     if (stun_sock->ka_interval == 0)
 	stun_sock->ka_interval = PJ_STUN_KEEP_ALIVE_SEC;
 
-    if (cfg && cfg->grp_lock) {
+    if (cfg->grp_lock) {
 	stun_sock->grp_lock = cfg->grp_lock;
     } else {
 	status = pj_grp_lock_create(pool, NULL, &stun_sock->grp_lock);
@@ -526,6 +526,13 @@ PJ_DEF(void*) pj_stun_sock_get_user_data(pj_stun_sock *stun_sock)
 {
     PJ_ASSERT_RETURN(stun_sock, NULL);
     return stun_sock->user_data;
+}
+
+/* Get group lock */
+PJ_DECL(pj_grp_lock_t *) pj_stun_sock_get_grp_lock(pj_stun_sock *stun_sock)
+{
+    PJ_ASSERT_RETURN(stun_sock, NULL);
+    return stun_sock->grp_lock;
 }
 
 /* Notify application that session has failed */
@@ -947,10 +954,8 @@ static pj_bool_t on_data_recvfrom(pj_activesock_t *asock,
 
 process_app_data:
     if (stun_sock->cb.on_rx_data) {
-	pj_bool_t ret;
-
-	ret = (*stun_sock->cb.on_rx_data)(stun_sock, data, (unsigned)size,
-					  src_addr, addr_len);
+	(*stun_sock->cb.on_rx_data)(stun_sock, data, (unsigned)size,
+				    src_addr, addr_len);
 	status = pj_grp_lock_release(stun_sock->grp_lock);
 	return status!=PJ_EGONE ? PJ_TRUE : PJ_FALSE;
     }

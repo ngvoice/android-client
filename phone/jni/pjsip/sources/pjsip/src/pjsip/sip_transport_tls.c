@@ -1,4 +1,4 @@
-/* $Id: sip_transport_tls.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: sip_transport_tls.c 4726 2014-02-04 04:56:50Z ming $ */
 /* 
  * Copyright (C) 2009-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -183,7 +183,7 @@ static void tls_init_shutdown(struct tls_transport *tls, pj_status_t status)
     if (tls->close_reason == PJ_SUCCESS)
 	tls->close_reason = status;
 
-    if (tls->base.is_shutdown)
+    if (tls->base.is_shutdown || tls->base.is_destroying)
 	return;
 
     /* Prevent immediate transport destroy by application, as transport
@@ -212,6 +212,12 @@ static void tls_init_shutdown(struct tls_transport *tls, pj_status_t status)
 	}
 
 	(*state_cb)(&tls->base, PJSIP_TP_STATE_DISCONNECTED, &state_info);
+    }
+
+    /* check again */
+    if (tls->base.is_shutdown || tls->base.is_destroying) {
+        pjsip_transport_dec_ref(&tls->base);
+	return;
     }
 
     /* We can not destroy the transport since high level objects may

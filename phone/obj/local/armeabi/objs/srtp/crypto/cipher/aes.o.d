@@ -1,5 +1,5 @@
-obj/local/armeabi/objs/srtp//crypto/cipher/aes.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/cipher/aes.c \
+obj/local/armeabi/objs/srtp/./crypto/cipher/aes.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/cipher/aes.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/aes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../build/srtp/srtp_config.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../../pjlib/include/pj/types.h \

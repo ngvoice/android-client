@@ -1,5 +1,5 @@
-obj/local/mips/objs/srtp//crypto/replay/ut_sim.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/replay/ut_sim.c \
+obj/local/mips/objs/srtp/./crypto/replay/ut_sim.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/replay/ut_sim.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/include/ut_sim.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/integers.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../build/srtp/srtp_config.h \

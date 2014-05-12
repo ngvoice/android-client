@@ -667,11 +667,17 @@ ac_pjmedia_video_has_ios
 ac_pjmedia_video
 ac_pa_use_oss
 ac_pa_use_alsa
+ac_pjmedia_audiodev_objs
 ac_pa_cflags
 ac_external_pa
 ac_pjmedia_snd
+ac_pjmedia_resample
+ac_srtp_shutdown_present
+ac_srtp_deinit_present
+ac_external_srtp
 ac_external_gsm
 ac_external_speex
+ac_shared_libraries
 ac_os_objs
 EGREP
 GREP
@@ -687,10 +693,12 @@ CC_INC
 CC_OUT
 LIBEXT2
 LIBEXT
-RANLIB
 LDOUT
 LD
+AR_FLAGS
+ac_ct_AR
 AR
+RANLIB
 ac_ct_CXX
 CXXFLAGS
 CXX
@@ -756,8 +764,11 @@ ac_user_opts='
 enable_option_checking
 enable_floating_point
 enable_epoll
+enable_shared
 with_external_speex
 with_external_gsm
+with_external_srtp
+enable_resample
 enable_sound
 with_external_pa
 enable_oss
@@ -1422,6 +1433,8 @@ Optional Features:
   --disable-floating-point
                           Disable floating point where possible
   --enable-epoll          Use /dev/epoll ioqueue on Linux (experimental)
+  --enable-shared         Build shared libraries
+  --disable-resample      Disable resampling implementations
   --disable-sound         Exclude sound (i.e. use null sound)
   --disable-oss           Disable OSS audio (default: not disabled)
   --disable-video         Disable video feature
@@ -1436,8 +1449,7 @@ Optional Features:
   --disable-g7221-codec   Exclude G.7221 codec in the build
   --disable-speex-codec   Exclude Speex codecs in the build
   --disable-ilbc-codec    Exclude iLBC codec in the build
-  --enable-libsamplerate  Link with libsamplerate when available. Note that
-                          PJMEDIA_RESAMPLE_IMP must also be configured
+  --enable-libsamplerate  Link with libsamplerate when available.
   --enable-resample-dll   Build libresample as shared library
   --disable-sdl           Disable SDL (default: not disabled)
   --disable-ffmpeg        Disable ffmpeg (default: not disabled)
@@ -1468,6 +1480,11 @@ Optional Packages:
                           make sure that the GSM include/lib files are
                           accessible to use (hint: use CFLAGS and LDFLAGS env
                           var to set the include/lib paths)
+  --with-external-srtp    Use external SRTP development files, not the one in
+                          "third_party" directory. When this option is set,
+                          make sure that SRTP is accessible to use (hint: use
+                          CFLAGS and LDFLAGS env var to set the include/lib
+                          paths)
   --with-external-pa      Use external PortAudio development files, not the
                           one in "third_party" directory. When this option is
                           set, make sure that PortAudio is accessible to use
@@ -3526,17 +3543,204 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-if test -z "$CROSS_COMPILE"; then
-    CROSS_COMPILE=`echo ${CC} | sed 's/gcc//'`
+if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}ranlib", so it can be a program name with args.
+set dummy ${ac_tool_prefix}ranlib; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_RANLIB+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$RANLIB"; then
+  ac_cv_prog_RANLIB="$RANLIB" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_RANLIB="${ac_tool_prefix}ranlib"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+RANLIB=$ac_cv_prog_RANLIB
+if test -n "$RANLIB"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $RANLIB" >&5
+$as_echo "$RANLIB" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
 fi
 
-if test "$AR" = ""; then AR="${CROSS_COMPILE}ar rv"; fi
+
+fi
+if test -z "$ac_cv_prog_RANLIB"; then
+  ac_ct_RANLIB=$RANLIB
+  # Extract the first word of "ranlib", so it can be a program name with args.
+set dummy ranlib; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_ac_ct_RANLIB+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$ac_ct_RANLIB"; then
+  ac_cv_prog_ac_ct_RANLIB="$ac_ct_RANLIB" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_ac_ct_RANLIB="ranlib"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+ac_ct_RANLIB=$ac_cv_prog_ac_ct_RANLIB
+if test -n "$ac_ct_RANLIB"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_ct_RANLIB" >&5
+$as_echo "$ac_ct_RANLIB" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+  if test "x$ac_ct_RANLIB" = x; then
+    RANLIB=":"
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    RANLIB=$ac_ct_RANLIB
+  fi
+else
+  RANLIB="$ac_cv_prog_RANLIB"
+fi
+
+if test -n "$ac_tool_prefix"; then
+  for ac_prog in ar gar
+  do
+    # Extract the first word of "$ac_tool_prefix$ac_prog", so it can be a program name with args.
+set dummy $ac_tool_prefix$ac_prog; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_AR+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$AR"; then
+  ac_cv_prog_AR="$AR" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_AR="$ac_tool_prefix$ac_prog"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+AR=$ac_cv_prog_AR
+if test -n "$AR"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $AR" >&5
+$as_echo "$AR" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+    test -n "$AR" && break
+  done
+fi
+if test -z "$AR"; then
+  ac_ct_AR=$AR
+  for ac_prog in ar gar
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_ac_ct_AR+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$ac_ct_AR"; then
+  ac_cv_prog_ac_ct_AR="$ac_ct_AR" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_ac_ct_AR="$ac_prog"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+ac_ct_AR=$ac_cv_prog_ac_ct_AR
+if test -n "$ac_ct_AR"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_ct_AR" >&5
+$as_echo "$ac_ct_AR" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+  test -n "$ac_ct_AR" && break
+done
+
+  if test "x$ac_ct_AR" = x; then
+    AR=":"
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    AR=$ac_ct_AR
+  fi
+fi
+
+
+if test "$AR_FLAGS" = ""; then AR_FLAGS="rv"; fi
 
 if test "$LD" = ""; then LD="$CC"; fi
 
 if test "$LDOUT" = ""; then LDOUT="-o "; fi
-
-if test "$RANLIB" = ""; then RANLIB="${CROSS_COMPILE}ranlib"; fi
 
 if test "$OBJEXT" = ""; then OBJEXT='o'; fi
 
@@ -3910,13 +4114,13 @@ _ACEOF
 
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for puts in -lnsl" >&5
-$as_echo_n "checking for puts in -lnsl... " >&6; }
-if ${ac_cv_lib_nsl_puts+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for sin in -lm" >&5
+$as_echo_n "checking for sin in -lm... " >&6; }
+if ${ac_cv_lib_m_sin+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lnsl  $LIBS"
+LIBS="-lm  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -3926,32 +4130,32 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char puts ();
+char sin ();
 int
 main ()
 {
-return puts ();
+return sin ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_nsl_puts=yes
+  ac_cv_lib_m_sin=yes
 else
-  ac_cv_lib_nsl_puts=no
+  ac_cv_lib_m_sin=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_nsl_puts" >&5
-$as_echo "$ac_cv_lib_nsl_puts" >&6; }
-if test "x$ac_cv_lib_nsl_puts" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_m_sin" >&5
+$as_echo "$ac_cv_lib_m_sin" >&6; }
+if test "x$ac_cv_lib_m_sin" = xyes; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBNSL 1
+#define HAVE_LIBM 1
 _ACEOF
 
-  LIBS="-lnsl $LIBS"
+  LIBS="-lm $LIBS"
 
 fi
 
@@ -4038,6 +4242,62 @@ fi
 $as_echo "$ac_cv_lib_uuid_uuid_generate" >&6; }
 if test "x$ac_cv_lib_uuid_uuid_generate" = xyes; then :
   ac_has_uuid_lib=1
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing gethostbyname" >&5
+$as_echo_n "checking for library containing gethostbyname... " >&6; }
+if ${ac_cv_search_gethostbyname+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char gethostbyname ();
+int
+main ()
+{
+return gethostbyname ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' nsl; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_search_gethostbyname=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+  if ${ac_cv_search_gethostbyname+:} false; then :
+  break
+fi
+done
+if ${ac_cv_search_gethostbyname+:} false; then :
+
+else
+  ac_cv_search_gethostbyname=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_gethostbyname" >&5
+$as_echo "$ac_cv_search_gethostbyname" >&6; }
+ac_res=$ac_cv_search_gethostbyname
+if test "$ac_res" != no; then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
 fi
 
 
@@ -4744,51 +5004,6 @@ else
 
 	        { $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking if floating point is disabled... no" >&5
 $as_echo "Checking if floating point is disabled... no" >&6; }
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for fmod in -lm" >&5
-$as_echo_n "checking for fmod in -lm... " >&6; }
-if ${ac_cv_lib_m_fmod+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lm  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char fmod ();
-int
-main ()
-{
-return fmod ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_m_fmod=yes
-else
-  ac_cv_lib_m_fmod=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_m_fmod" >&5
-$as_echo "$ac_cv_lib_m_fmod" >&6; }
-if test "x$ac_cv_lib_m_fmod" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBM 1
-_ACEOF
-
-  LIBS="-lm $LIBS"
-
-fi
-
 
 fi
 
@@ -5457,6 +5672,22 @@ fi
 
 
 
+# Check whether --enable-shared was given.
+if test "${enable_shared+set}" = set; then :
+  enableval=$enable_shared; if test "$enable_shared" = "yes"; then
+		ac_shared_libraries=1
+		CFLAGS="$CFLAGS -fPIC"
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: Building shared libraries... yes" >&5
+$as_echo "Building shared libraries... yes" >&6; }
+	       fi
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: Building shared libraries... no" >&5
+$as_echo "Building shared libraries... no" >&6; }
+
+fi
+
+
+
 case $target in
   *mingw* | *cygw* | *win32* | *w32* )
 	ac_os_objs="$ac_os_objs file_access_win32.o file_io_win32.o os_core_win32.o os_error_win32.o os_time_win32.o os_timestamp_win32.o guid_win32.o"
@@ -5597,6 +5828,144 @@ fi
 
 
 
+ac_external_srtp=0
+
+
+# Check whether --with-external-srtp was given.
+if test "${with_external_srtp+set}" = set; then :
+  withval=$with_external_srtp;
+	if test "x$with_external_srtp" != "xno"; then
+		# Test SRTP installation
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if external SRTP devkit is installed" >&5
+$as_echo_n "checking if external SRTP devkit is installed... " >&6; }
+		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <srtp/srtp.h>
+
+int
+main ()
+{
+srtp_init();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes!!" >&5
+$as_echo "yes!!" >&6; }
+				   ac_external_srtp="1"
+
+else
+  as_fn_error $? "Unable to use SRTP. If SRTP development files are not available in the default locations, use CFLAGS and LDFLAGS env var to set the include/lib paths" "$LINENO" 5
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+	fi
+
+
+fi
+
+
+if test "x$ac_external_srtp" = "x1"; then
+	ac_srtp_deinit_present=0
+
+	ac_srtp_shutdown_present=0
+
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for srtp_deinit in -lsrtp" >&5
+$as_echo_n "checking for srtp_deinit in -lsrtp... " >&6; }
+if ${ac_cv_lib_srtp_srtp_deinit+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lsrtp  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char srtp_deinit ();
+int
+main ()
+{
+return srtp_deinit ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_srtp_srtp_deinit=yes
+else
+  ac_cv_lib_srtp_srtp_deinit=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_srtp_srtp_deinit" >&5
+$as_echo "$ac_cv_lib_srtp_srtp_deinit" >&6; }
+if test "x$ac_cv_lib_srtp_srtp_deinit" = xyes; then :
+  ac_srtp_deinit_present=1
+fi
+
+	if test "x$ac_srtp_deinit_present" != "x1"; then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for srtp_shutdown in -lsrtp" >&5
+$as_echo_n "checking for srtp_shutdown in -lsrtp... " >&6; }
+if ${ac_cv_lib_srtp_srtp_shutdown+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lsrtp  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char srtp_shutdown ();
+int
+main ()
+{
+return srtp_shutdown ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_srtp_srtp_shutdown=yes
+else
+  ac_cv_lib_srtp_srtp_shutdown=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_srtp_srtp_shutdown" >&5
+$as_echo "$ac_cv_lib_srtp_srtp_shutdown" >&6; }
+if test "x$ac_cv_lib_srtp_srtp_shutdown" = xyes; then :
+  ac_srtp_shutdown_present=1
+fi
+
+	fi
+fi
+
+ac_pjmedia_resample=libresample
+
+# Check whether --enable-resample was given.
+if test "${enable_resample+set}" = set; then :
+  enableval=$enable_resample; if test "$enable_resample" = "no"; then
+		ac_pjmedia_resample=none
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking if resampling is disabled...yes" >&5
+$as_echo "Checking if resampling is disabled...yes" >&6; }
+	       fi
+
+fi
+
 
 
 # Check whether --enable-sound was given.
@@ -5676,6 +6045,7 @@ fi
 if test "$enable_sound" = "no"; then
   true;
 else
+
  case $target in
   *android*)
 	LIBS="$LIBS -lOpenSLES"
@@ -5684,11 +6054,13 @@ $as_echo "Checking sound device backend... OpenSL ES" >&6; }
 	;;
   arm-apple-darwin*)
 	LIBS="$LIBS -framework CoreAudio -framework CoreFoundation -framework AudioToolbox -framework CFNetwork -framework UIKit"
+	ac_pjmedia_audiodev_objs="coreaudio_dev.o"
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking sound device backend... AudioUnit" >&5
 $as_echo "Checking sound device backend... AudioUnit" >&6; }
 	;;
   *darwin*)
 	LIBS="$LIBS -framework CoreAudio -framework CoreServices -framework AudioUnit -framework AudioToolbox"
+	ac_pjmedia_audiodev_objs="coreaudio_dev.o"
 	if test "`uname -r`" = "6.8"; then
 		#ac_pa_cflags="$ac_pa_cflags -DPA_OLD_CORE_AUDIO -DMOSX_USE_NON_ATOMIC_FLAG_BITS"
 		#AC_MSG_RESULT([Setting additional PortAudio CFLAGS.. -DPA_OLD_CORE_AUDIO -DMOSX_USE_NON_ATOMIC_FLAG_BITS])
@@ -5762,7 +6134,7 @@ fi
 
 case $target in
  *android*)
-	LIBS="$LIBS -llog -lgcc"
+	LIBS="$LIBS -llog"
 	;;
  arm-apple-darwin*)
  	LIBS="$LIBS -framework UIKit"
@@ -6018,7 +6390,11 @@ fi
 
 # Check whether --enable-libsamplerate was given.
 if test "${enable_libsamplerate+set}" = set; then :
-  enableval=$enable_libsamplerate;  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for src_new in -lsamplerate" >&5
+  enableval=$enable_libsamplerate;
+           if test "$enable_libsamplerate" = "yes"; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking if libsamplerate is enabled...yes" >&5
+$as_echo "Checking if libsamplerate is enabled...yes" >&6; }
+             { $as_echo "$as_me:${as_lineno-$LINENO}: checking for src_new in -lsamplerate" >&5
 $as_echo_n "checking for src_new in -lsamplerate... " >&6; }
 if ${ac_cv_lib_samplerate_src_new+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -6063,10 +6439,15 @@ _ACEOF
 
 fi
 
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: Skipping libsamplerate detection" >&5
-$as_echo "Skipping libsamplerate detection" >&6; }
+             ac_pjmedia_resample=libsamplerate
+           else
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking if libsamplerate is enabled...no" >&5
+$as_echo "Checking if libsamplerate is enabled...no" >&6; }
+           fi
 
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: Checking if libsamplerate is enabled...no" >&5
+$as_echo "Checking if libsamplerate is enabled...no" >&6; }
 fi
 
 

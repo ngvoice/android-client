@@ -41,9 +41,9 @@ import android.widget.TextView;
 import com.actionbarsherlock.internal.utils.UtilityWrapper;
 import com.voiceblue.phone.R;
 import com.voiceblue.phone.ui.incall.locker.IOnLeftRightChoice;
-import com.voiceblue.phone.ui.incall.locker.LeftRightChooserUtils;
 import com.voiceblue.phone.ui.incall.locker.IOnLeftRightChoice.IOnLeftRightProvider;
 import com.voiceblue.phone.ui.incall.locker.IOnLeftRightChoice.TypeOfLock;
+import com.voiceblue.phone.ui.incall.locker.LeftRightChooserUtils;
 import com.voiceblue.phone.ui.incall.locker.multiwaveview.GlowPadView.OnTriggerListener;
 import com.voiceblue.phone.utils.Log;
 
@@ -570,6 +570,8 @@ public class SlidingTab extends ViewGroup implements IOnLeftRightProvider {
                     getContext().getResources().getDrawable(R.drawable.jog_tab_target_red), 
                     getContext().getResources().getDrawable(R.drawable.jog_tab_bar_right_decline), 
                     getContext().getResources().getDrawable(R.drawable.jog_tab_right_decline));
+
+            applyTargetTitles(R.array.answer_choices);
         }
     }
 

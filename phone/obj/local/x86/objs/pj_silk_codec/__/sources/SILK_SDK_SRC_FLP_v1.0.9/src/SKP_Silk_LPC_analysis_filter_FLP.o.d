@@ -1,10 +1,24 @@
 obj/local/x86/objs/pj_silk_codec/__/sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_LPC_analysis_filter_FLP.o: \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_LPC_analysis_filter_FLP.c \
- /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/stdlib.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stdlib.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_cprolog.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/features.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_stlport_version.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/user_config.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/compat.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/host.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_system.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_android.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_gcc.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/stl_confix.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_native_headers.h \
+ /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/stdlib.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/sys/cdefs.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/sys/cdefs_elf.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/android/api-level.h \
- /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/string.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stddef.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/string.h \
+ /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/string.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/malloc.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/alloca.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/strings.h \
@@ -22,16 +36,22 @@ obj/local/x86/objs/pj_silk_codec/__/sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/machine/kernel.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/sys/sysmacros.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/memory.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_epilog.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_config_compat_post.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_main_FLP.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_SigProc_FLP.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_SigProc_FIX.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/interface/SKP_Silk_typedef.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/float.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_resampler_structs.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_macros.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_Inlines.h \
- /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/assert.h \
- /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/math.h \
- /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/limits.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/assert.h \
+ /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/assert.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/math.h \
+ /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/math.h \
+ /opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/limits.h \
+ /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/limits.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/sys/limits.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/linux/limits.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/machine/internal_types.h \
@@ -48,7 +68,31 @@ obj/local/x86/objs/pj_silk_codec/__/sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_PLC.h \
  jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_tables_FLP.h
 
-/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/stdlib.h:
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stdlib.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_cprolog.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/features.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_stlport_version.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/user_config.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/compat.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/host.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_system.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_android.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_gcc.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/stl_confix.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/config/_native_headers.h:
+
+/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/stdlib.h:
 
 /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/sys/cdefs.h:
 
@@ -56,7 +100,11 @@ obj/local/x86/objs/pj_silk_codec/__/sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk
 
 /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/android/api-level.h:
 
-/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/string.h:
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stddef.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/string.h:
+
+/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/string.h:
 
 /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/malloc.h:
 
@@ -92,6 +140,10 @@ obj/local/x86/objs/pj_silk_codec/__/sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk
 
 /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/memory.h:
 
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_epilog.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/stl/_config_compat_post.h:
+
 jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_main_FLP.h:
 
 jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_SigProc_FLP.h:
@@ -100,17 +152,25 @@ jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_SigPr
 
 jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/interface/SKP_Silk_typedef.h:
 
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/float.h:
+
 jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_resampler_structs.h:
 
 jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_macros.h:
 
 jni/silk/android_toolchain/../sources/SILK_SDK_SRC_FLP_v1.0.9/src/SKP_Silk_Inlines.h:
 
-/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/assert.h:
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/assert.h:
 
-/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/math.h:
+/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/assert.h:
 
-/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/limits.h:
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/math.h:
+
+/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/math.h:
+
+/opt/android/android-ndk-r8e/sources/cxx-stl/stlport/stlport/limits.h:
+
+/opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/../include/limits.h:
 
 /opt/android/android-ndk-r8e/platforms/android-14/arch-x86/usr/include/sys/limits.h:
 

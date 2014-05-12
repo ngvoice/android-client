@@ -43,6 +43,7 @@ import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -57,10 +58,10 @@ import com.voiceblue.phone.R;
 import com.voiceblue.phone.api.ISipService;
 import com.voiceblue.phone.api.MediaState;
 import com.voiceblue.phone.api.SipCallSession;
+import com.voiceblue.phone.api.SipCallSession.StatusCode;
 import com.voiceblue.phone.api.SipConfigManager;
 import com.voiceblue.phone.api.SipManager;
 import com.voiceblue.phone.api.SipProfile;
-import com.voiceblue.phone.api.SipCallSession.StatusCode;
 import com.voiceblue.phone.service.SipService;
 import com.voiceblue.phone.ui.PickupSipUri;
 import com.voiceblue.phone.ui.incall.CallProximityManager.ProximityDirector;
@@ -924,11 +925,15 @@ public class InCallActivity extends SherlockFragmentActivity implements IOnCallA
                             infoDialog.dismiss();
                         }
                         String infos = service.showCallInfosDialog(call.getCallId());
-                        
+                        String natType = service.getLocalNatType();
                         SpannableStringBuilder buf = new SpannableStringBuilder();
                         Builder builder = new AlertDialog.Builder(this);
 
                         buf.append(infos);
+                        if(!TextUtils.isEmpty(natType)) {
+                            buf.append("\r\nLocal NAT type detected : ");
+                            buf.append(natType);
+                        }
                         TextAppearanceSpan textSmallSpan = new TextAppearanceSpan(this,
                                 android.R.style.TextAppearance_Small);
                         buf.setSpan(textSmallSpan, 0, buf.length(),

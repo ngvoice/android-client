@@ -115,6 +115,14 @@ public class pjsua implements pjsuaConstants {
     return pjsuaJNI.handle_events(msec_timeout);
   }
 
+  public synchronized static int register_worker_thread(String name) {
+    return pjsuaJNI.register_worker_thread(name);
+  }
+
+  public synchronized static void stop_worker_threads() {
+    pjsuaJNI.stop_worker_threads();
+  }
+
   public synchronized static pj_pool_t pool_create(String name, long init_size, long increment) {
     long cPtr = pjsuaJNI.pool_create(name, init_size, increment);
     return (cPtr == 0) ? null : new pj_pool_t(cPtr, false);
@@ -143,8 +151,8 @@ public class pjsua implements pjsuaConstants {
     return pjsuaJNI.detect_nat_type();
   }
 
-  public synchronized static int get_nat_type(SWIGTYPE_p_pj_stun_nat_type type) {
-    return pjsuaJNI.get_nat_type(SWIGTYPE_p_pj_stun_nat_type.getCPtr(type));
+  public synchronized static int get_nat_type(int[] type) {
+    return pjsuaJNI.get_nat_type(type);
   }
 
   public synchronized static int resolve_stun_servers(long count, pj_str_t[] srv, int wait, byte[] token, SWIGTYPE_p_f_p_q_const__pj_stun_resolve_result__void cb) {
@@ -275,8 +283,8 @@ public class pjsua implements pjsuaConstants {
     return pjsuaJNI.acc_del(acc_id);
   }
 
-  public synchronized static int acc_get_config(int acc_id, pjsua_acc_config acc_cfg) {
-    return pjsuaJNI.acc_get_config(acc_id, pjsua_acc_config.getCPtr(acc_cfg), acc_cfg);
+  public synchronized static int acc_get_config(int acc_id, pj_pool_t pool, pjsua_acc_config acc_cfg) {
+    return pjsuaJNI.acc_get_config(acc_id, pj_pool_t.getCPtr(pool), pool, pjsua_acc_config.getCPtr(acc_cfg), acc_cfg);
   }
 
   public synchronized static int acc_modify(int acc_id, pjsua_acc_config acc_cfg) {
@@ -383,8 +391,8 @@ public class pjsua implements pjsuaConstants {
 	return pjsuaJNI.call_get_user_data(call_id);
 }
 
-  public synchronized static int call_get_rem_nat_type(int call_id, SWIGTYPE_p_pj_stun_nat_type p_type) {
-    return pjsuaJNI.call_get_rem_nat_type(call_id, SWIGTYPE_p_pj_stun_nat_type.getCPtr(p_type));
+  public synchronized static int call_get_rem_nat_type(int call_id, int[] p_type) {
+    return pjsuaJNI.call_get_rem_nat_type(call_id, p_type);
   }
 
   public synchronized static int call_answer(int call_id, long code, pj_str_t reason, pjsua_msg_data msg_data) {
@@ -619,6 +627,14 @@ public class pjsua implements pjsuaConstants {
     return pjsuaJNI.player_get_port(id, SWIGTYPE_p_p_pjmedia_port.getCPtr(p_port));
   }
 
+  public synchronized static int player_get_info(int id, SWIGTYPE_p_pjmedia_wav_player_info info) {
+    return pjsuaJNI.player_get_info(id, SWIGTYPE_p_pjmedia_wav_player_info.getCPtr(info));
+  }
+
+  public synchronized static int player_get_pos(int id) {
+    return pjsuaJNI.player_get_pos(id);
+  }
+
   public synchronized static int player_set_pos(int id, long samples) {
     return pjsuaJNI.player_set_pos(id, samples);
   }
@@ -820,8 +836,8 @@ public class pjsua implements pjsuaConstants {
     return pjsuaJNI.csipsimple_destroy(flags);
   }
 
-  public static int csipsimple_set_acc_user_data(pjsua_acc_config acc_cfg, csipsimple_acc_config css_acc_cfg) {
-    return pjsuaJNI.csipsimple_set_acc_user_data(pjsua_acc_config.getCPtr(acc_cfg), acc_cfg, csipsimple_acc_config.getCPtr(css_acc_cfg), css_acc_cfg);
+  public static int csipsimple_set_acc_user_data(int acc_id, csipsimple_acc_config css_acc_cfg) {
+    return pjsuaJNI.csipsimple_set_acc_user_data(acc_id, csipsimple_acc_config.getCPtr(css_acc_cfg), css_acc_cfg);
   }
 
   public static int csipsimple_init_acc_msg_data(pj_pool_t pool, int acc_id, pjsua_msg_data msg_data) {

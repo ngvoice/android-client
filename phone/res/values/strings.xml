@@ -117,7 +117,8 @@
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    
+    <string name="apply_rewrite">Apply rewriting</string>
+     
     <string name="app_name">Voice Blue</string>
     <string name="title_activity_login">LoginActivity</string>    
        

@@ -1,4 +1,4 @@
-/* $Id: endpoint.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: endpoint.c 4739 2014-02-11 04:46:49Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -490,9 +490,9 @@ PJ_DEF(pj_status_t) pjmedia_endpt_create_audio_sdp(pjmedia_endpt *endpt,
 	    pjmedia_codec_fmtp *dec_fmtp = &codec_param.setting.dec_fmtp;
 
 	    /* Print codec PT */
-	    buf_len += pj_ansi_snprintf(buf, 
-					MAX_FMTP_STR_LEN - buf_len, 
-					"%d", 
+	    buf_len += pj_ansi_snprintf(buf,
+					MAX_FMTP_STR_LEN - buf_len,
+					"%d",
 					codec_info->pt);
 
 	    for (i = 0; i < dec_fmtp->cnt; ++i) {
@@ -500,7 +500,7 @@ PJ_DEF(pj_status_t) pjmedia_endpt_create_audio_sdp(pjmedia_endpt *endpt,
 
 		/* Check if buf still available */
 		test_len = dec_fmtp->param[i].val.slen + 
-			   dec_fmtp->param[i].name.slen;
+			   dec_fmtp->param[i].name.slen + 2;
 		if (test_len + buf_len >= MAX_FMTP_STR_LEN)
 		    return PJ_ETOOBIG;
 
@@ -558,7 +558,7 @@ PJ_DEF(pj_status_t) pjmedia_endpt_create_audio_sdp(pjmedia_endpt *endpt,
 	/* Add fmtp */
 	attr = PJ_POOL_ZALLOC_T(pool, pjmedia_sdp_attr);
 	attr->name = pj_str("fmtp");
-	attr->value = pj_str(PJMEDIA_RTP_PT_TELEPHONE_EVENTS_STR " 0-15");
+	attr->value = pj_str(PJMEDIA_RTP_PT_TELEPHONE_EVENTS_STR " 0-16");
 	m->attr[m->attr_count++] = attr;
     }
 #endif
@@ -686,7 +686,7 @@ PJ_DEF(pj_status_t) pjmedia_endpt_create_video_sdp(pjmedia_endpt *endpt,
 
 		/* Check if buf still available */
 		test_len = dec_fmtp->param[j].val.slen + 
-			   dec_fmtp->param[j].name.slen;
+			   dec_fmtp->param[j].name.slen + 2;
 		if (test_len + buf_len >= MAX_FMTP_STR_LEN)
 		    return PJ_ETOOBIG;
 

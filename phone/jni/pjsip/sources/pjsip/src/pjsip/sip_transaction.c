@@ -1,4 +1,4 @@
-/* $Id: sip_transaction.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: sip_transaction.c 4807 2014-03-31 10:19:27Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -648,20 +648,25 @@ PJ_DEF(pjsip_transaction*) pjsip_tsx_layer_find_tsx( const pj_str_t *key,
     tsx = (pjsip_transaction*)
     	  pj_hash_get_lower( mod_tsx_layer.htable, key->ptr, 
 			     (unsigned)key->slen, &hval );
+    
+    /* Prevent the transaction to get deleted before we have chance to lock it.
+     */
+    if (tsx && lock)
+        pj_grp_lock_add_ref(tsx->grp_lock);
+    
     pj_mutex_unlock(mod_tsx_layer.mutex);
 
     TSX_TRACE_((THIS_FILE, 
 		"Finding tsx with hkey=0x%p and key=%.*s: found %p",
 		hval, key->slen, key->ptr, tsx));
 
-    /* Race condition!
-     * Transaction may gets deleted before we have chance to lock it.
-     */
-    PJ_TODO(FIX_RACE_CONDITION_HERE);
+    /* Simulate race condition! */
     PJ_RACE_ME(5);
 
-    if (tsx && lock)
+    if (tsx && lock) {
 	pj_grp_lock_acquire(tsx->grp_lock);
+        pj_grp_lock_dec_ref(tsx->grp_lock);
+    }
 
     return tsx;
 }
@@ -798,18 +803,21 @@ static pj_bool_t mod_tsx_layer_on_rx_request(pjsip_rx_data *rdata)
 	return PJ_FALSE;
     }
 
+    /* Prevent the transaction to get deleted before we have chance to lock it
+     * in pjsip_tsx_recv_msg().
+     */
+    pj_grp_lock_add_ref(tsx->grp_lock);
+    
     /* Unlock hash table. */
     pj_mutex_unlock( mod_tsx_layer.mutex );
 
-    /* Race condition!
-     * Transaction may gets deleted before we have chance to lock it
-     * in pjsip_tsx_recv_msg().
-     */
-    PJ_TODO(FIX_RACE_CONDITION_HERE);
+    /* Simulate race condition! */
     PJ_RACE_ME(5);
 
     /* Pass the message to the transaction. */
     pjsip_tsx_recv_msg(tsx, rdata );
+    
+    pj_grp_lock_dec_ref(tsx->grp_lock);
 
     return PJ_TRUE;
 }
@@ -849,18 +857,21 @@ static pj_bool_t mod_tsx_layer_on_rx_response(pjsip_rx_data *rdata)
 	return PJ_FALSE;
     }
 
+    /* Prevent the transaction to get deleted before we have chance to lock it
+     * in pjsip_tsx_recv_msg().
+     */
+    pj_grp_lock_add_ref(tsx->grp_lock);
+
     /* Unlock hash table. */
     pj_mutex_unlock( mod_tsx_layer.mutex );
 
-    /* Race condition!
-     * Transaction may gets deleted before we have chance to lock it
-     * in pjsip_tsx_recv_msg().
-     */
-    PJ_TODO(FIX_RACE_CONDITION_HERE);
+    /* Simulate race condition! */
     PJ_RACE_ME(5);
 
     /* Pass the message to the transaction. */
     pjsip_tsx_recv_msg(tsx, rdata );
+    
+    pj_grp_lock_dec_ref(tsx->grp_lock);
 
     return PJ_TRUE;
 }
@@ -1599,14 +1610,14 @@ PJ_DEF(pj_status_t) pjsip_tsx_terminate( pjsip_transaction *tsx, int code )
 
     PJ_ASSERT_RETURN(code >= 200, PJ_EINVAL);
 
-    if (tsx->state >= PJSIP_TSX_STATE_TERMINATED)
-	return PJ_SUCCESS;
-
     pj_log_push_indent();
 
     pj_grp_lock_acquire(tsx->grp_lock);
-    tsx_set_status_code(tsx, code, NULL);
-    tsx_set_state( tsx, PJSIP_TSX_STATE_TERMINATED, PJSIP_EVENT_USER, NULL);
+
+    if (tsx->state < PJSIP_TSX_STATE_TERMINATED) {
+        tsx_set_status_code(tsx, code, NULL);
+        tsx_set_state( tsx, PJSIP_TSX_STATE_TERMINATED, PJSIP_EVENT_USER, NULL);
+    }
     pj_grp_lock_release(tsx->grp_lock);
 
     pj_log_pop_indent();
@@ -2224,6 +2235,18 @@ static pj_status_t tsx_retransmit( pjsip_transaction *tsx, int resched)
 {
     pj_status_t status;
 
+    if (resched && pj_timer_entry_running(&tsx->retransmit_timer)) {
+	/* We've been asked to reschedule but the timer is already rerunning.
+	 * This can only happen in a race condition where, between removing
+	 * this retransmit timer from the heap and actually scheduling it,
+	 * another thread has got in and rescheduled the timer itself.  In
+	 * this scenario, the transmission has already happened and so we
+	 * should just quit out immediately, without either resending the
+	 * message or restarting the timer.
+	 */
+	return PJ_SUCCESS;
+    }
+
     PJ_ASSERT_RETURN(tsx->last_tx!=NULL, PJ_EBUG);
 
     PJ_LOG(5,(tsx->obj_name, "Retransmiting %s, count=%d, restart?=%d", 
@@ -2332,6 +2355,7 @@ static pj_status_t tsx_on_state_null( pjsip_transaction *tsx,
 	 * timeout.
 	 */
 	lock_timer(tsx);
+	tsx_cancel_timer( tsx, &tsx->timeout_timer );
 	tsx_schedule_timer( tsx, &tsx->timeout_timer, &timeout_timer_val,
 	                    TIMEOUT_TIMER);
 	unlock_timer(tsx);
@@ -2677,6 +2701,7 @@ static pj_status_t tsx_on_state_proceeding_uas( pjsip_transaction *tsx,
 		}
 
 		lock_timer(tsx);
+		tsx_cancel_timer(tsx, &tsx->timeout_timer);
 		tsx_schedule_timer( tsx, &tsx->timeout_timer,
                                     &timeout, TIMEOUT_TIMER);
 		unlock_timer(tsx);
@@ -2705,6 +2730,7 @@ static pj_status_t tsx_on_state_proceeding_uas( pjsip_transaction *tsx,
 	     * non-reliable transports, and zero for reliable transports.
 	     */
 	    lock_timer(tsx);
+	    tsx_cancel_timer(tsx, &tsx->timeout_timer);
 	    if (tsx->method.id == PJSIP_INVITE_METHOD) {
 		/* Start timer H for INVITE */
 		tsx_schedule_timer(tsx, &tsx->timeout_timer,
@@ -3216,16 +3242,22 @@ static pj_status_t tsx_on_state_confirmed( pjsip_transaction *tsx,
 		  msg->line.req.method.id == PJSIP_INVITE_METHOD);
 
     } else if (event->type == PJSIP_EVENT_TIMER) {
-	/* Must be from timeout_timer_. */
-	pj_assert(event->body.timer.entry == &tsx->timeout_timer);
+	/* Ignore overlapped retransmit timer.
+	 * https://trac.pjsip.org/repos/ticket/1746
+	 */
+	if (event->body.timer.entry == &tsx->retransmit_timer) {
+	    /* Ignore */
+	} else {
+	    /* Must be from timeout_timer_. */
+	    pj_assert(event->body.timer.entry == &tsx->timeout_timer);
 
-	/* Move to Terminated state. */
-	tsx_set_state( tsx, PJSIP_TSX_STATE_TERMINATED,
-                       PJSIP_EVENT_TIMER, &tsx->timeout_timer );
+	    /* Move to Terminated state. */
+	    tsx_set_state( tsx, PJSIP_TSX_STATE_TERMINATED,
+			   PJSIP_EVENT_TIMER, &tsx->timeout_timer );
 
-	/* Transaction has been destroyed. */
-	//return PJSIP_ETSXDESTROYED;
-
+	    /* Transaction has been destroyed. */
+	    //return PJSIP_ETSXDESTROYED;
+	}
     } else {
 	pj_assert(!"Unexpected event");
         return PJ_EBUG;

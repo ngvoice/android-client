@@ -41,12 +41,12 @@ import android.widget.TextView;
 
 import com.voiceblue.phone.R;
 import com.voiceblue.phone.api.ISipService;
-import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.api.SipManager.PresenceStatus;
+import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.service.SipService;
 import com.voiceblue.phone.utils.AccountListUtils;
-import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.AccountListUtils.AccountStatusDisplay;
+import com.voiceblue.phone.utils.Log;
 
 import java.util.ArrayList;
 import java.util.List;

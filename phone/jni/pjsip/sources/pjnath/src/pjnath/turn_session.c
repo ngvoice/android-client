@@ -1,4 +1,4 @@
-/* $Id: turn_session.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: turn_session.c 4606 2013-10-01 05:00:57Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -120,7 +120,6 @@ struct pj_turn_session
     pj_turn_state_t	 state;
     pj_status_t		 last_status;
     pj_bool_t		 pending_destroy;
-    pj_bool_t		 destroy_notified;
 
     pj_stun_session	*stun;
 
@@ -131,7 +130,6 @@ struct pj_turn_session
     pj_timer_heap_t	*timer_heap;
     pj_timer_entry	 timer;
 
-    pj_dns_srv_async_query *dns_async;
     pj_uint16_t		 default_port;
 
     pj_uint16_t		 af;
@@ -395,10 +393,12 @@ static void sess_shutdown(pj_turn_session *sess,
     case PJ_TURN_STATE_NULL:
 	break;
     case PJ_TURN_STATE_RESOLVING:
-	if (sess->dns_async != NULL) {
-	    pj_dns_srv_cancel_query(sess->dns_async, PJ_FALSE);
-	    sess->dns_async = NULL;
-	}
+	/* Wait for DNS callback invoked, it will call the this function
+	 * again. If the callback happens to get pending_destroy==FALSE,
+	 * the TURN allocation will call this function again.
+	 */
+	sess->pending_destroy = PJ_TRUE;
+	can_destroy = PJ_FALSE;
 	break;
     case PJ_TURN_STATE_RESOLVED:
 	break;
@@ -525,6 +525,14 @@ PJ_DEF(void*) pj_turn_session_get_user_data(pj_turn_session *sess)
     return sess->user_data;
 }
 
+/**
+ * Get group lock.
+ */
+PJ_DEF(pj_grp_lock_t *) pj_turn_session_get_grp_lock(pj_turn_session *sess)
+{
+    PJ_ASSERT_RETURN(sess, NULL);
+    return sess->grp_lock;
+}
 
 /*
  * Configure message logging. By default all flags are enabled.
@@ -619,7 +627,7 @@ PJ_DEF(pj_status_t) pj_turn_session_set_server( pj_turn_session *sess,
 
 	status = pj_dns_srv_resolve(domain, &res_name, default_port, 
 				    sess->pool, resolver, opt, sess, 
-				    &dns_srv_resolver_cb, &sess->dns_async);
+				    &dns_srv_resolver_cb, NULL);
 	if (status != PJ_SUCCESS) {
 	    set_state(sess, PJ_TURN_STATE_NULL);
 	    goto on_return;
@@ -1682,11 +1690,9 @@ static void dns_srv_resolver_cb(void *user_data,
     pj_turn_session *sess = (pj_turn_session*) user_data;
     unsigned i, cnt, tot_cnt;
 
-    /* Clear async resolver */
-    sess->dns_async = NULL;
-
     /* Check failure */
-    if (status != PJ_SUCCESS) {
+    if (status != PJ_SUCCESS || sess->pending_destroy) {
+	set_state(sess, PJ_TURN_STATE_DESTROYING);
 	sess_shutdown(sess, status);
 	return;
     }

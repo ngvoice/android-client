@@ -44,6 +44,8 @@ import java.util.Set;
 
 
 public class WizardUtils {
+	
+	
 	public static class WizardInfo {
 		public String label;
 		public String id;
@@ -399,6 +401,22 @@ public class WizardUtils {
                     R.drawable.ic_wizard_spout, 30, 
                     new Locale[]{ }, false, true, 
                     Spout.class));
+            WIZARDS_DICT.put("WIMANX", new WizardInfo("WIMANX", "Wi-Manx", 
+                    R.drawable.ic_wizard_wimanx, 30, 
+                    new Locale[]{ }, false, true, 
+                    Wimanx.class));
+            WIZARDS_DICT.put("ADVANCEFONE", new WizardInfo("ADVANCEFONE", "Advancefone", 
+                    R.drawable.ic_wizard_advancefone, 30, 
+                    new Locale[]{ }, false, true, 
+                    Advancefone.class));
+            WIZARDS_DICT.put("KURIRA", new WizardInfo("KURIRA", "Kurira", 
+                    R.drawable.ic_wizard_kurira, 30, 
+                    new Locale[]{ }, false, true, 
+                    Kurira.class));
+            WIZARDS_DICT.put("VOSTRON", new WizardInfo("VOSTRON", "Vostron", 
+                    R.drawable.ic_wizard_vostron, 30, 
+                    new Locale[]{ }, false, true, 
+                    Vostron.class));
             
 			
 			//Locales
@@ -728,7 +746,7 @@ public class WizardUtils {
                     R.drawable.ic_wizard_voipbel, 19, 
                     new Locale[]{ locale("nl_BE"), locale("nl_NL"), locale("fr_BE") }, false, false, 
                     VoipBel.class));
-            WIZARDS_DICT.put("GLOBTELECOM", new WizardInfo("GLOBTELECOM", "Globtelecom", 
+            WIZARDS_DICT.put("GLOBTELECOM", new WizardInfo("GLOBTELECOM", "GVoip", 
                     R.drawable.ic_wizard_globtelecom, 10, 
                     new Locale[]{locale("ru_RU"),}, false, false, 
                     Globtelecom.class));
@@ -1054,10 +1072,36 @@ public class WizardUtils {
                     Hibritel.class));
             WIZARDS_DICT.put("POLFON", new WizardInfo("POLFON", "polfon", 
                     R.drawable.ic_wizard_polfon, 19, 
+                    new Locale[]{ new Locale("pl") }, false, false, 
+                    Polfon.class));
+            WIZARDS_DICT.put("TELPHIN", new WizardInfo("TELPHIN", "Telphin", 
+                    R.drawable.ic_wizard_telphin, 45, 
+                    new Locale[]{ locale("ru_RU") }, false, false, 
+                    Telphin.class));
+            WIZARDS_DICT.put("NETGSM", new WizardInfo("NETGSM", "Netgsm", 
+                    R.drawable.ic_wizard_netgsm, 30, 
+                    new Locale[] {new Locale("TR", "tr")}, false, false, 
+                    NetGSM.class));
+            WIZARDS_DICT.put("NETGSMSANTRAL", new WizardInfo("NETGSMSANTRAL", "Netgsm Sanal Santral", 
+                    R.drawable.ic_wizard_netgsmsantral, 30,
+                    new Locale[] {new Locale("TR", "tr")}, false, false, 
+                    NetGSMSantral.class));
+            WIZARDS_DICT.put("GTEL", new WizardInfo("GTEL", "GTel", 
+                    R.drawable.ic_wizard_gtel, 30,
+                    new Locale[] {new Locale("AR", "tn"), new Locale("FR", "tn")}, false, false, 
+                    GTel.class));
+            WIZARDS_DICT.put("MANGOTELECOM", new WizardInfo("MANGOTELECOM", "Mango Telecom", 
+                    R.drawable.ic_wizard_mangotelecom, 10, 
+                    new Locale[]{
+                    locale("ru_RU")
+                    }, false, false, 
+                    MangoTelecom.class));
+            WIZARDS_DICT.put("NEOFONTPPL", new WizardInfo("NEOFONTPPL", "Neofon.tp.pl", 
+                    R.drawable.ic_wizard_neofontppl, 10, 
                     new Locale[]{
                     new Locale("pl")
                     }, false, false, 
-                    Polfon.class));
+                    NeofonTpPl.class));
             
             
 		}else {

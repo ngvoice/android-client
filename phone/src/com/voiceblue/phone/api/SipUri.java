@@ -81,15 +81,9 @@ public final class SipUri {
         
         public String toString(boolean includeDisplayName) {
             StringBuffer buildString = new StringBuffer();
-            if(TextUtils.isEmpty(scheme)) {
-                buildString.append("<sip:");
-            }else {
-                buildString.append("<" + scheme + ":");
-            }
-            if(!TextUtils.isEmpty(userName)) {
-                buildString.append(encodeUser(userName) + "@");
-            }
-            buildString.append(domain + ">");
+            buildString.append("<");
+            buildString.append(getReadableSipUri());
+            buildString.append(">");
             
             // Append display name at beggining if necessary
             if (includeDisplayName && !TextUtils.isEmpty(displayName)) {
@@ -104,6 +98,20 @@ public final class SipUri {
             return buildString.toString();
         }
         
+        public String getReadableSipUri() {
+            StringBuffer buildString = new StringBuffer();
+            if(TextUtils.isEmpty(scheme)) {
+                buildString.append("sip:");
+            }else {
+                buildString.append(scheme + ":");
+            }
+            if(!TextUtils.isEmpty(userName)) {
+                buildString.append(encodeUser(userName) + "@");
+            }
+            buildString.append(domain);
+            return buildString.toString();
+        }
+        
         public String getContactAddress() {
             StringBuffer buildString = new StringBuffer();
 
@@ -112,6 +120,17 @@ public final class SipUri {
             }
             buildString.append(domain);
             return buildString.toString();
+        }
+
+        /**
+         * @return parsed sip server uri
+         */
+        public ParsedSipUriInfos getServerSipUri() {
+            String pScheme = scheme;
+            if(TextUtils.isEmpty(scheme)) {
+                pScheme = SipManager.PROTOCOL_SIP;
+            }
+            return parseSipUri(pScheme + ":" + domain);
         }
     }
 

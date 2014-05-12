@@ -16,7 +16,6 @@ public interface pjsuaConstants {
   public final static int PJMEDIA_TONEGEN_LOOP = pjsuaJNI.PJMEDIA_TONEGEN_LOOP_get();
   public final static int PJMEDIA_TONEGEN_NO_LOCK = pjsuaJNI.PJMEDIA_TONEGEN_NO_LOCK_get();
 
-  public final static int PJSUA_INVALID_ID = pjsuaJNI.PJSUA_INVALID_ID_get();
   public final static int DISABLED_FOR_TICKET_1185 = pjsuaJNI.DISABLED_FOR_TICKET_1185_get();
   public final static int PJSUA_ACC_MAX_PROXIES = pjsuaJNI.PJSUA_ACC_MAX_PROXIES_get();
   public final static int PJSUA_DEFAULT_SRTP_SECURE_SIGNALING = pjsuaJNI.PJSUA_DEFAULT_SRTP_SECURE_SIGNALING_get();
@@ -28,10 +27,8 @@ public interface pjsuaConstants {
   public final static int PJSUA_REG_INTERVAL = pjsuaJNI.PJSUA_REG_INTERVAL_get();
   public final static int PJSUA_UNREG_TIMEOUT = pjsuaJNI.PJSUA_UNREG_TIMEOUT_get();
   public final static int PJSUA_DEFAULT_ACC_PRIORITY = pjsuaJNI.PJSUA_DEFAULT_ACC_PRIORITY_get();
-  public final static String PJSUA_SECURE_SCHEME = pjsuaJNI.PJSUA_SECURE_SCHEME_get();
   public final static int PJSUA_UNPUBLISH_MAX_WAIT_TIME_MSEC = pjsuaJNI.PJSUA_UNPUBLISH_MAX_WAIT_TIME_MSEC_get();
   public final static int PJSUA_REG_RETRY_INTERVAL = pjsuaJNI.PJSUA_REG_RETRY_INTERVAL_get();
-  public final static int PJSUA_CONTACT_REWRITE_METHOD = pjsuaJNI.PJSUA_CONTACT_REWRITE_METHOD_get();
   public final static int PJSUA_REG_USE_OUTBOUND_PROXY = pjsuaJNI.PJSUA_REG_USE_OUTBOUND_PROXY_get();
   public final static int PJSUA_REG_USE_ACC_PROXY = pjsuaJNI.PJSUA_REG_USE_ACC_PROXY_get();
   public final static int PJSUA_MAX_CALLS = pjsuaJNI.PJSUA_MAX_CALLS_get();

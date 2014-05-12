@@ -1,4 +1,4 @@
-prefix=/home/carlos/development/android/ngvoice/android-client/phone/jni/ffmpeg/build/ffmpeg/armeabi-v7a
+prefix=/usr/src/csipsimple/csipsimple-read-only/jni/ffmpeg/build/ffmpeg/armeabi-v7a
 exec_prefix=${prefix}
 libdir=${prefix}/lib
 includedir=${prefix}/include

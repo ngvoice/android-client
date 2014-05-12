@@ -34,6 +34,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Profile;
+import android.text.TextUtils;
 
 import com.voiceblue.phone.models.CallerInfo;
 import com.voiceblue.phone.utils.Log;
@@ -94,11 +95,17 @@ public class ContactsUtils14 extends ContactsUtils5 {
                     }
                     
                     if(cv.containsKey(Profile.PHOTO_ID)) {
-                        callerInfo.photoId = cv.getAsLong(Profile.PHOTO_ID);
+                        Long photoId = cv.getAsLong(Profile.PHOTO_ID);
+                        if(photoId != null) {
+                            callerInfo.photoId = photoId;
+                        }
                     }
                     
                     if(cv.containsKey(Profile.PHOTO_URI)) {
-                        callerInfo.photoUri = Uri.parse(cv.getAsString(Profile.PHOTO_URI));
+                        String photoUri = cv.getAsString(Profile.PHOTO_URI);
+                        if(!TextUtils.isEmpty(photoUri)) {
+                            callerInfo.photoUri = Uri.parse(photoUri);
+                        }
                     }
     
                     if(callerInfo.name != null && callerInfo.name.length() == 0) {
@@ -107,7 +114,7 @@ public class ContactsUtils14 extends ContactsUtils5 {
                     
                 }
             }catch(Exception e) {
-                Log.e(THIS_FILE, "Exception while retrieving cursor infos");
+                Log.e(THIS_FILE, "Exception while retrieving cursor infos", e);
             }finally {
                 cursor.close();
             }

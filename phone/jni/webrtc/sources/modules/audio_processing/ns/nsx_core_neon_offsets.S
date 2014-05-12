@@ -491,7 +491,7 @@ offset_nsx_noiseEstDensity:
 .LASF13:
 	.ascii	"offset_nsx_analysisBuffer\000"
 .LASF30:
-	.ascii	"/usr/src/CSipSimple-trunk/CSipSimple/jni/webrtc\000"
+	.ascii	"/usr/src/csipsimple-read-only/jni/webrtc\000"
 .LASF20:
 	.ascii	"offset_nsx_magnLen\000"
 .LASF21:

@@ -5,7 +5,13 @@ export LIBDIR := ../../lib
 
 RULES_MAK := $(PJDIR)/build/rules.mak
 
-export SRTP_LIB := ../../lib/libsrtp-$(TARGET_NAME)$(LIBEXT)
+export SRTP_LIB := libsrtp-$(TARGET_NAME)$(LIBEXT)
+
+ifeq ($(PJ_SHARED_LIBRARIES),)
+else
+export SRTP_SONAME := libsrtp.$(SHLIB_SUFFIX)
+export SRTP_SHLIB := $(SRTP_SONAME).$(PJ_VERSION_MAJOR)
+endif
 
 ###############################################################################
 # Gather all flags.
@@ -18,7 +24,7 @@ export _CFLAGS 	:= $(CC_INC). $(CC_INC)../../srtp/crypto/include \
 export _CXXFLAGS:= $(_CFLAGS) $(CC_CXXFLAGS) $(OS_CXXFLAGS) $(M_CXXFLAGS) \
 		   $(HOST_CXXFLAGS) $(CXXFLAGS)
 export _LDFLAGS := $(CC_LDFLAGS) $(OS_LDFLAGS) $(M_LDFLAGS) $(HOST_LDFLAGS) \
-		   $(LDFLAGS) 
+		   $(APP_LDFLAGS) $(LDFLAGS) 
 
 # libcrypt.a (the crypto engine) 
 ciphers = crypto/cipher/cipher.o crypto/cipher/null_cipher.o      \
@@ -49,6 +55,7 @@ cryptobj =  $(ciphers) $(hashes) $(math) $(stat) $(kernel) $(replay)
 export SRTP_SRCDIR = ../../srtp
 export SRTP_OBJS = $(cryptobj) $(srtpobj)
 export SRTP_CFLAGS = -DHAVE_CONFIG_H $(_CFLAGS)
+export SRTP_LDFLAGS = $(PJLIB_LDLIB) $(_LDFLAGS)
 
 
 export CC_OUT CC AR RANLIB HOST_MV HOST_RM HOST_RMDIR HOST_MKDIR OBJEXT LD LDOUT 
@@ -57,7 +64,7 @@ export CC_OUT CC AR RANLIB HOST_MV HOST_RM HOST_RMDIR HOST_MKDIR OBJEXT LD LDOUT
 #
 # $(TARGET) is defined in os-$(OS_NAME).mak file in current directory.
 #
-TARGETS := libsrtp
+TARGETS := $(SRTP_LIB) $(SRTP_SONAME)
 
 all: $(TARGETS)
 
@@ -67,10 +74,14 @@ doc:
 dep: depend
 distclean: realclean
 
-.PHONY: dep depend libsrtp clean realclean distclean
+.PHONY: all dep depend clean realclean distclean
+.PHONY: $(TARGETS)
+.PHONY: $(SRTP_LIB) $(SRTP_SONAME)
 
-libsrtp:
-	$(MAKE) -f $(RULES_MAK) APP=SRTP app=libsrtp $(SRTP_LIB)
+libsrtp: $(SRTP_LIB)
+$(SRTP_SONAME): $(SRTP_LIB)
+$(SRTP_LIB) $(SRTP_SONAME):
+	$(MAKE) -f $(RULES_MAK) APP=SRTP app=libsrtp $(subst /,$(HOST_PSEP),$(LIBDIR)/$@)
 
 clean print_lib:
 	$(MAKE) -f $(RULES_MAK) APP=SRTP app=libsrtp $@

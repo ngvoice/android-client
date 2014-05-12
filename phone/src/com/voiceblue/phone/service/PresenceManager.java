@@ -30,8 +30,8 @@ import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.service.SipService.SameThreadException;
 import com.voiceblue.phone.service.SipService.SipRunnable;
 import com.voiceblue.phone.utils.AccountListUtils;
-import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.AccountListUtils.AccountStatusDisplay;
+import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.contacts.ContactsWrapper;
 
 import java.util.ArrayList;

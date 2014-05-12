@@ -121,7 +121,9 @@ obj/local/mips/objs/pjsip_mod_earlylock/src/pjsip_mod_earlylock.o: \
  jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/sha1.h \
  jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/srv_resolver.h \
  jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h \
+ jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h \
  jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/xml.h \
+ jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h \
  jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h \
  jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/pcap.h \
  jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/http_client.h \
@@ -515,7 +517,11 @@ jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include
 
 jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h:
 
+jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/string.h:
+
 jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/xml.h:
+
+jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/json.h:
 
 jni/pjsip_mod_earlylock/android_toolchain/../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h:
 

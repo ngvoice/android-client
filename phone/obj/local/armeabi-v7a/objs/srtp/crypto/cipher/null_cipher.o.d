@@ -1,5 +1,5 @@
-obj/local/armeabi-v7a/objs/srtp//crypto/cipher/null_cipher.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/cipher/null_cipher.c \
+obj/local/armeabi-v7a/objs/srtp/./crypto/cipher/null_cipher.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/cipher/null_cipher.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/datatypes.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/integers.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/../build/srtp/srtp_config.h \

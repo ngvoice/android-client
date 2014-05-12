@@ -1,4 +1,4 @@
-/* $Id: ffmpeg_dev.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: ffmpeg_dev.c 4722 2014-01-29 10:40:40Z nanang $ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  *
@@ -38,7 +38,8 @@
 #include <pj/unicode.h>
 
 
-#if defined(PJMEDIA_VIDEO_DEV_HAS_FFMPEG) && PJMEDIA_VIDEO_DEV_HAS_FFMPEG != 0
+#if defined(PJMEDIA_HAS_VIDEO) && PJMEDIA_HAS_VIDEO != 0 && \
+    defined(PJMEDIA_VIDEO_DEV_HAS_FFMPEG) && PJMEDIA_VIDEO_DEV_HAS_FFMPEG != 0
 
 
 #define THIS_FILE		"ffmpeg.c"

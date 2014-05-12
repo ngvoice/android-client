@@ -33,8 +33,8 @@ import android.widget.TextView;
 import com.voiceblue.phone.R;
 import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.utils.AccountListUtils;
-import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.utils.AccountListUtils.AccountStatusDisplay;
+import com.voiceblue.phone.utils.Log;
 import com.voiceblue.phone.wizards.WizardUtils;
 import com.voiceblue.phone.wizards.WizardUtils.WizardInfo;
 

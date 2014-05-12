@@ -426,11 +426,11 @@ public class SipService extends Service {
         /**
          * {@inheritDoc}
          */
-		@Override
-		public SipCallSession getCallInfo(final int callId) throws RemoteException {
-			SipService.this.enforceCallingOrSelfPermission(SipManager.PERMISSION_USE_SIP, null);
-			return pjService.getCallInfo(callId);
-		}
+                @Override
+                public SipCallSession getCallInfo(final int callId) throws RemoteException {
+                        SipService.this.enforceCallingOrSelfPermission(SipManager.PERMISSION_USE_SIP, null);
+                        return new SipCallSession(pjService.getCallInfo(callId));
+                }
 
         /**
          * {@inheritDoc}
@@ -478,15 +478,18 @@ public class SipService extends Service {
         /**
          * {@inheritDoc}
          */
-		@Override
 		public SipCallSession[] getCalls() throws RemoteException {
-			SipService.this.enforceCallingOrSelfPermission(SipManager.PERMISSION_USE_SIP, null);
-			if(pjService != null) {
-				return pjService.getCalls();
-			}
-			return new SipCallSession[0];
-		}
-
+                        SipService.this.enforceCallingOrSelfPermission(SipManager.PERMISSION_USE_SIP, null);
+                        if(pjService != null) {
+                                SipCallSession[] listOfCallsImpl = pjService.getCalls();
+                                SipCallSession[] result = new SipCallSession[listOfCallsImpl.length];
+                                for(int sessIdx = 0; sessIdx < listOfCallsImpl.length; sessIdx++) {
+                                    result[sessIdx] = new SipCallSession(listOfCallsImpl[sessIdx]);
+                                }
+                                return result;
+                        }
+                        return new SipCallSession[0];
+                }
         /**
          * {@inheritDoc}
          */
@@ -830,6 +833,21 @@ public class SipService extends Service {
             });
         }
 
+	/**
+ 	** {@inheritDoc}
+ 	**/
+        @Override
+        public String getLocalNatType() throws RemoteException {
+            ReturnRunnable action = new ReturnRunnable() {
+                @Override
+                protected Object runWithReturn() throws SameThreadException {
+                    return (String) pjService.getDetectedNatType();
+                }
+            };
+            getExecutor().execute(action);
+            return (String) action.getResult();
+        }
+
         private boolean mForceRegistrationOn3g = false;
         
 		@Override
@@ -845,10 +863,6 @@ public class SipService extends Service {
 			// TODO Auto-generated method stub
 			mForceRegistrationOn3g = forceRegistrationOn3g; 
 		}
-
-
-
-		
 	};
 
 	private final ISipConfiguration.Stub binderConfiguration = new ISipConfiguration.Stub() {
@@ -1080,6 +1094,7 @@ public class SipService extends Service {
 			IntentFilter intentfilter = new IntentFilter();
 			intentfilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 			intentfilter.addAction(SipManager.ACTION_SIP_ACCOUNT_CHANGED);
+			intentfilter.addAction(SipManager.ACTION_SIP_ACCOUNT_DELETED);
 			intentfilter.addAction(SipManager.ACTION_SIP_CAN_BE_STOPPED);
 			intentfilter.addAction(SipManager.ACTION_SIP_REQUEST_RESTART);
 			intentfilter.addAction(DynamicReceiver4.ACTION_VPN_CONNECTIVITY);
@@ -1310,7 +1325,7 @@ public class SipService extends Service {
 		Log.d(THIS_FILE, "Ask pjservice to start itself");
 		
 
-        presenceMgr.startMonitoring(this);
+//        presenceMgr.startMonitoring(this);
 		if(pjService.sipStart()) {
 		    // This should be done after in acquire resource
 		    // But due to http://code.google.com/p/android/issues/detail?id=21635

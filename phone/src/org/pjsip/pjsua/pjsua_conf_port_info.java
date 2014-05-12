@@ -52,6 +52,14 @@ public class pjsua_conf_port_info {
     return (cPtr == 0) ? null : new pj_str_t(cPtr, false);
   }
 
+  public void setFormat(SWIGTYPE_p_pjmedia_format value) {
+    pjsuaJNI.pjsua_conf_port_info_format_set(swigCPtr, this, SWIGTYPE_p_pjmedia_format.getCPtr(value));
+  }
+
+  public SWIGTYPE_p_pjmedia_format getFormat() {
+    return new SWIGTYPE_p_pjmedia_format(pjsuaJNI.pjsua_conf_port_info_format_get(swigCPtr, this), true);
+  }
+
   public void setClock_rate(long value) {
     pjsuaJNI.pjsua_conf_port_info_clock_rate_set(swigCPtr, this, value);
   }
@@ -82,6 +90,22 @@ public class pjsua_conf_port_info {
 
   public long getBits_per_sample() {
     return pjsuaJNI.pjsua_conf_port_info_bits_per_sample_get(swigCPtr, this);
+  }
+
+  public void setTx_level_adj(float value) {
+    pjsuaJNI.pjsua_conf_port_info_tx_level_adj_set(swigCPtr, this, value);
+  }
+
+  public float getTx_level_adj() {
+    return pjsuaJNI.pjsua_conf_port_info_tx_level_adj_get(swigCPtr, this);
+  }
+
+  public void setRx_level_adj(float value) {
+    pjsuaJNI.pjsua_conf_port_info_rx_level_adj_set(swigCPtr, this, value);
+  }
+
+  public float getRx_level_adj() {
+    return pjsuaJNI.pjsua_conf_port_info_rx_level_adj_get(swigCPtr, this);
   }
 
   public void setListener_cnt(long value) {

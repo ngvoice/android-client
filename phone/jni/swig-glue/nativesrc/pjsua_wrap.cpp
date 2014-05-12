@@ -4791,6 +4791,42 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1TRANSPORT_1TLS6_1ge
 }
 
 
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJ_1TURN_1TP_1UDP_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  pj_turn_tp_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (pj_turn_tp_type)PJ_TURN_TP_UDP;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJ_1TURN_1TP_1TCP_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  pj_turn_tp_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (pj_turn_tp_type)PJ_TURN_TP_TCP;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJ_1TURN_1TP_1TLS_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  pj_turn_tp_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (pj_turn_tp_type)PJ_TURN_TP_TLS;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1SC_1TRYING_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   pjsip_status_code result;
@@ -6470,27 +6506,21 @@ SWIGEXPORT jstring JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1
 }
 
 
-SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   pj_stun_nat_detect_result *arg1 = (pj_stun_nat_detect_result *) 0 ;
   pj_stun_nat_type arg2 ;
-  pj_stun_nat_type *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pj_stun_nat_detect_result **)&jarg1; 
-  argp2 = *(pj_stun_nat_type **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null pj_stun_nat_type");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (pj_stun_nat_type)jarg2; 
   if (arg1) (arg1)->nat_type = arg2;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   pj_stun_nat_detect_result *arg1 = (pj_stun_nat_detect_result *) 0 ;
   pj_stun_nat_type result;
   
@@ -6498,8 +6528,8 @@ SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1re
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pj_stun_nat_detect_result **)&jarg1; 
-  result =  ((arg1)->nat_type);
-  *(pj_stun_nat_type **)&jresult = new pj_stun_nat_type((const pj_stun_nat_type &)result); 
+  result = (pj_stun_nat_type) ((arg1)->nat_type);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -7048,6 +7078,112 @@ SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_delete_1pjsip_1auth_1clt_1
 }
 
 
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1aggressive_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  pj_ice_sess_options *arg1 = (pj_ice_sess_options *) 0 ;
+  pj_bool_t arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pj_ice_sess_options **)&jarg1; 
+  arg2 = (pj_bool_t)jarg2; 
+  if (arg1) (arg1)->aggressive = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1aggressive_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  pj_ice_sess_options *arg1 = (pj_ice_sess_options *) 0 ;
+  pj_bool_t result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pj_ice_sess_options **)&jarg1; 
+  result = (pj_bool_t) ((arg1)->aggressive);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1nominated_1check_1delay_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  pj_ice_sess_options *arg1 = (pj_ice_sess_options *) 0 ;
+  unsigned int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pj_ice_sess_options **)&jarg1; 
+  arg2 = (unsigned int)jarg2; 
+  if (arg1) (arg1)->nominated_check_delay = arg2;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1nominated_1check_1delay_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  pj_ice_sess_options *arg1 = (pj_ice_sess_options *) 0 ;
+  unsigned int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pj_ice_sess_options **)&jarg1; 
+  result = (unsigned int) ((arg1)->nominated_check_delay);
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1controlled_1agent_1want_1nom_1timeout_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  pj_ice_sess_options *arg1 = (pj_ice_sess_options *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pj_ice_sess_options **)&jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->controlled_agent_want_nom_timeout = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1controlled_1agent_1want_1nom_1timeout_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  pj_ice_sess_options *arg1 = (pj_ice_sess_options *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pj_ice_sess_options **)&jarg1; 
+  result = (int) ((arg1)->controlled_agent_want_nom_timeout);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_new_1pj_1ice_1sess_1options(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  pj_ice_sess_options *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (pj_ice_sess_options *)new pj_ice_sess_options();
+  *(pj_ice_sess_options **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_delete_1pj_1ice_1sess_1options(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  pj_ice_sess_options *arg1 = (pj_ice_sess_options *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(pj_ice_sess_options **)&jarg1; 
+  delete arg1;
+}
+
+
 SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_delete_1ZrtpCallback(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   ZrtpCallback *arg1 = (ZrtpCallback *) 0 ;
   
@@ -7411,11 +7547,11 @@ SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_mod_1earlylock_1set_1callb
 
 SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1INVALID_1ID_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
-  int result;
+  pjsua_invalid_id_const_ result;
   
   (void)jenv;
   (void)jcls;
-  result = (int)((-1));
+  result = (pjsua_invalid_id_const_)PJSUA_INVALID_ID;
   jresult = (jint)result; 
   return jresult;
 }
@@ -8053,6 +8189,42 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1MED_1TP_1CLOSE_1MEM
   (void)jenv;
   (void)jcls;
   result = (pjsua_create_media_transport_flag)PJSUA_MED_TP_CLOSE_MEMBER;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1UNREGISTER_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  pjsua_contact_rewrite_method result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (pjsua_contact_rewrite_method)PJSUA_CONTACT_REWRITE_UNREGISTER;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1NO_1UNREG_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  pjsua_contact_rewrite_method result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (pjsua_contact_rewrite_method)PJSUA_CONTACT_REWRITE_NO_UNREG;
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1ALWAYS_1UPDATE_1get(JNIEnv *jenv, jclass jcls) {
+  jint jresult = 0 ;
+  pjsua_contact_rewrite_method result;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (pjsua_contact_rewrite_method)PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE;
   jresult = (jint)result; 
   return jresult;
 }
@@ -10383,6 +10555,32 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_handle_1events(JNIEnv *jen
 }
 
 
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_register_1worker_1thread(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jint jresult = 0 ;
+  char *arg1 = (char *) 0 ;
+  pj_status_t result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
+    if (!arg1) return 0;
+  }
+  result = (pj_status_t)pjsua_register_worker_thread((char const *)arg1);
+  jresult = (jint)result; 
+  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_stop_1worker_1threads(JNIEnv *jenv, jclass jcls) {
+  (void)jenv;
+  (void)jcls;
+  pjsua_stop_worker_threads();
+}
+
+
 SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pool_1create(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jlong jarg3) {
   jlong jresult = 0 ;
   char *arg1 = (char *) 0 ;
@@ -10614,16 +10812,33 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_detect_1nat_1type(JNIEnv *
 }
 
 
-SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_get_1nat_1type(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_get_1nat_1type(JNIEnv *jenv, jclass jcls, jintArray jarg1) {
   jint jresult = 0 ;
   pj_stun_nat_type *arg1 = (pj_stun_nat_type *) 0 ;
+  pj_stun_nat_type temp1 ;
   pj_status_t result;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(pj_stun_nat_type **)&jarg1; 
+  {
+    if (!jarg1) {
+      SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "array null");
+      return 0;
+    }
+    if (jenv->GetArrayLength(jarg1) == 0) {
+      SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
+      return 0;
+    }
+    temp1 = (pj_stun_nat_type)0;
+    arg1 = &temp1; 
+  }
   result = (pj_status_t)pjsua_get_nat_type(arg1);
   jresult = (jint)result; 
+  {
+    jint jvalue = (jint)temp1;
+    jenv->SetIntArrayRegion(jarg1, 0, 1, &jvalue);
+  }
+  
   return jresult;
 }
 
@@ -11559,18 +11774,6 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1DEFAULT_1ACC_1PRIOR
 }
 
 
-SWIGEXPORT jstring JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1SECURE_1SCHEME_1get(JNIEnv *jenv, jclass jcls) {
-  jstring jresult = 0 ;
-  char *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (char *)("sip");
-  if (result) jresult = jenv->NewStringUTF((const char *)result);
-  return jresult;
-}
-
-
 SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1UNPUBLISH_1MAX_1WAIT_1TIME_1MSEC_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
@@ -11590,18 +11793,6 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1REG_1RETRY_1INTERVA
   (void)jenv;
   (void)jcls;
   result = (int)(300);
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1METHOD_1get(JNIEnv *jenv, jclass jcls) {
-  jint jresult = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (int)(2);
   jresult = (jint)result; 
   return jresult;
 }
@@ -11687,36 +11878,31 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1m
 }
 
 
-SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1opt_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1opt_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   pjsua_ice_config *arg1 = (pjsua_ice_config *) 0 ;
-  pj_ice_sess_options arg2 ;
-  pj_ice_sess_options *argp2 ;
+  pj_ice_sess_options *arg2 = (pj_ice_sess_options *) 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg2_;
   arg1 = *(pjsua_ice_config **)&jarg1; 
-  argp2 = *(pj_ice_sess_options **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null pj_ice_sess_options");
-    return ;
-  }
-  arg2 = *argp2; 
-  if (arg1) (arg1)->ice_opt = arg2;
+  arg2 = *(pj_ice_sess_options **)&jarg2; 
+  if (arg1) (arg1)->ice_opt = *arg2;
 }
 
 
 SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1opt_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   pjsua_ice_config *arg1 = (pjsua_ice_config *) 0 ;
-  pj_ice_sess_options result;
+  pj_ice_sess_options *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pjsua_ice_config **)&jarg1; 
-  result =  ((arg1)->ice_opt);
-  *(pj_ice_sess_options **)&jresult = new pj_ice_sess_options((const pj_ice_sess_options &)result); 
+  result = (pj_ice_sess_options *)& ((arg1)->ice_opt);
+  *(pj_ice_sess_options **)&jresult = result; 
   return jresult;
 }
 
@@ -11856,27 +12042,21 @@ SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn
 }
 
 
-SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   pjsua_turn_config *arg1 = (pjsua_turn_config *) 0 ;
   pj_turn_tp_type arg2 ;
-  pj_turn_tp_type *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pjsua_turn_config **)&jarg1; 
-  argp2 = *(pj_turn_tp_type **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null pj_turn_tp_type");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (pj_turn_tp_type)jarg2; 
   if (arg1) (arg1)->turn_conn_type = arg2;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   pjsua_turn_config *arg1 = (pjsua_turn_config *) 0 ;
   pj_turn_tp_type result;
   
@@ -11884,8 +12064,8 @@ SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pjsua_turn_config **)&jarg1; 
-  result =  ((arg1)->turn_conn_type);
-  *(pj_turn_tp_type **)&jresult = new pj_turn_tp_type((const pj_turn_tp_type &)result); 
+  result = (pj_turn_tp_type) ((arg1)->turn_conn_type);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -14407,18 +14587,21 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_acc_1del(JNIEnv *jenv, jcl
 }
 
 
-SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_acc_1get_1config(JNIEnv *jenv, jclass jcls, jint jarg1, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_acc_1get_1config(JNIEnv *jenv, jclass jcls, jint jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
   pjsua_acc_id arg1 ;
-  pjsua_acc_config *arg2 = (pjsua_acc_config *) 0 ;
+  pj_pool_t *arg2 = (pj_pool_t *) 0 ;
+  pjsua_acc_config *arg3 = (pjsua_acc_config *) 0 ;
   pj_status_t result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg2_;
+  (void)jarg3_;
   arg1 = (pjsua_acc_id)jarg1; 
-  arg2 = *(pjsua_acc_config **)&jarg2; 
-  result = (pj_status_t)pjsua_acc_get_config(arg1,arg2);
+  arg2 = *(pj_pool_t **)&jarg2; 
+  arg3 = *(pjsua_acc_config **)&jarg3; 
+  result = (pj_status_t)pjsua_acc_get_config(arg1,arg2,arg3);
   jresult = (jint)result; 
   return jresult;
 }
@@ -16157,18 +16340,35 @@ SWIGEXPORT void * JNICALL Java_org_pjsip_pjsua_pjsuaJNI_call_1get_1user_1data(JN
 }
 
 
-SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_call_1get_1rem_1nat_1type(JNIEnv *jenv, jclass jcls, jint jarg1, jlong jarg2) {
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_call_1get_1rem_1nat_1type(JNIEnv *jenv, jclass jcls, jint jarg1, jintArray jarg2) {
   jint jresult = 0 ;
   pjsua_call_id arg1 ;
   pj_stun_nat_type *arg2 = (pj_stun_nat_type *) 0 ;
+  pj_stun_nat_type temp2 ;
   pj_status_t result;
   
   (void)jenv;
   (void)jcls;
   arg1 = (pjsua_call_id)jarg1; 
-  arg2 = *(pj_stun_nat_type **)&jarg2; 
+  {
+    if (!jarg2) {
+      SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "array null");
+      return 0;
+    }
+    if (jenv->GetArrayLength(jarg2) == 0) {
+      SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
+      return 0;
+    }
+    temp2 = (pj_stun_nat_type)0;
+    arg2 = &temp2; 
+  }
   result = (pj_status_t)pjsua_call_get_rem_nat_type(arg1,arg2);
   jresult = (jint)result; 
+  {
+    jint jvalue = (jint)temp2;
+    jenv->SetIntArrayRegion(jarg2, 0, 1, &jvalue);
+  }
+  
   return jresult;
 }
 
@@ -18328,36 +18528,31 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_
 }
 
 
-SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1opt_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1opt_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   pjsua_media_config *arg1 = (pjsua_media_config *) 0 ;
-  pj_ice_sess_options arg2 ;
-  pj_ice_sess_options *argp2 ;
+  pj_ice_sess_options *arg2 = (pj_ice_sess_options *) 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg2_;
   arg1 = *(pjsua_media_config **)&jarg1; 
-  argp2 = *(pj_ice_sess_options **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null pj_ice_sess_options");
-    return ;
-  }
-  arg2 = *argp2; 
-  if (arg1) (arg1)->ice_opt = arg2;
+  arg2 = *(pj_ice_sess_options **)&jarg2; 
+  if (arg1) (arg1)->ice_opt = *arg2;
 }
 
 
 SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1opt_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   pjsua_media_config *arg1 = (pjsua_media_config *) 0 ;
-  pj_ice_sess_options result;
+  pj_ice_sess_options *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pjsua_media_config **)&jarg1; 
-  result =  ((arg1)->ice_opt);
-  *(pj_ice_sess_options **)&jresult = new pj_ice_sess_options((const pj_ice_sess_options &)result); 
+  result = (pj_ice_sess_options *)& ((arg1)->ice_opt);
+  *(pj_ice_sess_options **)&jresult = result; 
   return jresult;
 }
 
@@ -18475,27 +18670,21 @@ SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1tur
 }
 
 
-SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   pjsua_media_config *arg1 = (pjsua_media_config *) 0 ;
   pj_turn_tp_type arg2 ;
-  pj_turn_tp_type *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pjsua_media_config **)&jarg1; 
-  argp2 = *(pj_turn_tp_type **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null pj_turn_tp_type");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (pj_turn_tp_type)jarg2; 
   if (arg1) (arg1)->turn_conn_type = arg2;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   pjsua_media_config *arg1 = (pjsua_media_config *) 0 ;
   pj_turn_tp_type result;
   
@@ -18503,8 +18692,8 @@ SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1tur
   (void)jcls;
   (void)jarg1_;
   arg1 = *(pjsua_media_config **)&jarg1; 
-  result =  ((arg1)->turn_conn_type);
-  *(pj_turn_tp_type **)&jresult = new pj_turn_tp_type((const pj_turn_tp_type &)result); 
+  result = (pj_turn_tp_type) ((arg1)->turn_conn_type);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -18894,6 +19083,40 @@ SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1
 }
 
 
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1format_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  pjsua_conf_port_info *arg1 = (pjsua_conf_port_info *) 0 ;
+  pjmedia_format arg2 ;
+  pjmedia_format *argp2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pjsua_conf_port_info **)&jarg1; 
+  argp2 = *(pjmedia_format **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null pjmedia_format");
+    return ;
+  }
+  arg2 = *argp2; 
+  if (arg1) (arg1)->format = arg2;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1format_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  pjsua_conf_port_info *arg1 = (pjsua_conf_port_info *) 0 ;
+  pjmedia_format result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pjsua_conf_port_info **)&jarg1; 
+  result =  ((arg1)->format);
+  *(pjmedia_format **)&jresult = new pjmedia_format((const pjmedia_format &)result); 
+  return jresult;
+}
+
+
 SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1clock_1rate_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   pjsua_conf_port_info *arg1 = (pjsua_conf_port_info *) 0 ;
   unsigned int arg2 ;
@@ -19002,6 +19225,62 @@ SWIGEXPORT jlong JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1
   arg1 = *(pjsua_conf_port_info **)&jarg1; 
   result = (unsigned int) ((arg1)->bits_per_sample);
   jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1tx_1level_1adj_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2) {
+  pjsua_conf_port_info *arg1 = (pjsua_conf_port_info *) 0 ;
+  float arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pjsua_conf_port_info **)&jarg1; 
+  arg2 = (float)jarg2; 
+  if (arg1) (arg1)->tx_level_adj = arg2;
+}
+
+
+SWIGEXPORT jfloat JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1tx_1level_1adj_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jfloat jresult = 0 ;
+  pjsua_conf_port_info *arg1 = (pjsua_conf_port_info *) 0 ;
+  float result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pjsua_conf_port_info **)&jarg1; 
+  result = (float) ((arg1)->tx_level_adj);
+  jresult = (jfloat)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1rx_1level_1adj_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2) {
+  pjsua_conf_port_info *arg1 = (pjsua_conf_port_info *) 0 ;
+  float arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pjsua_conf_port_info **)&jarg1; 
+  arg2 = (float)jarg2; 
+  if (arg1) (arg1)->rx_level_adj = arg2;
+}
+
+
+SWIGEXPORT jfloat JNICALL Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1rx_1level_1adj_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jfloat jresult = 0 ;
+  pjsua_conf_port_info *arg1 = (pjsua_conf_port_info *) 0 ;
+  float result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(pjsua_conf_port_info **)&jarg1; 
+  result = (float) ((arg1)->rx_level_adj);
+  jresult = (jfloat)result; 
   return jresult;
 }
 
@@ -19554,6 +19833,36 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_player_1get_1port(JNIEnv *
   arg1 = (pjsua_player_id)jarg1; 
   arg2 = *(pjmedia_port ***)&jarg2; 
   result = (pj_status_t)pjsua_player_get_port(arg1,arg2);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_player_1get_1info(JNIEnv *jenv, jclass jcls, jint jarg1, jlong jarg2) {
+  jint jresult = 0 ;
+  pjsua_player_id arg1 ;
+  pjmedia_wav_player_info *arg2 = (pjmedia_wav_player_info *) 0 ;
+  pj_status_t result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (pjsua_player_id)jarg1; 
+  arg2 = *(pjmedia_wav_player_info **)&jarg2; 
+  result = (pj_status_t)pjsua_player_get_info(arg1,arg2);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_player_1get_1pos(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  jint jresult = 0 ;
+  pjsua_player_id arg1 ;
+  pj_ssize_t result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (pjsua_player_id)jarg1; 
+  result = (pj_ssize_t)pjsua_player_get_pos(arg1);
   jresult = (jint)result; 
   return jresult;
 }
@@ -21896,17 +22205,16 @@ SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1destroy(JNIEnv
 }
 
 
-SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1set_1acc_1user_1data(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jint JNICALL Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1set_1acc_1user_1data(JNIEnv *jenv, jclass jcls, jint jarg1, jlong jarg2, jobject jarg2_) {
   jint jresult = 0 ;
-  pjsua_acc_config *arg1 = (pjsua_acc_config *) 0 ;
+  pjsua_acc_id arg1 ;
   csipsimple_acc_config *arg2 = (csipsimple_acc_config *) 0 ;
   pj_status_t result;
   
   (void)jenv;
   (void)jcls;
-  (void)jarg1_;
   (void)jarg2_;
-  arg1 = *(pjsua_acc_config **)&jarg1; 
+  arg1 = (pjsua_acc_id)jarg1; 
   arg2 = *(csipsimple_acc_config **)&jarg2; 
   result = (pj_status_t)csipsimple_set_acc_user_data(arg1,arg2);
   jresult = (jint)result; 
@@ -22710,6 +23018,9 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"PJSIP_TRANSPORT_UDP6_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1TRANSPORT_1UDP6_1get},
 {"PJSIP_TRANSPORT_TCP6_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1TRANSPORT_1TCP6_1get},
 {"PJSIP_TRANSPORT_TLS6_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1TRANSPORT_1TLS6_1get},
+{"PJ_TURN_TP_UDP_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJ_1TURN_1TP_1UDP_1get},
+{"PJ_TURN_TP_TCP_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJ_1TURN_1TP_1TCP_1get},
+{"PJ_TURN_TP_TLS_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJ_1TURN_1TP_1TLS_1get},
 {"PJSIP_SC_TRYING_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1SC_1TRYING_1get},
 {"PJSIP_SC_RINGING_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1SC_1RINGING_1get},
 {"PJSIP_SC_CALL_BEING_FORWARDED_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSIP_1SC_1CALL_1BEING_1FORWARDED_1get},
@@ -22830,8 +23141,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"pj_stun_nat_detect_result_status_get", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1status_1get},
 {"pj_stun_nat_detect_result_status_text_set", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;Ljava/lang/String;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1status_1text_1set},
 {"pj_stun_nat_detect_result_status_text_get", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;)Ljava/lang/String;", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1status_1text_1get},
-{"pj_stun_nat_detect_result_nat_type_set", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1set},
-{"pj_stun_nat_detect_result_nat_type_get", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1get},
+{"pj_stun_nat_detect_result_nat_type_set", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1set},
+{"pj_stun_nat_detect_result_nat_type_get", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1get},
 {"pj_stun_nat_detect_result_nat_type_name_set", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;Ljava/lang/String;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1name_1set},
 {"pj_stun_nat_detect_result_nat_type_name_get", "(JLorg/pjsip/pjsua/pj_stun_nat_detect_result;)Ljava/lang/String;", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1stun_1nat_1detect_1result_1nat_1type_1name_1get},
 {"new_pj_stun_nat_detect_result", "()J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_new_1pj_1stun_1nat_1detect_1result},
@@ -22870,6 +23181,14 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"pjsip_auth_clt_pref_algorithm_get", "(JLorg/pjsip/pjsua/pjsip_auth_clt_pref;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsip_1auth_1clt_1pref_1algorithm_1get},
 {"new_pjsip_auth_clt_pref", "()J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_new_1pjsip_1auth_1clt_1pref},
 {"delete_pjsip_auth_clt_pref", "(J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_delete_1pjsip_1auth_1clt_1pref},
+{"pj_ice_sess_options_aggressive_set", "(JLorg/pjsip/pjsua/pj_ice_sess_options;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1aggressive_1set},
+{"pj_ice_sess_options_aggressive_get", "(JLorg/pjsip/pjsua/pj_ice_sess_options;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1aggressive_1get},
+{"pj_ice_sess_options_nominated_check_delay_set", "(JLorg/pjsip/pjsua/pj_ice_sess_options;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1nominated_1check_1delay_1set},
+{"pj_ice_sess_options_nominated_check_delay_get", "(JLorg/pjsip/pjsua/pj_ice_sess_options;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1nominated_1check_1delay_1get},
+{"pj_ice_sess_options_controlled_agent_want_nom_timeout_set", "(JLorg/pjsip/pjsua/pj_ice_sess_options;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1controlled_1agent_1want_1nom_1timeout_1set},
+{"pj_ice_sess_options_controlled_agent_want_nom_timeout_get", "(JLorg/pjsip/pjsua/pj_ice_sess_options;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1ice_1sess_1options_1controlled_1agent_1want_1nom_1timeout_1get},
+{"new_pj_ice_sess_options", "()J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_new_1pj_1ice_1sess_1options},
+{"delete_pj_ice_sess_options", "(J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_delete_1pj_1ice_1sess_1options},
 {"delete_ZrtpCallback", "(J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_delete_1ZrtpCallback},
 {"ZrtpCallback_on_zrtp_show_sas", "(JLorg/pjsip/pjsua/ZrtpCallback;IJLorg/pjsip/pjsua/pj_str_t;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_ZrtpCallback_1on_1zrtp_1show_1sas},
 {"ZrtpCallback_on_zrtp_show_sasSwigExplicitZrtpCallback", "(JLorg/pjsip/pjsua/ZrtpCallback;IJLorg/pjsip/pjsua/pj_str_t;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_ZrtpCallback_1on_1zrtp_1show_1sasSwigExplicitZrtpCallback},
@@ -22947,6 +23266,9 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"new_pjsua_med_tp_state_info", "()J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_new_1pjsua_1med_1tp_1state_1info},
 {"delete_pjsua_med_tp_state_info", "(J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_delete_1pjsua_1med_1tp_1state_1info},
 {"PJSUA_MED_TP_CLOSE_MEMBER_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1MED_1TP_1CLOSE_1MEMBER_1get},
+{"PJSUA_CONTACT_REWRITE_UNREGISTER_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1UNREGISTER_1get},
+{"PJSUA_CONTACT_REWRITE_NO_UNREG_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1NO_1UNREG_1get},
+{"PJSUA_CONTACT_REWRITE_ALWAYS_UPDATE_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1ALWAYS_1UPDATE_1get},
 {"pjsua_call_setting_flag_set", "(JLorg/pjsip/pjsua/pjsua_call_setting;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1call_1setting_1flag_1set},
 {"pjsua_call_setting_flag_get", "(JLorg/pjsip/pjsua/pjsua_call_setting;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1call_1setting_1flag_1get},
 {"pjsua_call_setting_req_keyframe_method_set", "(JLorg/pjsip/pjsua/pjsua_call_setting;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1call_1setting_1req_1keyframe_1method_1set},
@@ -23102,6 +23424,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"start", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_start},
 {"get_state", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_get_1state},
 {"handle_events", "(J)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_handle_1events},
+{"register_worker_thread", "(Ljava/lang/String;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_register_1worker_1thread},
+{"stop_worker_threads", "()V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_stop_1worker_1threads},
 {"pool_create", "(Ljava/lang/String;JJ)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pool_1create},
 {"reconfigure_logging", "(JLorg/pjsip/pjsua/pjsua_logging_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_reconfigure_1logging},
 {"get_pjsip_endpt", "()J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_get_1pjsip_1endpt},
@@ -23118,7 +23442,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"new_pj_stun_resolve_result", "()J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_new_1pj_1stun_1resolve_1result},
 {"delete_pj_stun_resolve_result", "(J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_delete_1pj_1stun_1resolve_1result},
 {"detect_nat_type", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_detect_1nat_1type},
-{"get_nat_type", "(J)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_get_1nat_1type},
+{"get_nat_type", "([I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_get_1nat_1type},
 {"resolve_stun_servers", "(J[JI[BJ)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_resolve_1stun_1servers},
 {"cancel_stun_resolution", "([BI)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_cancel_1stun_1resolution},
 {"verify_sip_url", "(Ljava/lang/String;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_verify_1sip_1url},
@@ -23176,17 +23500,15 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"PJSUA_REG_INTERVAL_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1REG_1INTERVAL_1get},
 {"PJSUA_UNREG_TIMEOUT_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1UNREG_1TIMEOUT_1get},
 {"PJSUA_DEFAULT_ACC_PRIORITY_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1DEFAULT_1ACC_1PRIORITY_1get},
-{"PJSUA_SECURE_SCHEME_get", "()Ljava/lang/String;", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1SECURE_1SCHEME_1get},
 {"PJSUA_UNPUBLISH_MAX_WAIT_TIME_MSEC_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1UNPUBLISH_1MAX_1WAIT_1TIME_1MSEC_1get},
 {"PJSUA_REG_RETRY_INTERVAL_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1REG_1RETRY_1INTERVAL_1get},
-{"PJSUA_CONTACT_REWRITE_METHOD_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1CONTACT_1REWRITE_1METHOD_1get},
 {"PJSUA_REG_USE_OUTBOUND_PROXY_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1REG_1USE_1OUTBOUND_1PROXY_1get},
 {"PJSUA_REG_USE_ACC_PROXY_get", "()I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_PJSUA_1REG_1USE_1ACC_1PROXY_1get},
 {"pjsua_ice_config_enable_ice_set", "(JLorg/pjsip/pjsua/pjsua_ice_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1enable_1ice_1set},
 {"pjsua_ice_config_enable_ice_get", "(JLorg/pjsip/pjsua/pjsua_ice_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1enable_1ice_1get},
 {"pjsua_ice_config_ice_max_host_cands_set", "(JLorg/pjsip/pjsua/pjsua_ice_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1max_1host_1cands_1set},
 {"pjsua_ice_config_ice_max_host_cands_get", "(JLorg/pjsip/pjsua/pjsua_ice_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1max_1host_1cands_1get},
-{"pjsua_ice_config_ice_opt_set", "(JLorg/pjsip/pjsua/pjsua_ice_config;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1opt_1set},
+{"pjsua_ice_config_ice_opt_set", "(JLorg/pjsip/pjsua/pjsua_ice_config;JLorg/pjsip/pjsua/pj_ice_sess_options;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1opt_1set},
 {"pjsua_ice_config_ice_opt_get", "(JLorg/pjsip/pjsua/pjsua_ice_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1opt_1get},
 {"pjsua_ice_config_ice_no_rtcp_set", "(JLorg/pjsip/pjsua/pjsua_ice_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1no_1rtcp_1set},
 {"pjsua_ice_config_ice_no_rtcp_get", "(JLorg/pjsip/pjsua/pjsua_ice_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1ice_1config_1ice_1no_1rtcp_1get},
@@ -23198,8 +23520,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"pjsua_turn_config_enable_turn_get", "(JLorg/pjsip/pjsua/pjsua_turn_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1enable_1turn_1get},
 {"pjsua_turn_config_turn_server_set", "(JLorg/pjsip/pjsua/pjsua_turn_config;JLorg/pjsip/pjsua/pj_str_t;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1server_1set},
 {"pjsua_turn_config_turn_server_get", "(JLorg/pjsip/pjsua/pjsua_turn_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1server_1get},
-{"pjsua_turn_config_turn_conn_type_set", "(JLorg/pjsip/pjsua/pjsua_turn_config;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1set},
-{"pjsua_turn_config_turn_conn_type_get", "(JLorg/pjsip/pjsua/pjsua_turn_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1get},
+{"pjsua_turn_config_turn_conn_type_set", "(JLorg/pjsip/pjsua/pjsua_turn_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1set},
+{"pjsua_turn_config_turn_conn_type_get", "(JLorg/pjsip/pjsua/pjsua_turn_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1conn_1type_1get},
 {"pjsua_turn_config_turn_auth_cred_set", "(JLorg/pjsip/pjsua/pjsua_turn_config;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1auth_1cred_1set},
 {"pjsua_turn_config_turn_auth_cred_get", "(JLorg/pjsip/pjsua/pjsua_turn_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1turn_1config_1turn_1auth_1cred_1get},
 {"new_pjsua_turn_config", "()J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_new_1pjsua_1turn_1config},
@@ -23367,7 +23689,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"acc_set_user_data", "(I[B)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1set_1user_1data},
 {"acc_get_user_data", "(I)[B", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1get_1user_1data},
 {"acc_del", "(I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1del},
-{"acc_get_config", "(IJLorg/pjsip/pjsua/pjsua_acc_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1get_1config},
+{"acc_get_config", "(IJLorg/pjsip/pjsua/pj_pool_t;JLorg/pjsip/pjsua/pjsua_acc_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1get_1config},
 {"acc_modify", "(IJLorg/pjsip/pjsua/pjsua_acc_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1modify},
 {"acc_set_online_status", "(II)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1set_1online_1status},
 {"acc_set_online_status2", "(IIJLorg/pjsip/pjsua/pjrpid_element;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_acc_1set_1online_1status2},
@@ -23481,7 +23803,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"call_remote_has_cap", "(IIJLorg/pjsip/pjsua/pj_str_t;JLorg/pjsip/pjsua/pj_str_t;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1remote_1has_1cap},
 {"call_set_user_data", "(I[B)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1set_1user_1data},
 {"call_get_user_data", "(I)[B", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1get_1user_1data},
-{"call_get_rem_nat_type", "(IJ)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1get_1rem_1nat_1type},
+{"call_get_rem_nat_type", "(I[I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1get_1rem_1nat_1type},
 {"call_answer", "(IJJLorg/pjsip/pjsua/pj_str_t;JLorg/pjsip/pjsua/pjsua_msg_data;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1answer},
 {"call_answer2", "(IJLorg/pjsip/pjsua/pjsua_call_setting;JJLorg/pjsip/pjsua/pj_str_t;JLorg/pjsip/pjsua/pjsua_msg_data;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1answer2},
 {"call_hangup", "(IJJLorg/pjsip/pjsua/pj_str_t;JLorg/pjsip/pjsua/pjsua_msg_data;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_call_1hangup},
@@ -23620,7 +23942,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"pjsua_media_config_enable_ice_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1enable_1ice_1get},
 {"pjsua_media_config_ice_max_host_cands_set", "(JLorg/pjsip/pjsua/pjsua_media_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1max_1host_1cands_1set},
 {"pjsua_media_config_ice_max_host_cands_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1max_1host_1cands_1get},
-{"pjsua_media_config_ice_opt_set", "(JLorg/pjsip/pjsua/pjsua_media_config;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1opt_1set},
+{"pjsua_media_config_ice_opt_set", "(JLorg/pjsip/pjsua/pjsua_media_config;JLorg/pjsip/pjsua/pj_ice_sess_options;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1opt_1set},
 {"pjsua_media_config_ice_opt_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1opt_1get},
 {"pjsua_media_config_ice_no_rtcp_set", "(JLorg/pjsip/pjsua/pjsua_media_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1no_1rtcp_1set},
 {"pjsua_media_config_ice_no_rtcp_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1ice_1no_1rtcp_1get},
@@ -23630,8 +23952,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"pjsua_media_config_enable_turn_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1enable_1turn_1get},
 {"pjsua_media_config_turn_server_set", "(JLorg/pjsip/pjsua/pjsua_media_config;JLorg/pjsip/pjsua/pj_str_t;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1server_1set},
 {"pjsua_media_config_turn_server_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1server_1get},
-{"pjsua_media_config_turn_conn_type_set", "(JLorg/pjsip/pjsua/pjsua_media_config;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1set},
-{"pjsua_media_config_turn_conn_type_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1get},
+{"pjsua_media_config_turn_conn_type_set", "(JLorg/pjsip/pjsua/pjsua_media_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1set},
+{"pjsua_media_config_turn_conn_type_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1conn_1type_1get},
 {"pjsua_media_config_turn_auth_cred_set", "(JLorg/pjsip/pjsua/pjsua_media_config;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1auth_1cred_1set},
 {"pjsua_media_config_turn_auth_cred_get", "(JLorg/pjsip/pjsua/pjsua_media_config;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1turn_1auth_1cred_1get},
 {"pjsua_media_config_snd_auto_close_time_set", "(JLorg/pjsip/pjsua/pjsua_media_config;I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1media_1config_1snd_1auto_1close_1time_1set},
@@ -23659,6 +23981,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"pjsua_conf_port_info_slot_id_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1slot_1id_1get},
 {"pjsua_conf_port_info_name_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;JLorg/pjsip/pjsua/pj_str_t;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1name_1set},
 {"pjsua_conf_port_info_name_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1name_1get},
+{"pjsua_conf_port_info_format_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1format_1set},
+{"pjsua_conf_port_info_format_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1format_1get},
 {"pjsua_conf_port_info_clock_rate_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1clock_1rate_1set},
 {"pjsua_conf_port_info_clock_rate_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1clock_1rate_1get},
 {"pjsua_conf_port_info_channel_count_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1channel_1count_1set},
@@ -23667,6 +23991,10 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"pjsua_conf_port_info_samples_per_frame_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1samples_1per_1frame_1get},
 {"pjsua_conf_port_info_bits_per_sample_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1bits_1per_1sample_1set},
 {"pjsua_conf_port_info_bits_per_sample_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1bits_1per_1sample_1get},
+{"pjsua_conf_port_info_tx_level_adj_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;F)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1tx_1level_1adj_1set},
+{"pjsua_conf_port_info_tx_level_adj_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)F", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1tx_1level_1adj_1get},
+{"pjsua_conf_port_info_rx_level_adj_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;F)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1rx_1level_1adj_1set},
+{"pjsua_conf_port_info_rx_level_adj_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)F", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1rx_1level_1adj_1get},
 {"pjsua_conf_port_info_listener_cnt_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;J)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1listener_1cnt_1set},
 {"pjsua_conf_port_info_listener_cnt_get", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;)J", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1listener_1cnt_1get},
 {"pjsua_conf_port_info_listeners_set", "(JLorg/pjsip/pjsua/pjsua_conf_port_info;[I)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pjsua_1conf_1port_1info_1listeners_1set},
@@ -23694,6 +24022,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"playlist_create", "([JJJLorg/pjsip/pjsua/pj_str_t;J[I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_playlist_1create},
 {"player_get_conf_port", "(I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_player_1get_1conf_1port},
 {"player_get_port", "(IJ)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_player_1get_1port},
+{"player_get_info", "(IJ)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_player_1get_1info},
+{"player_get_pos", "(I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_player_1get_1pos},
 {"player_set_pos", "(IJ)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_player_1set_1pos},
 {"player_destroy", "(I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_player_1destroy},
 {"recorder_create", "(JLorg/pjsip/pjsua/pj_str_t;J[BIJ[I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_recorder_1create},
@@ -23828,7 +24158,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 {"csipsimple_acc_config_default", "(JLorg/pjsip/pjsua/csipsimple_acc_config;)V", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1acc_1config_1default},
 {"csipsimple_init", "(JLorg/pjsip/pjsua/pjsua_config;JLorg/pjsip/pjsua/pjsua_logging_config;JLorg/pjsip/pjsua/pjsua_media_config;JLorg/pjsip/pjsua/csipsimple_config;Ljava/lang/Object;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1init},
 {"csipsimple_destroy", "(J)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1destroy},
-{"csipsimple_set_acc_user_data", "(JLorg/pjsip/pjsua/pjsua_acc_config;JLorg/pjsip/pjsua/csipsimple_acc_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1set_1acc_1user_1data},
+{"csipsimple_set_acc_user_data", "(IJLorg/pjsip/pjsua/csipsimple_acc_config;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1set_1acc_1user_1data},
 {"csipsimple_init_acc_msg_data", "(JLorg/pjsip/pjsua/pj_pool_t;IJLorg/pjsip/pjsua/pjsua_msg_data;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1init_1acc_1msg_1data},
 {"csipsimple_msg_data_add_string_hdr", "(JLorg/pjsip/pjsua/pj_pool_t;JLorg/pjsip/pjsua/pjsua_msg_data;JLorg/pjsip/pjsua/pj_str_t;JLorg/pjsip/pjsua/pj_str_t;)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_csipsimple_1msg_1data_1add_1string_1hdr},
 {"pj_timer_fire", "(I)I", (void*)& Java_org_pjsip_pjsua_pjsuaJNI_pj_1timer_1fire},

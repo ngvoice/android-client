@@ -137,7 +137,9 @@ obj/local/x86/objs/zrtp4pj/transport_zrtp.o: \
  jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/dns_server.h \
  jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/scanner.h \
  jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/string.h \
  jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/xml.h \
+ jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/json.h \
  jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h \
  jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/pcap.h \
  jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/http_client.h \
@@ -549,7 +551,11 @@ jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util
 
 jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/scanner_cis_bitwise.h:
 
+jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/string.h:
+
 jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/xml.h:
+
+jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/json.h:
 
 jni/zrtp4pj/android_toolchain/../sources/zsrtp/../../../pjsip/sources/pjlib-util/include/pjlib-util/stun_simple.h:
 

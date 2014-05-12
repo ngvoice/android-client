@@ -118,7 +118,9 @@ obj/local/armeabi-v7a/objs/pjmedia/src/pjmedia-audiodev/audiotest.o: \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/dns_server.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/scanner.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h \
+ jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/string.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/xml.h \
+ jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/json.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/stun_simple.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/pcap.h \
  jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/http_client.h \
@@ -363,7 +365,11 @@ jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/
 
 jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/scanner_cis_bitwise.h:
 
+jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/string.h:
+
 jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/xml.h:
+
+jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/json.h:
 
 jni/pjsip/android_toolchain/pjmedia/../../sources/pjmedia/../pjlib-util/include/pjlib-util/stun_simple.h:
 

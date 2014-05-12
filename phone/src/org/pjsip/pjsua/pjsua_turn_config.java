@@ -52,12 +52,12 @@ public class pjsua_turn_config {
     return (cPtr == 0) ? null : new pj_str_t(cPtr, false);
   }
 
-  public void setTurn_conn_type(SWIGTYPE_p_pj_turn_tp_type value) {
-    pjsuaJNI.pjsua_turn_config_turn_conn_type_set(swigCPtr, this, SWIGTYPE_p_pj_turn_tp_type.getCPtr(value));
+  public void setTurn_conn_type(pj_turn_tp_type value) {
+    pjsuaJNI.pjsua_turn_config_turn_conn_type_set(swigCPtr, this, value.swigValue());
   }
 
-  public SWIGTYPE_p_pj_turn_tp_type getTurn_conn_type() {
-    return new SWIGTYPE_p_pj_turn_tp_type(pjsuaJNI.pjsua_turn_config_turn_conn_type_get(swigCPtr, this), true);
+  public pj_turn_tp_type getTurn_conn_type() {
+    return pj_turn_tp_type.swigToEnum(pjsuaJNI.pjsua_turn_config_turn_conn_type_get(swigCPtr, this));
   }
 
   public void setTurn_auth_cred(SWIGTYPE_p_pj_stun_auth_cred value) {

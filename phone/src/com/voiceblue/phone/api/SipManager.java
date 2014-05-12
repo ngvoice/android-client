@@ -23,8 +23,6 @@
 
 package com.voiceblue.phone.api;
 
-import com.voiceblue.phone.api.ISipService;
-
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.RemoteException;
@@ -164,6 +162,15 @@ public final class SipManager {
      * </p>
      */
     public static final String ACTION_SIP_ACCOUNT_CHANGED = "com.voiceblue.phone.service.ACCOUNT_CHANGED";
+    /**
+     * Broadcast sent when a sip account has been deleted
+     * <p>
+     * <ul>
+     * <li>{@link SipProfile#FIELD_ID} the long id of the account</li>
+     * </ul>
+     * </p>
+     */
+    public static final String ACTION_SIP_ACCOUNT_DELETED = "com.voiceblue.phone.service.ACCOUNT_DELETED";
     /**
      * Broadcast sent when sip account registration has changed.
      * <p>

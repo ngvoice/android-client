@@ -580,6 +580,13 @@ public class SipConfigManager {
      * @see #setPreferenceBooleanValue(Context, String, boolean)
      */
     public static final String START_WITH_TEXT_DIALER = "start_with_text_dialer";
+    /**
+     * Starts with rewrite rules enabled in dialer.
+     * By default false
+     * 
+     * @see #setPreferenceBooleanValue(Context, String, boolean)
+     */
+    public static final String REWRITE_RULES_DIALER = "rewrite_rules_dialer";
 
     // NETWORK
     /**
@@ -619,6 +626,18 @@ public class SipConfigManager {
      * @see #setPreferenceStringValue(Context, String, String)
      */
     public static final String TURN_PASSWORD = "turn_password";
+    
+    /**
+     * Transport to use to reach turn server.<br/>
+     * <a target="_blank" href=
+     * "http://www.pjsip.org/pjsip/docs/html/structpjsua__media__config.htm#a41572ead73dbe0ac76fda9d7146d5976"
+     * >Pjsip documentation</a>
+     * 
+     * @see #setPreferenceStringValue(Context, String, String)
+     * 0 = pjsip default, 1 = udp, 2 = tcp, 3 = tls.
+     */
+    public static final String TURN_TRANSPORT = "turn_transport";
+    
     /**
      * Enable ICE.<br/>
      * <a target="_blank" href=
@@ -628,6 +647,16 @@ public class SipConfigManager {
      * @see #setPreferenceBooleanValue(Context, String, boolean)
      */
     public static final String ENABLE_ICE = "enable_ice";
+    
+    /**
+     * Aggressive ICE nomination.<br/>
+     * Specify whether to use aggressive nomination. <br/>
+     * <a target="_blank" href=
+     * "http://www.pjsip.org/pjnath/docs/html/structpj__ice__sess__options.htm#ac8cc479ffdceffe057e4b1f9f823d531"
+     * >Pjsip documentation</a>
+     * 
+     */
+    public static final String ICE_AGGRESSIVE = "ice_aggressive";
     /**
      * Enable STUN.<br/>
      * <a target="_blank" href=
@@ -1072,6 +1101,20 @@ public class SipConfigManager {
      * @see #setPreferenceBooleanValue(Context, String, boolean)
      */
     public static final String USE_ANYWAY_OUT = "use_anyway_out";
+
+    /**
+     * Also enable mobile data when roaming is detected for incoming calls
+     * 
+     * @see #setPreferenceBooleanValue(Context, String, boolean)
+     */
+    public static final String USE_ROAMING_IN = "use_roaming_in";
+    
+    /**
+     * Also enable mobile data when roaming is detected for outgoing calls
+     * 
+     * @see #setPreferenceBooleanValue(Context, String, boolean)
+     */
+    public static final String USE_ROAMING_OUT = "use_roaming_out";
     
     // CALLS
     /**
@@ -1080,6 +1123,12 @@ public class SipConfigManager {
      * @see #setPreferenceBooleanValue(Context, String, boolean)
      */
     public static final String AUTO_RECORD_CALLS = "auto_record_calls";
+    /**
+     * Play a wait tone when the call is on hold on remote side.
+     * 
+     * @see #setPreferenceBooleanValue(Context, String, boolean)
+     */
+    public static final String PLAY_WAITTONE_ON_HOLD = "play_waittone_on_hold";
     /**
      * Default display name to use for sip contact.<br/>
      * This can be overriden per account.

@@ -51,12 +51,13 @@ public class pjsua_ice_config {
     return pjsuaJNI.pjsua_ice_config_ice_max_host_cands_get(swigCPtr, this);
   }
 
-  public void setIce_opt(SWIGTYPE_p_pj_ice_sess_options value) {
-    pjsuaJNI.pjsua_ice_config_ice_opt_set(swigCPtr, this, SWIGTYPE_p_pj_ice_sess_options.getCPtr(value));
+  public void setIce_opt(pj_ice_sess_options value) {
+    pjsuaJNI.pjsua_ice_config_ice_opt_set(swigCPtr, this, pj_ice_sess_options.getCPtr(value), value);
   }
 
-  public SWIGTYPE_p_pj_ice_sess_options getIce_opt() {
-    return new SWIGTYPE_p_pj_ice_sess_options(pjsuaJNI.pjsua_ice_config_ice_opt_get(swigCPtr, this), true);
+  public pj_ice_sess_options getIce_opt() {
+    long cPtr = pjsuaJNI.pjsua_ice_config_ice_opt_get(swigCPtr, this);
+    return (cPtr == 0) ? null : new pj_ice_sess_options(cPtr, false);
   }
 
   public void setIce_no_rtcp(int value) {

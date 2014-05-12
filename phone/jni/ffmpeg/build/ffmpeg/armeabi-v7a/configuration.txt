@@ -1,4 +1,4 @@
-install prefix            /home/carlos/development/android/ngvoice/android-client/phone/jni/ffmpeg/build/ffmpeg/armeabi-v7a
+install prefix            /usr/src/csipsimple/csipsimple-read-only/jni/ffmpeg/build/ffmpeg/armeabi-v7a
 source path               .
 C compiler                /opt/android/android-ndk-r8e/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc
 ARCH                      arm (armv7-a)

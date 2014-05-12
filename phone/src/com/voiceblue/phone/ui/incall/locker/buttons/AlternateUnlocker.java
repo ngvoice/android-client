@@ -35,9 +35,9 @@ import android.widget.TextView;
 
 import com.voiceblue.phone.R;
 import com.voiceblue.phone.ui.incall.locker.IOnLeftRightChoice;
-import com.voiceblue.phone.ui.incall.locker.LeftRightChooserUtils;
 import com.voiceblue.phone.ui.incall.locker.IOnLeftRightChoice.IOnLeftRightProvider;
 import com.voiceblue.phone.ui.incall.locker.IOnLeftRightChoice.TypeOfLock;
+import com.voiceblue.phone.ui.incall.locker.LeftRightChooserUtils;
 
 import java.util.ArrayList;
 
@@ -106,8 +106,9 @@ public class AlternateUnlocker extends LinearLayout implements IOnLeftRightProvi
      */
     @Override
     public void setTypeOfLock(TypeOfLock lock) {
-        // TODO Auto-generated method stub
-        
+        if(lock == TypeOfLock.CALL) {
+            applyTargetTitles(R.array.answer_choices);
+        }        
     }
 
     /* (non-Javadoc)

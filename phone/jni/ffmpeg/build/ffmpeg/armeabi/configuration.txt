@@ -1,10 +1,10 @@
-install prefix            /home/carlos/development/android/ngvoice/android-client/phone/jni/ffmpeg/build/ffmpeg/armeabi
+install prefix            /usr/src/csipsimple/csipsimple-read-only/jni/ffmpeg/build/ffmpeg/armeabi
 source path               .
 C compiler                /opt/android/android-ndk-r8e/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86_64/bin/arm-linux-androideabi-gcc
 ARCH                      arm (generic)
 big-endian                no
 runtime cpu detection     yes
-ARMv5TE enabled           yes
+ARMv5TE enabled           no
 ARMv6 enabled             no
 ARMv6T2 enabled           no
 ARM VFP enabled           no

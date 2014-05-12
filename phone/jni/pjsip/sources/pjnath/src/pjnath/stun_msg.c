@@ -1,4 +1,4 @@
-/* $Id: stun_msg.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: stun_msg.c 4712 2014-01-23 08:09:29Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -1137,11 +1137,11 @@ PJ_DEF(pj_status_t) pj_stun_string_attr_init( pj_stun_string_attr *attr,
 					      int attr_type,
 					      const pj_str_t *value)
 {
-    INIT_ATTR(attr, attr_type, value->slen);
-    if (value && value->slen)
+    INIT_ATTR(attr, attr_type, 0);
+    if (value && value->slen) {
+	attr->value.slen = value->slen;
 	pj_strdup(pool, &attr->value, value);
-    else
-	attr->value.slen = 0;
+    }
     return PJ_SUCCESS;
 }
 
@@ -2300,7 +2300,6 @@ PJ_DEF(pj_status_t) pj_stun_msg_decode(pj_pool_t *pool,
 {
     
     pj_stun_msg *msg;
-    unsigned uattr_cnt;
     const pj_uint8_t *start_pdu = pdu;
     pj_bool_t has_msg_int = PJ_FALSE;
     pj_bool_t has_fingerprint = PJ_FALSE;
@@ -2339,7 +2338,6 @@ PJ_DEF(pj_status_t) pj_stun_msg_decode(pj_pool_t *pool,
 	p_response = NULL;
 
     /* Parse attributes */
-    uattr_cnt = 0;
     while (pdu_len >= 4) {
 	unsigned attr_type, attr_val_len;
 	const struct attr_desc *adesc;
@@ -2451,7 +2449,8 @@ PJ_DEF(pj_status_t) pj_stun_msg_decode(pj_pool_t *pool,
 					     "%s in %s",
 					     err_msg1,
 					     pj_stun_get_attr_name(attr_type));
-
+		    if (e.slen < 1 || e.slen >= (int)sizeof(err_msg2))
+			e.slen = sizeof(err_msg2) - 1;
 		    pj_stun_msg_create_response(pool, msg,
 						PJ_STUN_SC_BAD_REQUEST,
 						&e, p_response);

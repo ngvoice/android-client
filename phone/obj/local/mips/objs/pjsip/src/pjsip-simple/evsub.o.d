@@ -51,6 +51,7 @@ obj/local/mips/objs/pjsip/src/pjsip-simple/evsub.o: \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/log.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/os.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/pool.h \
+ jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/rand.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/string.h \
  jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/compat/string.h \
  /opt/android/android-ndk-r8e/platforms/android-14/arch-mips/usr/include/string.h \
@@ -175,6 +176,8 @@ jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/log.h:
 jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/os.h:
 
 jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/pool.h:
+
+jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/rand.h:
 
 jni/pjsip/android_toolchain/pjsip/../../sources/pjsip/../pjlib/include/pj/string.h:
 

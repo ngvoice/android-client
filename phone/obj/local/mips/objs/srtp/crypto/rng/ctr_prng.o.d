@@ -1,5 +1,5 @@
-obj/local/mips/objs/srtp//crypto/rng/ctr_prng.o: \
- jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp//crypto/rng/ctr_prng.c \
+obj/local/mips/objs/srtp/./crypto/rng/ctr_prng.o: \
+ jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/./crypto/rng/ctr_prng.c \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/prng.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/rand_source.h \
  jni/pjsip/android_toolchain/third_party/srtp/../../../sources/third_party/srtp/crypto/include/err.h \

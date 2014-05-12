@@ -179,22 +179,23 @@ public class TimerWrapper extends BroadcastReceiver {
 		}
 		
 		// Push next
-        Log.v(THIS_FILE, "Schedule TIMER " + entryId + " in " + intervalMs + "ms @ " + firstTime);
-		alarmManager.set(alarmType, firstTime, pendingIntent);
+        Log.v(THIS_FILE, "Schedule timer " + entryId + " in " + intervalMs + "ms @ " + firstTime);
+        Compatibility.setExactAlarm(alarmManager, alarmType, firstTime, pendingIntent);
 		scheduleEntries.add((Integer) entryId);
         scheduleTimes.add((Long) firstTime);
 		return 1;
 	}
 	
 	private synchronized int doCancel(int entryId) {
-        Log.v(THIS_FILE, "Cancel TIMER" + entryId );
+        Log.v(THIS_FILE, "Cancel timer " + entryId);
 		alarmManager.cancel(getPendingIntentForTimer(entryId));
         int existingReg = scheduleEntries.indexOf((Integer) entryId);
         if(existingReg != -1) {
             scheduleEntries.remove(existingReg);
             scheduleTimes.remove(existingReg);
+            return 1;
         }
-		return 1;
+		return 0;
 	}
 	
 	
@@ -324,9 +325,9 @@ public class TimerWrapper extends BroadcastReceiver {
 			        if(existingReg != -1) {
 			            if(scheduleTimes.get(existingReg) == fireTime) {
 			                doFire = true;
+	                        scheduleEntries.remove(existingReg);
+	                        scheduleTimes.remove(existingReg);
 			            }
-			            scheduleEntries.remove(existingReg);
-			            scheduleTimes.remove(existingReg);
 			        }
                 }
 			    if(doFire) {

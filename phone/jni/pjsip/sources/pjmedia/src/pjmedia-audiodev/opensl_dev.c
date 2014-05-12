@@ -1,4 +1,4 @@
-/* $Id: opensl_dev.c 4435 2013-03-11 06:32:58Z nanang $ */
+/* $Id: opensl_dev.c 4731 2014-02-05 05:49:13Z bennylp $ */
 /* 
  * Copyright (C) 2012-2012 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
@@ -226,6 +226,7 @@ void bqRecorderCallback(W_SLBufferQueueItf bq, void *context)
 	pj_bzero(stream->rec_thread_desc, sizeof(pj_thread_desc));
 	status = pj_thread_register("opensl_rec", stream->rec_thread_desc,
 				    &stream->rec_thread);
+	PJ_UNUSED_ARG(status);  /* Unused for now.. */
 	stream->rec_thread_initialized = 1;
 	PJ_LOG(5, (THIS_FILE, "Recorder thread started")); 
     }

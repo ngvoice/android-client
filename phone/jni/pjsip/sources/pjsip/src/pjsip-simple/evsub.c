@@ -1,4 +1,4 @@
-/* $Id: evsub.c 4447 2013-03-21 08:28:21Z nanang $ */
+/* $Id: evsub.c 4747 2014-02-18 01:33:17Z bennylp $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -32,6 +32,7 @@
 #include <pj/log.h>
 #include <pj/os.h>
 #include <pj/pool.h>
+#include <pj/rand.h>
 #include <pj/string.h>
 
 
@@ -251,7 +252,7 @@ struct dlgsub
 
 /* Static vars. */
 static const pj_str_t STR_EVENT	     = { "Event", 5 };
-static const pj_str_t STR_EVENT_S    = { "Event", 5 };
+static const pj_str_t STR_EVENT_S    = { "o", 1 };
 static const pj_str_t STR_SUB_STATE  = { "Subscription-State", 18 };
 static const pj_str_t STR_TERMINATED = { "terminated", 10 };
 static const pj_str_t STR_ACTIVE     = { "active", 6 };
@@ -592,6 +593,9 @@ static void set_state( pjsip_evsub *sub, pjsip_evsub_state state,
     if (state == PJSIP_EVSUB_STATE_TERMINATED &&
 	prev_state != PJSIP_EVSUB_STATE_TERMINATED) 
     {
+	/* Kill any timer. */
+	set_timer(sub, TIMER_TYPE_NONE, 0);
+
 	if (sub->pending_tsx == 0) {
 	    evsub_destroy(sub);
 	}
@@ -1146,6 +1150,14 @@ PJ_DEF(pj_status_t) pjsip_evsub_accept( pjsip_evsub *sub,
     if (status != PJ_SUCCESS)
 	goto on_return;
 
+    /* Set UAS timeout timer, when status code is 2xx and state is not
+     * terminated.
+     */
+    if (st_code/100 == 2 && sub->state != PJSIP_EVSUB_STATE_TERMINATED) {
+	PJ_LOG(5,(sub->obj_name, "UAS timeout in %d seconds",
+		  sub->expires->ivalue));
+	set_timer(sub, TIMER_TYPE_UAS_TIMEOUT, sub->expires->ivalue);
+    }
 
 on_return:
 
@@ -1749,6 +1761,10 @@ static void on_tsx_state_uac( pjsip_evsub *sub, pjsip_transaction *tsx,
 		unsigned timeout = (sub->expires->ivalue > TIME_UAC_REFRESH) ?
 		    sub->expires->ivalue - TIME_UAC_REFRESH : sub->expires->ivalue;
 
+		/* Reduce timeout by about 1 - 10 secs (randomized) */
+		if (timeout > 10)
+		    timeout += -10 + (pj_rand() % 10);
+
 		PJ_LOG(5,(sub->obj_name, "Will refresh in %d seconds", 
 			  timeout));
 		set_timer(sub, TIMER_TYPE_UAC_REFRESH, timeout);
@@ -1796,9 +1812,6 @@ static void on_tsx_state_uac( pjsip_evsub *sub, pjsip_transaction *tsx,
 	    if (tsx->status_code == PJSIP_SC_REQUEST_UPDATED) {
 		return;
 	    }
-
-	    /* Kill any timer. */
-	    set_timer(sub, TIMER_TYPE_NONE, 0);
 
 	    /* Set state to TERMINATED */
 	    set_state(sub, PJSIP_EVSUB_STATE_TERMINATED, 

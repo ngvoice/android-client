@@ -1,4 +1,4 @@
-/* $Id: sip_msg.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: sip_msg.c 4550 2013-07-02 11:45:57Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -399,7 +399,7 @@ PJ_DEF(pj_ssize_t) pjsip_msg_print( const pjsip_msg *msg,
 				    char *buf, pj_size_t size)
 {
     char *p=buf, *end=buf+size;
-    pj_size_t len;
+    pj_ssize_t len;
     pjsip_hdr *hdr;
     pj_str_t clen_hdr =  { "Content-Length: ", 16};
 

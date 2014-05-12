@@ -183,7 +183,7 @@ public class MessageFragment extends SherlockListFragment implements LoaderManag
     
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(THIS_FILE, "On activity result");
+        Log.d(THIS_FILE, "On activity result " + requestCode);
         if (requestCode == PICKUP_SIP_URI) {
             if (resultCode == Activity.RESULT_OK) {
                 String from = data.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
@@ -243,6 +243,7 @@ public class MessageFragment extends SherlockListFragment implements LoaderManag
     
 
     private void setupFrom(String from, String fullFrom) {
+        Log.d(THIS_FILE, "Setup from " + from);
         if (from != null) {
             if (remoteFrom != from) {
                 remoteFrom = from;
@@ -293,7 +294,7 @@ public class MessageFragment extends SherlockListFragment implements LoaderManag
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Builder toLoadUriBuilder = SipMessage.THREAD_ID_URI_BASE.buildUpon().appendEncodedPath(remoteFrom);
+        Builder toLoadUriBuilder = SipMessage.THREAD_ID_URI_BASE.buildUpon().appendEncodedPath(remoteFrom.replaceAll("/", "%2F"));
         return new CursorLoader(getActivity(), toLoadUriBuilder.build(), null, null, null,
                 SipMessage.FIELD_DATE + " ASC");
     }

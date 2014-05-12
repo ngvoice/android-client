@@ -1,4 +1,4 @@
-/* $Id: pjsua_aud.c 4537 2013-06-19 06:47:43Z riza $ */
+/* $Id: pjsua_aud.c 4793 2014-03-14 04:09:50Z bennylp $ */
 /*
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -741,10 +741,13 @@ PJ_DEF(pj_status_t) pjsua_conf_get_port_info( pjsua_conf_port_id id,
     pj_bzero(info, sizeof(*info));
     info->slot_id = id;
     info->name = cinfo.name;
+    pjmedia_format_copy(&info->format, &cinfo.format);
     info->clock_rate = cinfo.clock_rate;
     info->channel_count = cinfo.channel_count;
     info->samples_per_frame = cinfo.samples_per_frame;
     info->bits_per_sample = cinfo.bits_per_sample;
+    info->tx_level_adj = ((float)cinfo.tx_adj_level) / 128 + 1;
+    info->rx_level_adj = ((float)cinfo.rx_adj_level) / 128 + 1;
 
     /* Build array of listeners */
     info->listener_cnt = cinfo.listener_cnt;
@@ -1189,7 +1192,7 @@ on_error:
  */
 PJ_DEF(pjsua_conf_port_id) pjsua_player_get_conf_port(pjsua_player_id id)
 {
-    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player), PJ_EINVAL);
+    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player),PJ_EINVAL);
     PJ_ASSERT_RETURN(pjsua_var.player[id].port != NULL, PJ_EINVAL);
 
     return pjsua_var.player[id].slot;
@@ -1201,7 +1204,7 @@ PJ_DEF(pjsua_conf_port_id) pjsua_player_get_conf_port(pjsua_player_id id)
 PJ_DEF(pj_status_t) pjsua_player_get_port( pjsua_player_id id,
 					   pjmedia_port **p_port)
 {
-    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player), PJ_EINVAL);
+    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player),PJ_EINVAL);
     PJ_ASSERT_RETURN(pjsua_var.player[id].port != NULL, PJ_EINVAL);
     PJ_ASSERT_RETURN(p_port != NULL, PJ_EINVAL);
 
@@ -1211,16 +1214,65 @@ PJ_DEF(pj_status_t) pjsua_player_get_port( pjsua_player_id id,
 }
 
 /*
+ * Get player info.
+ */
+PJ_DEF(pj_status_t) pjsua_player_get_info(pjsua_player_id id,
+                                          pjmedia_wav_player_info *info)
+{
+    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player),
+                     -PJ_EINVAL);
+    PJ_ASSERT_RETURN(pjsua_var.player[id].port != NULL, PJ_EINVAL);
+    PJ_ASSERT_RETURN(pjsua_var.player[id].type == 0, PJ_EINVAL);
+
+    return pjmedia_wav_player_get_info(pjsua_var.player[id].port, info);
+}
+
+/*
+ * Get playback position.
+ */
+PJ_DEF(pj_ssize_t) pjsua_player_get_pos( pjsua_player_id id )
+{
+    pj_ssize_t pos_bytes;
+    pjmedia_wav_player_info info;
+    pj_status_t status;
+
+    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player),
+                     -PJ_EINVAL);
+    PJ_ASSERT_RETURN(pjsua_var.player[id].port != NULL, -PJ_EINVAL);
+    PJ_ASSERT_RETURN(pjsua_var.player[id].type == 0, -PJ_EINVAL);
+
+    pos_bytes = pjmedia_wav_player_port_get_pos(pjsua_var.player[id].port);
+    if (pos_bytes < 0)
+	return pos_bytes;
+
+    status = pjmedia_wav_player_get_info(pjsua_var.player[id].port, &info);
+    if (status != PJ_SUCCESS)
+	return -status;
+
+    return pos_bytes / (info.payload_bits_per_sample / 8);
+}
+
+/*
  * Set playback position.
  */
 PJ_DEF(pj_status_t) pjsua_player_set_pos( pjsua_player_id id,
 					  pj_uint32_t samples)
 {
-    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player), PJ_EINVAL);
+    pjmedia_wav_player_info info;
+    pj_uint32_t pos_bytes;
+    pj_status_t status;
+
+    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player),PJ_EINVAL);
     PJ_ASSERT_RETURN(pjsua_var.player[id].port != NULL, PJ_EINVAL);
     PJ_ASSERT_RETURN(pjsua_var.player[id].type == 0, PJ_EINVAL);
 
-    return pjmedia_wav_player_port_set_pos(pjsua_var.player[id].port, samples);
+    status = pjmedia_wav_player_get_info(pjsua_var.player[id].port, &info);
+    if (status != PJ_SUCCESS)
+	return status;
+
+    pos_bytes = samples * (info.payload_bits_per_sample / 8);
+    return pjmedia_wav_player_port_set_pos(pjsua_var.player[id].port,
+                                           pos_bytes);
 }
 
 
@@ -1230,7 +1282,7 @@ PJ_DEF(pj_status_t) pjsua_player_set_pos( pjsua_player_id id,
  */
 PJ_DEF(pj_status_t) pjsua_player_destroy(pjsua_player_id id)
 {
-    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player), PJ_EINVAL);
+    PJ_ASSERT_RETURN(id>=0&&id<(int)PJ_ARRAY_SIZE(pjsua_var.player),PJ_EINVAL);
     PJ_ASSERT_RETURN(pjsua_var.player[id].port != NULL, PJ_EINVAL);
 
     PJ_LOG(4,(THIS_FILE, "Destroying player %d..", id));
@@ -1759,12 +1811,14 @@ static pj_status_t open_snd_dev(pjmedia_snd_port_param *param)
 	if (status==PJ_SUCCESS) {
 	    if (param->base.clock_rate != pjsua_var.media_cfg.clock_rate) {
 		char tmp_buf[128];
-		int tmp_buf_len = sizeof(tmp_buf);
+		int tmp_buf_len;
 
-		tmp_buf_len = pj_ansi_snprintf(tmp_buf, sizeof(tmp_buf)-1,
+		tmp_buf_len = pj_ansi_snprintf(tmp_buf, sizeof(tmp_buf),
 					       "%s (%dKHz)",
 					       rec_info.name,
 					       param->base.clock_rate/1000);
+		if (tmp_buf_len < 1 || tmp_buf_len >= (int)sizeof(tmp_buf))
+		    tmp_buf_len = sizeof(tmp_buf) - 1;
 		pj_strset(&tmp, tmp_buf, tmp_buf_len);
 		pjmedia_conf_set_port0_name(pjsua_var.mconf, &tmp);
 	    } else {
