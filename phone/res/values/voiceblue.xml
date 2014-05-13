@@ -25,4 +25,10 @@
     <string name="voiceblue_config_changed_title">Configuration changed</string>
     <string name="voiceblue_config_changed_msg">The app needs to restart to apply the changes.</string>
     
+    <string name="voiceblue_qr_auto_config_title">QR Auto-Configuration</string>
+    <string name="voiceblue_invalid_qr_code">Invalid QR Code</string>
+    <string name="voiceblue_scan_again">Scan again</string>
+    <string name="voiceblue_load_profile">Load this profile</string>
+    <string name="voiceblue_exit">Exit</string>
+    
 </resources>

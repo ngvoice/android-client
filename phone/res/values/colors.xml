@@ -24,5 +24,21 @@
     <color name="account_valid">#FF84E300</color>
     <color name="account_error">#FFFF0F00</color>
     <color name="blue">#FF0000FF</color>
+    
+    <!-- Color corresponding to QR code decoder -->
+	<color name="transparent">#00000000</color>
+	<color name="contents_text">#ff000000</color>
+	<color name="encode_view">#ffffffff</color>
+	<color name="possible_result_points">#c07FFF00</color>
+	<color name="result_image_border">#ff526F35</color>
+	<color name="result_minor_text">#ffc0c0c0</color>
+	<color name="result_points">#c07FFF00</color>
+	<color name="result_text">#ffffffff</color>
+	<color name="result_view">#b0000000</color>
+	<color name="status_view">#50000000</color>
+	<color name="status_text">#ffffffff</color>
+	<color name="viewfinder_frame">#ff526F35</color>
+	<color name="viewfinder_laser">#ff7FFF00</color>
+	<color name="viewfinder_mask">#607CFC00</color>
 
 </resources>

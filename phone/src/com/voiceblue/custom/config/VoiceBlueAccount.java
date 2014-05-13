@@ -2,6 +2,7 @@ package com.voiceblue.custom.config;
 
 public class VoiceBlueAccount {
 	
+	public static final String CONFIGURED_BY_QR = "configured_by_qr";
 	public static final String CUSTOMER_CARE_KEY = "customer_care_url";
 	public static final String MY_ACCOUNT_KEY = "myaccount_url";
 	public static final String WEB_URL_KEY = "web_url";

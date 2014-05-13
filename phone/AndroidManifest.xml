@@ -113,7 +113,7 @@
         android:allowBackup="true"
         android:backupAgent="com.voiceblue.phone.backup.SipBackupAgent"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/vb_logo"
+        android:icon="@drawable/ic_logo_flat"
         android:label="@string/app_name" >              
         
         <meta-data
@@ -143,7 +143,7 @@
 
         <activity
             android:name="com.voiceblue.custom.ui.SplashScreen"
-            android:icon="@drawable/vb_logo"
+            android:icon="@drawable/ic_logo_flat"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Splash"
@@ -152,6 +152,25 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.jwetherell.quick_response_code.CaptureActivity"
+            android:screenOrientation="landscape"
+            android:clearTaskOnLaunch="true"
+            android:stateNotNeeded="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden">            
+        </activity>
+
+        <activity
+            android:name="com.caruizdiaz.custom.ui.QRScannedActivity"
+			android:icon="@drawable/ic_logo_flat"
+            android:label="@string/voiceblue_qr_auto_config_title"
+            android:launchMode="singleTask"            
+            android:uiOptions="splitActionBarWhenNarrow"                        
+            >            
         </activity>
 
         <!-- Main service -->
@@ -418,7 +437,7 @@
         <!-- Widget -->
         <receiver
             android:name="com.voiceblue.phone.widgets.AccountWidgetProvider"
-            android:icon="@drawable/vb_logo"
+            android:icon="@drawable/ic_logo_flat"
             android:label="@string/gadget_title" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -441,7 +460,7 @@
 
         <receiver
             android:name="com.voiceblue.phone.widgets.ShortcutWidgetProvider"
-            android:icon="@drawable/vb_logo"
+            android:icon="@drawable/ic_logo_flat"
             android:label="@string/csipsimple_shortcut" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

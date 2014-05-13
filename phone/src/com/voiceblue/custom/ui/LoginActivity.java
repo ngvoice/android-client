@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.voiceblue.phone.R;
@@ -34,6 +35,8 @@ import com.voiceblue.custom.config.ota.OTAConfig;
 import com.voiceblue.phone.api.SipConfigManager;
 import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.ui.SipHome;
+import com.jwetherell.quick_response_code.CaptureActivity;
+import com.jwetherell.quick_response_code.DecoderActivity;
 
 public class LoginActivity extends Activity implements ConfigDownloaderCallbacks {
 
@@ -44,14 +47,14 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 	private String mUsername;	
 	private String mPassword;
 	
-	private final String TAG = "LoginActivity";
+	private final String TAG = LoginActivity.class.getSimpleName();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		boolean reloadConfig = forceConfigurationReload();
-		boolean firstTimeConfig = isFirstTimeConfiguration();
+		boolean firstTimeConfig = ConfigLoader.isFirstTimeConfiguration(this);
 		//reloadConfig = true;		
 		
 		if (reloadConfig && !firstTimeConfig) {
@@ -74,17 +77,27 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 			}
 		}
 		else if (!firstTimeConfig) {
+			
 			showMainScreen();
 			return;
 		}
 		
 		setupLoginScreen();
+		
+		mUsername 	= getIntent().getStringExtra(CaptureActivity.USERNAME);
+		mPassword	= getIntent().getStringExtra(CaptureActivity.PASSWORD);
+		
+		if (mUsername != null) {
+			new ConfigDownloaderTask(LoginActivity.this)
+				.execute(new AccessInformation(mUsername, mPassword));
+		}
 	}
 	
 	private void setupLoginScreen() {
 		setContentView(R.layout.activity_login);
 		
-		Button btn = (Button) findViewById(R.id.btnLogin);
+		Button btnLogin = (Button) findViewById(R.id.btnLogin);
+		ImageButton btnScan = (ImageButton) findViewById(R.id.btnScanQRCode);
 		TextView lnkPasswordForgotten = (TextView) findViewById(R.id.lnkPasswordForgotten);		
 		TextView lnkNewAccount = (TextView) findViewById(R.id.lnkNewAccount);
 		
@@ -99,7 +112,17 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		//
 		//getContentResolver().delete(SipProfile.ACCOUNT_URI, null, null);
 		
-		btn.setOnClickListener(new View.OnClickListener() {
+		btnScan.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(LoginActivity.this, CaptureActivity.class);
+				startActivity(intent);
+				
+			}
+		});
+		
+		btnLogin.setOnClickListener(new View.OnClickListener() {
 		
 			@Override
 			public void onClick(View arg0) {
@@ -167,16 +190,6 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 		showError("Configuration fetch was cancelled");
 		
 	}
-
-	private boolean isFirstTimeConfiguration() {
-		Cursor c = getContentResolver().query(SipProfile.ACCOUNT_URI, 
-				new String[] { SipProfile.FIELD_ID }, 
-				null, 
-				null, 
-				null);
-
-		return (c.getCount() == 0);
-	}
 	
 	@Override
 	public void onConfigDownloaded(ConfigDownloaderResult result) {
@@ -186,57 +199,12 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 						
 			VoiceBlueAccount acc = ConfigLoader.loadFromResult(result);
 			
-			// update username/password of the web portal access
-			SipConfigManager.setPreferenceStringValue(this, 
-														AccessInformation.USERNAME_FIELD_KEY, 
-														mUsername);
-			SipConfigManager.setPreferenceStringValue(this, 
-														AccessInformation.PASSWORD_FIELD_KEY, 
-														mPassword);
-			
-			// update common preferences
-			SipConfigManager.setPreferenceStringValue(this, 
-														VoiceBlueAccount.CUSTOMER_CARE_KEY, 
-														acc.getCustomerCareURL());
-			SipConfigManager.setPreferenceStringValue(this, 
-														VoiceBlueAccount.MY_ACCOUNT_KEY, 
-														acc.getMyAccURL());
-			SipConfigManager.setPreferenceStringValue(this, 
-														VoiceBlueAccount.TOP_UP_URL_KEY, 
-														acc.getTopUpURL());
-			SipConfigManager.setPreferenceStringValue(this, 
-														VoiceBlueAccount.WEB_URL_KEY, 
-														acc.getWebURL());
-			
 			if (acc == null)
-				throw new Exception("Something went wrong parsing your config");		
+				throw new Exception("Something went wrong parsing your config");
 			
-			if (isFirstTimeConfiguration()) {
+			ConfigLoader.setupAccount(this, acc, mUsername, mPassword);
 			
-				ContentValues values =  new ContentValues();
-				values.put(SipProfile.FIELD_ACTIVE, "1");
-				values.put(SipProfile.FIELD_PROXY, acc.getProxy());
-				values.put(SipProfile.FIELD_DISPLAY_NAME, acc.getDisplayName());
-				values.put(SipProfile.FIELD_ACC_ID, acc.getAccID());
-				values.put(SipProfile.FIELD_USERNAME, acc.getUsername());
-				values.put(SipProfile.FIELD_DATA, acc.getPassword());
-				values.put(SipProfile.FIELD_REG_URI, acc.getRegURI());
-				values.put(SipProfile.FIELD_REALM, acc.getRealm());
-				values.put(SipProfile.FIELD_REG_USE_PROXY, acc.getRegUseProxy());
-				
-				getContentResolver().insert(SipProfile.ACCOUNT_URI, values);
-			}	
-					
-			showMainScreen();
-			
-			// enable video by default
-			SipConfigManager.setPreferenceBooleanValue(this, SipConfigManager.USE_VIDEO, true);
-			
-			ConfigLoader.setupDefaultPreferences(this);
-			
-			// update config reload to "no"
-			SipConfigManager.setPreferenceStringValue(this, OTAConfig.RELOAD_CONFIG_KEY, "no");
-		
+			showMainScreen();						
 		}
 		catch(SSLException e) {
 			if (mProgressDialog != null)

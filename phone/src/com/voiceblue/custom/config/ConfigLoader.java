@@ -3,10 +3,12 @@ package com.voiceblue.custom.config;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract.Profile;
 
+import com.voiceblue.custom.config.ota.OTAConfig;
 import com.voiceblue.phone.api.SipConfigManager;
 import com.voiceblue.phone.api.SipProfile;
 import com.voiceblue.phone.db.DBProvider;
@@ -53,8 +55,84 @@ public class ConfigLoader {
 			e.printStackTrace();			
 			return null;
 		}		
-	}
+	}	
 
+	public static void setupAccount(Context ctx, VoiceBlueAccount acc) {
+	
+		setupAccount(ctx, acc, null, null);
+	}
+	
+	public static void setupAccount(Context ctx, VoiceBlueAccount acc, String username, String password) {			
+		
+		if (username == null && password == null)
+			SipConfigManager.setPreferenceStringValue(ctx, 
+					VoiceBlueAccount.CONFIGURED_BY_QR, 
+					"yes");
+		else {
+			// update username/password of the web portal access
+			SipConfigManager.setPreferenceStringValue(ctx, 
+														AccessInformation.USERNAME_FIELD_KEY, 
+														username);
+			SipConfigManager.setPreferenceStringValue(ctx, 
+														AccessInformation.PASSWORD_FIELD_KEY, 
+														password);
+			
+			SipConfigManager.setPreferenceStringValue(ctx, 
+					VoiceBlueAccount.CONFIGURED_BY_QR, 
+					"no");
+		}
+		
+		// update common preferences
+		SipConfigManager.setPreferenceStringValue(ctx, 
+													VoiceBlueAccount.CUSTOMER_CARE_KEY, 
+													acc.getCustomerCareURL());
+		SipConfigManager.setPreferenceStringValue(ctx, 
+													VoiceBlueAccount.MY_ACCOUNT_KEY, 
+													acc.getMyAccURL());
+		SipConfigManager.setPreferenceStringValue(ctx, 
+													VoiceBlueAccount.TOP_UP_URL_KEY, 
+													acc.getTopUpURL());
+		SipConfigManager.setPreferenceStringValue(ctx, 
+													VoiceBlueAccount.WEB_URL_KEY, 
+													acc.getWebURL());
+		
+		
+		
+		if (isFirstTimeConfiguration(ctx)) {
+		
+			ContentValues values =  new ContentValues();
+			values.put(SipProfile.FIELD_ACTIVE, "1");
+			values.put(SipProfile.FIELD_PROXY, acc.getProxy());
+			values.put(SipProfile.FIELD_DISPLAY_NAME, acc.getDisplayName());
+			values.put(SipProfile.FIELD_ACC_ID, acc.getAccID());
+			values.put(SipProfile.FIELD_USERNAME, acc.getUsername());
+			values.put(SipProfile.FIELD_DATA, acc.getPassword());
+			values.put(SipProfile.FIELD_REG_URI, acc.getRegURI());
+			values.put(SipProfile.FIELD_REALM, acc.getRealm());
+			values.put(SipProfile.FIELD_REG_USE_PROXY, acc.getRegUseProxy());
+			
+			ctx.getContentResolver().insert(SipProfile.ACCOUNT_URI, values);
+		}						
+		
+		// enable video by default
+		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_VIDEO, true);
+		
+		ConfigLoader.setupDefaultPreferences(ctx);
+		
+		// update config reload to "no"
+		SipConfigManager.setPreferenceStringValue(ctx, OTAConfig.RELOAD_CONFIG_KEY, "no");
+	}
+	
+	public static boolean isFirstTimeConfiguration(Context ctx) {
+		Cursor c = ctx.getContentResolver().query(SipProfile.ACCOUNT_URI, 
+				new String[] { SipProfile.FIELD_ID }, 
+				null, 
+				null, 
+				null);
+
+		return (c.getCount() == 0);
+	}
+	
 	public static VoiceBlueAccount getLoadedAccount() {			
 		return mLoadedAccount;
 	}
@@ -92,7 +170,7 @@ public class ConfigLoader {
 		}
 		
 		return null;
-	}
+	}	
 	
 	public static void setupDefaultPreferences(Context ctx) {
 		String g722CodecWb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_WB),
