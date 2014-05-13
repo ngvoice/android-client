@@ -1,11 +1,14 @@
 .swp
 
+.svn/
+
 # built application files
 *.apk
 *.ap_
 *.so
 *.o
 *.a
+*.d
 
 # files for the dex VM
 *.dex
