@@ -366,7 +366,7 @@ public class PrefsLogic {
     
     
     public static boolean onMainActivityOptionsItemSelected(MenuItem item, Context ctxt, PreferencesWrapper prefsWrapper) {
-        int id = item.getItemId();
+        /*int id = item.getItemId();
         if (id == R.id.audio_test) {
             ctxt.startActivity(new Intent(ctxt, AudioTester.class));
             return true;
@@ -377,13 +377,14 @@ public class PrefsLogic {
             prefsWrapper.toogleExpertMode();
 
             return true;
-        }
+        }*/
         return false;
     }
 
     public static void onMainActivityPrepareOptionMenu(Menu menu, Context ctxt, PreferencesWrapper prefsWrapper) {
 
-        menu.findItem(R.id.expert).setTitle(prefsWrapper.isAdvancedUser()? R.string.normal_preferences: R.string.expert_preferences);
+        //menu.findItem(R.id.expert).setTitle(prefsWrapper.isAdvancedUser()? R.string.normal_preferences: R.string.expert_preferences);
+    	
         //menu.findItem(R.id.audio_test).setVisible(prefsWrapper.isAdvancedUser());
     }
 }

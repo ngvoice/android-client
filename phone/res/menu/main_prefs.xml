@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
+    <!--item
         android:id="@+id/audio_test"
         android:icon="@drawable/ic_prefs_media"
         android:title="@string/test_audio"/>
@@ -12,6 +12,6 @@
     <item
         android:id="@+id/reset_settings"
         android:icon="@android:drawable/ic_menu_revert"
-        android:title="@string/restore_default"/>
+        android:title="@string/restore_default"/-->
 
 </menu>

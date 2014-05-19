@@ -3,7 +3,7 @@
     package="com.voiceblue.phone"
     android:installLocation="auto"
     android:versionCode="2353"
-    android:versionName="1.02.00" >
+    android:versionName="1.02.00.ngvoice" >
 
     <supports-screens
         android:anyDensity="true"
