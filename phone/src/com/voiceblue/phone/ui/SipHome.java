@@ -839,9 +839,9 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
                 .setIcon(android.R.drawable.ic_menu_preferences)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-        menu.add(Menu.NONE, HELP_MENU, Menu.NONE, R.string.help)
+/*        menu.add(Menu.NONE, HELP_MENU, Menu.NONE, R.string.help)
                 .setIcon(android.R.drawable.ic_menu_help)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER); 
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);*/ 
         
         menu.add(Menu.NONE, CLOSE_MENU, Menu.NONE, R.string.menu_disconnect)
                 .setIcon(R.drawable.ic_lock_power_off)
