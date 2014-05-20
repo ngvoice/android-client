@@ -66,7 +66,7 @@ public class LoginActivity extends Activity implements ConfigDownloaderCallbacks
 				showError(getString(R.string.voiceblue_usrpwd_empty));
 			else {
 				// remove all previous accounts, a new one is going to be fetched 
-				getContentResolver().delete(SipProfile.ACCOUNT_URI, null, null);
+				getContentResolver().delete(SipProfile.ACCOUNT_URI, null, null);				
 
 				setContentView(R.layout.activity_splash_screen);
 				

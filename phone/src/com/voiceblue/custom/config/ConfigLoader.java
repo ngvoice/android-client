@@ -40,14 +40,20 @@ public class ConfigLoader {
 				account.setAccID(jsonAcccounts.getJSONObject(i).getString("acc_id"));
 				account.setProxy(jsonAcccounts.getJSONObject(i).getString("proxy"));
 				account.setRealm(jsonAcccounts.getJSONObject(i).getString("realm"));
-				account.setRegUseProxy(jsonAcccounts.getJSONObject(i).getString("reg_use_proxy"));								
+				account.setRegUseProxy(jsonAcccounts.getJSONObject(i).getString("reg_use_proxy"));							
 			}
 								
 			account.setCustomerCareURL(jsonSettings.getString("customer_care_url"));
 			account.setMyAccURL(jsonSettings.getString("myaccount_url"));
 			account.setWebURL(jsonSettings.getString("web_url"));
 			account.setTopUpURL(jsonSettings.getString("topup_url"));
+			
+			account.setCodecSelection(new CodecSelection(jsonSettings.getString("audiocodecs_wifi"), 
+														jsonSettings.getString("audiocodecs_3g"), 
+														jsonSettings.getString("videocodecs_wifi"),
+														jsonSettings.getString("videocodecs_3g")));
 
+			
 			mLoadedAccount = account;
 			return mLoadedAccount;
 		}
@@ -59,7 +65,7 @@ public class ConfigLoader {
 
 	public static void setupAccount(Context ctx, VoiceBlueAccount acc) {
 	
-		setupAccount(ctx, acc, null, null);
+		setupAccount(ctx, acc, null, null);		
 	}
 	
 	public static void setupAccount(Context ctx, VoiceBlueAccount acc, String username, String password) {			
@@ -121,6 +127,8 @@ public class ConfigLoader {
 		
 		// update config reload to "no"
 		SipConfigManager.setPreferenceStringValue(ctx, OTAConfig.RELOAD_CONFIG_KEY, "no");
+		
+		acc.getCodecSelection().setupPrefences(ctx);
 	}
 	
 	public static boolean isFirstTimeConfiguration(Context ctx) {
@@ -173,7 +181,7 @@ public class ConfigLoader {
 	}	
 	
 	public static void setupDefaultPreferences(Context ctx) {
-		String g722CodecWb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_WB),
+		/*String g722CodecWb = SipConfigManager.getCodecKey("G722/16000/1", SipConfigManager.CODEC_WB),
 			   pcmaCodecWb = SipConfigManager.getCodecKey("PCMA/8000/1", SipConfigManager.CODEC_WB),
 			   pcmuCodecWb = SipConfigManager.getCodecKey("PCMU/8000/1", SipConfigManager.CODEC_WB),
 			   isacCodecWb = SipConfigManager.getCodecKey("ISAC/16000/1", SipConfigManager.CODEC_WB),
@@ -195,7 +203,7 @@ public class ConfigLoader {
 			   h263CodecNb  = SipConfigManager.getCodecKey("H263-1998/96", SipConfigManager.CODEC_NB),
 			   vp8CodecNb =  SipConfigManager.getCodecKey("VP8/102", SipConfigManager.CODEC_NB);
 		
-		
+		*/
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.INTEGRATE_WITH_DIALER, true);
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.INTEGRATE_WITH_CALLLOGS, true);
 		
@@ -213,7 +221,7 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.USE_OTHER_OUT, false);
 		
 		SipConfigManager.setPreferenceBooleanValue(ctx, SipConfigManager.LOCK_WIFI, false);			
-				
+		/*		
 		// wide band
 		SipConfigManager.setPreferenceStringValue(ctx, g722CodecWb, "300");
 		SipConfigManager.setPreferenceStringValue(ctx, pcmaCodecWb, "250");
@@ -243,5 +251,6 @@ public class ConfigLoader {
 		SipConfigManager.setPreferenceStringValue(ctx, h264CodecNb, "200");
 		SipConfigManager.setPreferenceStringValue(ctx, h263CodecNb, "255");
 		SipConfigManager.setPreferenceStringValue(ctx, vp8CodecNb, "0");
+		*/
 	}
 }

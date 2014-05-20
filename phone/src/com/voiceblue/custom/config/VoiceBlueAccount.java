@@ -16,11 +16,20 @@ public class VoiceBlueAccount {
 	private String mProxy;
 	private String mRealm;
 	private String mRegUseProxy;
+	private CodecSelection mCodecSelection;
 	
 	private String mCustomerCareURL;
 	private String mMyAccURL;
 	private String mWebURL;
 	private String mTopUpURL;
+	
+
+	public CodecSelection getCodecSelection() {
+		return mCodecSelection;
+	}
+	public void setCodecSelection(CodecSelection selection) {
+		this.mCodecSelection = selection;
+	}
 	
 	public String getUsername() {
 		return mUsername;
