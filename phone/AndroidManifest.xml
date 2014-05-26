@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.voiceblue.phone"
     android:installLocation="auto"
-    android:versionCode="2353"
+    android:versionCode="2355"
     android:versionName="1.02.00.ngvoice" >
 
     <supports-screens

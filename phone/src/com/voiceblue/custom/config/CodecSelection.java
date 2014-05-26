@@ -1,6 +1,7 @@
 package com.voiceblue.custom.config;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import android.content.Context;
@@ -132,6 +133,8 @@ public class CodecSelection {
 		try {		
 			int currentItem = CodecsWifi.size() * 2;
 			
+			resetCodecs(ctx);
+			
 			for(Codec codec:CodecsWifi) {
 				String codecID = getID(codec, true);
 				Log.d(TAG, "Setting up codec: " + codecID + "| weight: " + Integer.valueOf((currentItem) * 100).toString() );
@@ -150,5 +153,23 @@ public class CodecSelection {
 		catch(Exception e) {
 			Log.e(TAG, e.getMessage());
 		}
+	}
+	
+	private void resetCodecs(Context ctx) {
+		
+		EnumSet<Codec> codecs = EnumSet.allOf(Codec.class);
+		try {
+			for(Codec codec:CodecsWifi) {
+				String idWb = getID(codec, true);
+				String idNb = getID(codec, false);
+				
+				SipConfigManager.setPreferenceStringValue(ctx, idWb, "0");
+				SipConfigManager.setPreferenceStringValue(ctx, idNb, "0");
+			}
+		}
+		catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+		}
+		
 	}
 }
